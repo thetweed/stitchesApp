@@ -39,7 +39,7 @@
 		5B1D8F4E2D13774100297376 /* stitchesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stitchesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B1D8F512D13774100297376 /* stitchesAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stitchesAppApp.swift; sourceTree = "<group>"; };
 		5B1D8F532D13774100297376 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		5B1D8F552D13774200297376 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5B1D8F552D13774200297376 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../stitchesApp/Assets.xcassets; sourceTree = "<group>"; };
 		5B1D8F582D13774200297376 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5B1D8F5A2D13774200297376 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		5B1D8F5D2D13774200297376 /* stitchesApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = stitchesApp.xcdatamodel; sourceTree = "<group>"; };
@@ -75,13 +75,63 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B16DE192D137F61008B5FEB /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				5B37E4F82D1382D3005A3031 /* UITests */,
+				5B37E4F72D1382CD005A3031 /* UnitTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		5B16DE1D2D137F97008B5FEB /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		5B16DE1E2D137F9E008B5FEB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5B16DE1F2D137FA3008B5FEB /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		5B16DE262D137FE9008B5FEB /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				5B1D8F5C2D13774200297376 /* stitchesApp.xcdatamodeld */,
+				5B16DE272D137FEE008B5FEB /* Models */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		5B16DE272D137FEE008B5FEB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		5B1D8F452D13774100297376 = {
 			isa = PBXGroup;
 			children = (
-				5B1D8F502D13774100297376 /* stitchesApp */,
-				5B1D8F662D13774200297376 /* stitchesAppTests */,
-				5B1D8F702D13774200297376 /* stitchesAppUITests */,
+				5B92DDD02D137E8100306A26 /* Application */,
+				5B92DDD12D137E9C00306A26 /* Core */,
+				5B92DDD22D137EA200306A26 /* Data */,
+				5B92DDD32D137EAB00306A26 /* Features */,
 				5B1D8F4F2D13774100297376 /* Products */,
+				5B92DDD52D137EBC00306A26 /* Resources */,
+				5B92DDD42D137EB700306A26 /* Shared */,
+				5B16DE192D137F61008B5FEB /* Tests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,12 +148,9 @@
 		5B1D8F502D13774100297376 /* stitchesApp */ = {
 			isa = PBXGroup;
 			children = (
-				5B1D8F512D13774100297376 /* stitchesAppApp.swift */,
 				5B1D8F532D13774100297376 /* ContentView.swift */,
-				5B1D8F552D13774200297376 /* Assets.xcassets */,
 				5B1D8F5A2D13774200297376 /* Persistence.swift */,
-				5B1D8F5C2D13774200297376 /* stitchesApp.xcdatamodeld */,
-				5B1D8F572D13774200297376 /* Preview Content */,
+				5B1D8F512D13774100297376 /* stitchesAppApp.swift */,
 			);
 			path = stitchesApp;
 			sourceTree = "<group>";
@@ -131,6 +178,191 @@
 				5B1D8F732D13774200297376 /* stitchesAppUITestsLaunchTests.swift */,
 			);
 			path = stitchesAppUITests;
+			sourceTree = "<group>";
+		};
+		5B37E4EC2D138276005A3031 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5B37E4ED2D13827B005A3031 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		5B37E4EE2D138284005A3031 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5B37E4EF2D138288005A3031 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		5B37E4F02D138291005A3031 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5B37E4F12D138297005A3031 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		5B37E4F22D1382A2005A3031 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		5B37E4F32D1382A9005A3031 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
+		5B37E4F52D1382BE005A3031 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		5B37E4F62D1382C3005A3031 /* Localizations */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Localizations;
+			sourceTree = "<group>";
+		};
+		5B37E4F72D1382CD005A3031 /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				5B1D8F662D13774200297376 /* stitchesAppTests */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
+		5B37E4F82D1382D3005A3031 /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				5B1D8F702D13774200297376 /* stitchesAppUITests */,
+			);
+			path = UITests;
+			sourceTree = "<group>";
+		};
+		5B92DDD02D137E8100306A26 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				5B1D8F572D13774200297376 /* Preview Content */,
+				5B1D8F502D13774100297376 /* stitchesApp */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		5B92DDD12D137E9C00306A26 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				5B16DE1D2D137F97008B5FEB /* Constants */,
+				5B16DE1E2D137F9E008B5FEB /* Extensions */,
+				5B16DE1F2D137FA3008B5FEB /* Utilities */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		5B92DDD22D137EA200306A26 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				5B16DE262D137FE9008B5FEB /* CoreData */,
+				5BA9AA852D1380D500E068BE /* Repositories */,
+				5BA9AA862D1380E000E068BE /* Services */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		5B92DDD32D137EAB00306A26 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				5BA9AA882D1380FA00E068BE /* Counter */,
+				5BA9AA872D1380F500E068BE /* Projects */,
+				5BA9AA892D1380FE00E068BE /* Yarn */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		5B92DDD42D137EB700306A26 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				5B37E4F22D1382A2005A3031 /* Components */,
+				5B37E4F32D1382A9005A3031 /* Styles */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		5B92DDD52D137EBC00306A26 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5B1D8F552D13774200297376 /* Assets.xcassets */,
+				5B37E4F52D1382BE005A3031 /* Fonts */,
+				5B37E4F62D1382C3005A3031 /* Localizations */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		5BA9AA852D1380D500E068BE /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		5BA9AA862D1380E000E068BE /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		5BA9AA872D1380F500E068BE /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				5B37E4F12D138297005A3031 /* ViewModels */,
+				5B37E4F02D138291005A3031 /* Views */,
+			);
+			path = Projects;
+			sourceTree = "<group>";
+		};
+		5BA9AA882D1380FA00E068BE /* Counter */ = {
+			isa = PBXGroup;
+			children = (
+				5B37E4EF2D138288005A3031 /* ViewModels */,
+				5B37E4EE2D138284005A3031 /* Views */,
+			);
+			path = Counter;
+			sourceTree = "<group>";
+		};
+		5BA9AA892D1380FE00E068BE /* Yarn */ = {
+			isa = PBXGroup;
+			children = (
+				5B37E4ED2D13827B005A3031 /* ViewModels */,
+				5B37E4EC2D138276005A3031 /* Views */,
+			);
+			path = Yarn;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
