@@ -1,9 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="24C101" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Counter" representedClassName=".Counter" syncable="YES">
+        <attribute name="counterType" optional="YES" attributeType="String"/>
+        <attribute name="currentCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="deleted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="lastModified" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="project" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="targetCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="counterProject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="projectCounter" inverseEntity="Project"/>
     </entity>
-    <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
-    </elements>
+    <entity name="Project" representedClassName=".Project" syncable="YES">
+        <attribute name="counters" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="currentRow" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="deleted" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="lastModified" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="patternNotes" optional="YES" attributeType="String"/>
+        <attribute name="photoData" optional="YES" attributeType="Binary"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="status" optional="YES" attributeType="String"/>
+        <attribute name="yarns" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="projectCounter" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Counter" inverseName="counterProject" inverseEntity="Counter"/>
+        <relationship name="projectYarn" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Yarn" inverseName="yarnProject" inverseEntity="Yarn"/>
+    </entity>
+    <entity name="Yarn" representedClassName=".Yarn" syncable="YES">
+        <attribute name="brand" optional="YES" attributeType="String"/>
+        <attribute name="colorName" optional="YES" attributeType="String"/>
+        <attribute name="colorNumber" optional="YES" attributeType="String"/>
+        <attribute name="deleted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="fiberContent" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="photoData" optional="YES" attributeType="Binary"/>
+        <attribute name="price" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="projects" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="purchaseDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="totalYardage" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="usedYardage" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="weightCategory" optional="YES" attributeType="String"/>
+        <relationship name="yarnProject" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="projectYarn" inverseEntity="Project"/>
+    </entity>
 </model>

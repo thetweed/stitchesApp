@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import CoreData
 
 @main
 struct stitchesAppApp: App {
-    let persistenceController = PersistenceController.shared
+    let persistenceController = CoreDataManager.shared
 
     var body: some Scene {
         WindowGroup {
