@@ -152,7 +152,7 @@ struct ProjectDetailView: View {
                     Text(yarn.colorName)
                         .padding()
                         .background(Color.gray.opacity(0.1))
-                        .cornerRadius(8)
+                        .cornerRadius(8) 
                 }
             } else {
                 Text("No yarns added")

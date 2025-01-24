@@ -23,6 +23,8 @@
 		5B0637AE2D430E09001D35E2 /* ProjectEditFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637AD2D430E05001D35E2 /* ProjectEditFormView.swift */; };
 		5B0637B02D431130001D35E2 /* ProjectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637AF2D43112B001D35E2 /* ProjectListViewModel.swift */; };
 		5B0637B22D431417001D35E2 /* AddProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637B12D431410001D35E2 /* AddProjectViewModel.swift */; };
+		5B0637B42D442B72001D35E2 /* YarnInventoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637B32D442B69001D35E2 /* YarnInventoryViewModel.swift */; };
+		5B0637B72D442B8F001D35E2 /* YarnInventoryView\.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637B62D442B89001D35E2 /* YarnInventoryView\.swift */; };
 		5B1D8F522D13774100297376 /* stitchesAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1D8F512D13774100297376 /* stitchesAppApp.swift */; };
 		5B1D8F542D13774100297376 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1D8F532D13774100297376 /* ContentView.swift */; };
 		5B1D8F592D13774200297376 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B1D8F582D13774200297376 /* Preview Assets.xcassets */; };
@@ -79,6 +81,8 @@
 		5B0637AD2D430E05001D35E2 /* ProjectEditFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectEditFormView.swift; sourceTree = "<group>"; };
 		5B0637AF2D43112B001D35E2 /* ProjectListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModel.swift; sourceTree = "<group>"; };
 		5B0637B12D431410001D35E2 /* AddProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectViewModel.swift; sourceTree = "<group>"; };
+		5B0637B32D442B69001D35E2 /* YarnInventoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YarnInventoryViewModel.swift; sourceTree = "<group>"; };
+		5B0637B62D442B89001D35E2 /* YarnInventoryView\.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YarnInventoryView\\.swift"; sourceTree = "<group>"; };
 		5B1D8F4E2D13774100297376 /* stitchesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stitchesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B1D8F512D13774100297376 /* stitchesAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stitchesAppApp.swift; sourceTree = "<group>"; };
 		5B1D8F532D13774100297376 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -247,6 +251,7 @@
 		5B37E4EC2D138276005A3031 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B0637B62D442B89001D35E2 /* YarnInventoryView\.swift */,
 				5B0637A92D430CB5001D35E2 /* EditYarnView.swift */,
 				5B0637A52D4305C5001D35E2 /* AddYarnView.swift */,
 				5B0637502D419CCA001D35E2 /* YarnSelectionView.swift */,
@@ -257,6 +262,7 @@
 		5B37E4ED2D13827B005A3031 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				5B0637B32D442B69001D35E2 /* YarnInventoryViewModel.swift */,
 				5B0637A32D4305B0001D35E2 /* AddYarnViewModel.swift */,
 				5B0637A72D430C2E001D35E2 /* EditYarnViewModel.swift */,
 				5B0637A02D42FAC1001D35E2 /* YarnSelectionViewModel.swift */,
@@ -590,6 +596,7 @@
 				5B0637B22D431417001D35E2 /* AddProjectViewModel.swift in Sources */,
 				5B0637462D3AFAEB001D35E2 /* ProjectRowView.swift in Sources */,
 				5B1D8F5E2D13774200297376 /* stitchesApp.xcdatamodeld in Sources */,
+				5B0637B72D442B8F001D35E2 /* YarnInventoryView\.swift in Sources */,
 				5B0637A82D430C33001D35E2 /* EditYarnViewModel.swift in Sources */,
 				5B1D8F542D13774100297376 /* ContentView.swift in Sources */,
 				5B37E5062D3738CB005A3031 /* CounterRepository.swift in Sources */,
@@ -597,6 +604,7 @@
 				5B06374D2D3AFB28001D35E2 /* ProjectDetailView.swift in Sources */,
 				5B0637AE2D430E09001D35E2 /* ProjectEditFormView.swift in Sources */,
 				5B0637AC2D430D87001D35E2 /* ProjectEditViewModel.swift in Sources */,
+				5B0637B42D442B72001D35E2 /* YarnInventoryViewModel.swift in Sources */,
 				5B6242A42D3860CB008DE40D /* BasicStitchCounterView.swift in Sources */,
 				5B37E5022D3738AB005A3031 /* ProjectRepository.swift in Sources */,
 				5B37E4FA2D372CF4005A3031 /* Project.swift in Sources */,
