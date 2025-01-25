@@ -15,7 +15,7 @@ struct ContentView: View {
         TabView(selection: $selectedTab) {
             HomeView()
                 .tabItem {
-                    Label("Home", systemImage: "circle.circle.fill")
+                    Label("Settings", systemImage: "circle.circle.fill")
                 }
                 .tag(0)
             
@@ -37,11 +37,11 @@ struct ContentView: View {
                 }
                 .tag(3)
             
-           /* SettingsView()
+            AlbumView()
                 .tabItem {
-                    Label("Settings", systemImage: "line.3.horizontal")
+                    Label("Album", systemImage: "camera.circle.fill")
                 }
-                .tag(3)*/
+                .tag(3)
         }
     }
 }
@@ -66,7 +66,13 @@ struct HomeView: View {
     }
 }
 
-// Preview provider
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static let context = CoreDataManager.shared.container.viewContext
+    
+    static var previews: some View {
+        let sampleData = PreviewingData()
+        let _ = sampleData.sampleProjects(context)
+        return ContentView()
+            .environment(\.managedObjectContext, context)
+    }
 }

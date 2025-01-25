@@ -8,8 +8,8 @@
 import SwiftUI
 import CoreData
 
-struct PhotosView: View {
+struct AlbumView: View {
     var body: some View {
-        Text("PhotosView")
+        Text("Photo Album")
     }
 }
