@@ -55,8 +55,9 @@ import CoreData
 */
 
 struct ProjectEditFormView: View {
-    @ObservedObject var viewModel: ProjectEditViewModel
+    @ObservedObject var viewModel: ProjectAddEditViewModel
     @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         Form {
@@ -78,10 +79,13 @@ struct ProjectEditFormView: View {
     }
     
     private var patternNotesSection: some View {
-        Section(header: Text("Pattern Notes")) {
-            TextEditor(text: $viewModel.patternNotes)
-                .frame(height: 100)
-        }
+       Section(header: Text("Pattern Notes")) {
+           TextEditor(text: $viewModel.patternNotes)
+               .placeholder(when: viewModel.patternNotes.isEmpty) {
+                   Text("Add pattern notes").foregroundColor(.gray)
+               }
+               .frame(height: 100)
+       }
     }
     
     private var yarnSection: some View {
@@ -116,7 +120,7 @@ struct ProjectEditFormView_Previews: PreviewProvider {
        NavigationView {
            Previewing(\.sampleProjects) { projects in
                ProjectEditFormView(
-                   viewModel: ProjectEditViewModel(
+                   viewModel: ProjectAddEditViewModel(
                        project: projects[0],
                        viewContext: CoreDataManager.shared.container.viewContext
                    )

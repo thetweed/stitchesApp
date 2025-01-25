@@ -8,7 +8,12 @@ import SwiftUI
 import CoreData
 
 class ProjectListViewModel: ObservableObject {
-    @Published var showingAddProject = false
+    @Published var showingAddProject = false {
+            didSet {
+                print("showingAddProject didSet: \(showingAddProject)")  // Debug
+                objectWillChange.send()
+            }
+        }
     let viewContext: NSManagedObjectContext
     
     init(viewContext: NSManagedObjectContext) {

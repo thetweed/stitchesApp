@@ -9,8 +9,9 @@ import SwiftUI
 import CoreData
 
 struct ProjectListView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel: ProjectListViewModel
-    @FetchRequest private var projects: FetchedResults<Project>
+    @FetchRequest(sortDescriptors: []) private var projects: FetchedResults<Project>
     
     init(viewContext: NSManagedObjectContext) {
         let vm = ProjectListViewModel(viewContext: viewContext)
@@ -19,13 +20,43 @@ struct ProjectListView: View {
     }
     
     var body: some View {
-        NavigationView {
+/*        NavigationView {
             List {
-                ForEach(projects) { project in
+                ForEach(projects, id: \.safeID) { project in
                     NavigationLink(destination: ProjectDetailView(project: project)) {
                         ProjectRowView(project: project)
                     }
                 }
+            }
+            .navigationTitle("Knitting Projects")
+            .navigationBarItems(trailing:
+                                    Button(action: {
+                viewModel.toggleAddProject()
+            }) {
+                Label("Add Project", systemImage: "plus")
+            }
+            )
+            .sheet(isPresented: $viewModel.showingAddProject) {
+                let newProject = Project(context: viewContext)
+                
+                AddProjectFormView(
+                    viewModel: ProjectAddEditViewModel(
+                        project: newProject,
+                        viewContext: viewContext
+                    )
+                )
+                .environment(\.managedObjectContext, viewContext)
+            }
+        }
+    }
+}*/
+        NavigationView {
+            List {
+                ForEach(projects, id: \.safeID) { project in
+                           NavigationLink(destination: ProjectDetailView(project: project)) {
+                               ProjectRowView(project: project)
+                           }
+                       }
             }
             .navigationTitle("Knitting Projects")
             .toolbar {
@@ -39,9 +70,8 @@ struct ProjectListView: View {
                 AddProjectFormView(
                     viewModel: ProjectAddEditViewModel(
                         project: Project(context: viewContext),
-                        viewContext: viewContext
-                    )
-                )
+                        viewContext: viewContext))
+                .environment(\.managedObjectContext, viewContext)
             }
         }
     }
@@ -91,8 +121,9 @@ struct ProjectListView_Previews: PreviewProvider {
             }
         }
     }
-}
-/*
+}*/
+
+ /*
                 .onDelete(perform: deleteProjects)
  private func deleteProjects(offsets: IndexSet) {
         withAnimation {
@@ -103,9 +134,4 @@ struct ProjectListView_Previews: PreviewProvider {
             try? viewContext.save()
         }
     }*/
-*/
-
-//#Preview {
-//    ProjectListView()
-//}
 

@@ -40,7 +40,11 @@ extension Project {
     }
 }
 
-extension Project: Identifiable { }
+extension Project {
+    var safeID: NSManagedObjectID {
+        self.objectID
+    }
+}
 
 extension Project {
     @objc(addYarnsObject:)
@@ -48,6 +52,17 @@ extension Project {
     
     @objc(removeYarnsObject:)
     @NSManaged public func removeFromYarns(_ value: Yarn)
+}
+
+extension Project {
+    @objc var projectID: UUID {
+        get {
+            id
+        }
+        set {
+            id = newValue
+        }
+    }
 }
 
 // Project status types

@@ -11,31 +11,55 @@ import CoreData
 struct AddProjectFormView: View {
     @ObservedObject var viewModel: ProjectAddEditViewModel
     @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        Form {
-            projectDetailsSection
-            patternNotesSection
-            yarnSection
-        }
+        NavigationView {
+                    Form {
+                        projectDetailsSection
+                        patternNotesSection
+                        yarnSection
+                    }
+                    .navigationTitle("New Project")
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Cancel") {
+                                dismiss()
+                            }
+                        }
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Save") {
+                                viewModel.saveProject()
+                                dismiss()
+                            }
+                            .disabled(!viewModel.isValid)
+                        }
+                    }
+                }
     }
     
     private var projectDetailsSection: some View {
-        Section(header: Text("Project Details")) {
-            TextField("Project Name", text: $viewModel.name)
-            Picker("Status", selection: $viewModel.status) {
-                ForEach(viewModel.statuses, id: \.self) { Text($0) }
-            }
-            TextField("Current Row", value: $viewModel.currentRow, formatter: NumberFormatter())
-                .keyboardType(.numberPad)
-        }
+       Section(header: Text("Project Details")) {
+           TextField("Project Name", text: $viewModel.name)
+
+           Picker("Status", selection: $viewModel.status) {
+               ForEach(viewModel.statuses, id: \.self) { Text($0) }
+           }
+           TextField("Current Row", value: $viewModel.currentRow, formatter: NumberFormatter())
+               .keyboardType(.numberPad)
+       }
     }
     
     private var patternNotesSection: some View {
-        Section(header: Text("Pattern Notes")) {
-            TextEditor(text: $viewModel.patternNotes)
-                .frame(height: 100)
-        }
+       Section(header: Text("Pattern Notes")) {
+           TextEditor(text: $viewModel.patternNotes)
+               .placeholder(when: viewModel.patternNotes.isEmpty) {
+                   Text("Add pattern notes")
+                       .foregroundColor(.gray)
+                       .multilineTextAlignment(.center)
+               }
+               .frame(height: 100)
+       }
     }
     
     private var yarnSection: some View {
@@ -65,6 +89,20 @@ struct AddProjectFormView: View {
     }
 }
 
+struct AddProjectFormView_Previews: PreviewProvider {
+   static var previews: some View {
+       NavigationView {
+           Previewing(\.sampleProjects) { projects in
+               AddProjectFormView(
+                   viewModel: ProjectAddEditViewModel(
+                       project: projects[0],
+                       viewContext: CoreDataManager.shared.container.viewContext
+                   )
+               )
+           }
+       }
+   }
+}
 
 /*struct AddProjectFormView: View {
     @StateObject private var viewModel: AddProjectViewModel

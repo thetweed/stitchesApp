@@ -9,11 +9,11 @@ import SwiftUI
 import CoreData
 
 struct ProjectEditView: View {
-    @StateObject private var viewModel: ProjectEditViewModel
+    @StateObject private var viewModel: ProjectAddEditViewModel
     @Environment(\.dismiss) private var dismiss
     
     init(project: Project, viewContext: NSManagedObjectContext) {
-        _viewModel = StateObject(wrappedValue: ProjectEditViewModel(project: project, viewContext: viewContext))
+        _viewModel = StateObject(wrappedValue: ProjectAddEditViewModel(project: project, viewContext: viewContext))
     }
     
     var body: some View {
