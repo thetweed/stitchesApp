@@ -20,8 +20,7 @@ class Counter: NSManagedObject {
     @NSManaged public var lastModified: Date
 }
 
-extension Counter {
-    // Convenience initializer
+extension Counter: Identifiable {
     @discardableResult
     static func create(in context: NSManagedObjectContext,
                       name: String,
@@ -35,6 +34,5 @@ extension Counter {
         return counter
     }
     
-    // Counter types
     static let counterTypes = ["row", "stitch", "repeat"]
 }

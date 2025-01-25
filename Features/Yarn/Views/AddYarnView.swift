@@ -9,8 +9,12 @@ import SwiftUI
 import CoreData
 
 struct AddYarnView: View {
-    @StateObject private var viewModel: AddYarnViewModel
+    @StateObject var viewModel: AddYarnViewModel
     @Environment(\.dismiss) private var dismiss
+    
+    init(viewModel: AddYarnViewModel) {
+         _viewModel = StateObject(wrappedValue: viewModel)
+     }
     
     let context = CoreDataManager.shared.container.viewContext
     

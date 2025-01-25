@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreData
-
 // Project Entity
 class Project: NSManagedObject {
     @NSManaged public var id: UUID
@@ -23,13 +22,12 @@ class Project: NSManagedObject {
     @NSManaged public var counters: Set<Counter>?
  }
 
-extension Project: Identifiable {
-    // Convenience initializer
+extension Project {
     @discardableResult
     static func create(in context: NSManagedObjectContext,
-                      name: String,
-                      projectType: String,
-                      startDate: Date = Date()) -> Project {
+                       name: String,
+                       projectType: String,
+                       startDate: Date = Date()) -> Project {
         let project = Project(context: context)
         project.id = UUID()
         project.name = name
@@ -40,10 +38,20 @@ extension Project: Identifiable {
         project.lastModified = Date()
         return project
     }
-    
-    // Project status types
-    static let statusTypes = ["active", "completed", "paused for now"]
-    
-    // Project types
-    static let projectTypes = ["knitting", "crochet"]
 }
+
+extension Project: Identifiable { }
+
+extension Project {
+    @objc(addYarnsObject:)
+    @NSManaged public func addToYarns(_ value: Yarn)
+    
+    @objc(removeYarnsObject:)
+    @NSManaged public func removeFromYarns(_ value: Yarn)
+}
+
+// Project status types
+//static let statusTypes = ["active", "completed", "paused for now"]
+
+// Project types
+//static let projectTypes = ["knitting", "crochet"]

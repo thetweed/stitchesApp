@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct ProjectRowView: View {
-    let project: Project
+    @ObservedObject var project: Project
     
     var body: some View {
         VStack(alignment: .leading) {

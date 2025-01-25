@@ -87,6 +87,17 @@ struct ProjectDetailView: View {
     }
 }
 
+struct ProjectDetailView_Previews: PreviewProvider {
+   static let context = CoreDataManager.shared.container.viewContext
+   
+   static var previews: some View {
+       let sampleData = PreviewingData()
+       let projects = sampleData.sampleProjects(context)
+       return ProjectDetailView(project: projects[0])
+           .environment(\.managedObjectContext, context)
+   }
+}
+
 /*struct ProjectDetailView: View {
     @Environment(\.managedObjectContext) private var viewContext
 //    @ObservedObject var project: Project

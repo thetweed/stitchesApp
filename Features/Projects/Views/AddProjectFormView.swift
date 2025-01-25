@@ -9,11 +9,69 @@ import SwiftUI
 import CoreData
 
 struct AddProjectFormView: View {
+    @ObservedObject var viewModel: ProjectAddEditViewModel
+    @Environment(\.managedObjectContext) var viewContext
+    
+    var body: some View {
+        Form {
+            projectDetailsSection
+            patternNotesSection
+            yarnSection
+        }
+    }
+    
+    private var projectDetailsSection: some View {
+        Section(header: Text("Project Details")) {
+            TextField("Project Name", text: $viewModel.name)
+            Picker("Status", selection: $viewModel.status) {
+                ForEach(viewModel.statuses, id: \.self) { Text($0) }
+            }
+            TextField("Current Row", value: $viewModel.currentRow, formatter: NumberFormatter())
+                .keyboardType(.numberPad)
+        }
+    }
+    
+    private var patternNotesSection: some View {
+        Section(header: Text("Pattern Notes")) {
+            TextEditor(text: $viewModel.patternNotes)
+                .frame(height: 100)
+        }
+    }
+    
+    private var yarnSection: some View {
+        Section {
+            NavigationLink {
+                YarnSelectionView(selectedYarns: $viewModel.yarns, viewContext: viewContext)
+            } label: {
+                HStack {
+                    Text("Select Yarns")
+                    Spacer()
+                    Text("\(viewModel.yarns.count) selected")
+                        .foregroundColor(.gray)
+                }
+            }
+            
+            ForEach(viewModel.sortedYarns) { yarn in
+                YarnRowView(yarn: yarn)
+                    .swipeActions {
+                        Button(role: .destructive) {
+                            viewModel.removeYarn(yarn)
+                        } label: {
+                            Label("Remove", systemImage: "minus.circle")
+                        }
+                    }
+            }
+        }
+    }
+}
+
+
+/*struct AddProjectFormView: View {
     @StateObject private var viewModel: AddProjectViewModel
     @Environment(\.dismiss) private var dismiss
     
-    init(viewContext: NSManagedObjectContext) {
-        _viewModel = StateObject(wrappedValue: AddProjectViewModel(viewContext: viewContext))
+    init(project: Project, viewContext: NSManagedObjectContext) {
+        _viewModel = StateObject(wrappedValue: AddProjectViewModel(project: project, viewContext: viewContext))
     }
     
     var body: some View {
@@ -63,7 +121,7 @@ struct AddProjectFormView: View {
         }
     }
 }
-
+*/
 /*struct ProjectFormView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss

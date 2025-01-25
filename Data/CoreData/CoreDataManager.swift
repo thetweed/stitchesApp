@@ -10,13 +10,10 @@ import CoreData
 
 class CoreDataManager {
     
-    // Shared access for easy access throughout the app
     static let shared = CoreDataManager()
-    
-    // Persistent container
+
     let container = NSPersistentContainer(name: "stitchesApp")
-    
-    // Convenience accessor for view context
+
     var viewContext: NSManagedObjectContext {
             container.viewContext
         }
@@ -32,8 +29,7 @@ class CoreDataManager {
                 }
             }
         }
-
-    // Initialize the persistent container
+    
     private init() {
         
         container.loadPersistentStores { description, error in
@@ -41,11 +37,7 @@ class CoreDataManager {
                 fatalError("Error loading Core Data: \(error.localizedDescription)")
             }
         }
-        
-        // Enable automatic merging of changes
         container.viewContext.automaticallyMergesChangesFromParent = true
-        
-        // If a conflict occurs, let the latest version win
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 
     }

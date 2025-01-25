@@ -19,13 +19,11 @@ class Yarn: NSManagedObject {
     @NSManaged public var totalYardage: Double
     @NSManaged public var usedYardage: Double
     @NSManaged public var purchaseDate: Date?
-    @NSManaged public var price: Decimal
     @NSManaged public var projects: Set<Project>?
     @NSManaged public var photoData: Data?
 }
 
-extension Yarn {
-    // Convenience initializer
+extension Yarn: Identifiable {
     @discardableResult
     static func create(in context: NSManagedObjectContext,
                       brand: String,
@@ -41,18 +39,23 @@ extension Yarn {
         yarn.fiberContent = fiberContent
         yarn.totalYardage = totalYardage
         yarn.usedYardage = 0
-        yarn.price = 0
         return yarn
     }
     
-    // Yarn weight categories
     static let weightCategories = [
         "Lace", "Super Fine", "Fine", "Light", "Medium",
         "Bulky", "Super Bulky", "Jumbo"
     ]
     
-    // Computed property for remaining yardage
     var remainingYardage: Double {
         return totalYardage - usedYardage
     }
+}
+
+extension Yarn {
+    @objc(addProjectsObject:)
+    @NSManaged public func addToProjects(_ value: Project)
+    
+    @objc(removeProjectsObject:)
+    @NSManaged public func removeFromProjects(_ value: Project)
 }

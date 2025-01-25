@@ -23,7 +23,7 @@ struct YarnSelectionView: View {
     var body: some View {
         List {
             ForEach(yarns, id: \.id) { yarn in
-                HStack{
+                HStack {
                     Text(yarn.colorName)
                     Spacer()
                     if viewModel.selectedYarns.contains(yarn) {
@@ -33,47 +33,25 @@ struct YarnSelectionView: View {
                 .contentShape(Rectangle())
                 .onTapGesture {
                     viewModel.toggleSelection(for: yarn)
+                    selectedYarns = viewModel.selectedYarns
                 }
             }
         }
     }
 }
 
-/*
-struct YarnSelectionView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    @Binding var selectedYarns: Set<Yarn>
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Yarn.colorName, ascending: true)],
-        animation: .default)
-    private var yarns: FetchedResults<Yarn>
-    
-    var body: some View {
-        List {
-            ForEach(yarns, id: \.objectID) { yarn in
-                HStack {
-                    Text(yarn.colorName)
-                    Spacer()
-                    if selectedYarns.contains(yarn) {
-                        Image(systemName: "checkmark")
-                    }
-                }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    if selectedYarns.contains(yarn) {
-                        selectedYarns.remove(yarn)
-                    } else {
-                        selectedYarns.insert(yarn)
-                    }
-                }
-            }
+struct YarnSelectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        let context = CoreDataManager.shared.container.viewContext
+        let previewData = PreviewingData()
+        let sampleYarns = previewData.sampleYarns(context)
+        
+        NavigationView {
+            YarnSelectionView(
+                selectedYarns: .constant(Set(sampleYarns.prefix(2))),
+                viewContext: context
+            )
         }
-        .navigationTitle("Select Yarns")
+        .environment(\.managedObjectContext, context)
     }
 }
- */
-
-//#Preview {
-  //  YarnSelectionView()
-//}
-

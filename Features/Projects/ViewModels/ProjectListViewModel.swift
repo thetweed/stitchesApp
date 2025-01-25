@@ -13,6 +13,11 @@ class ProjectListViewModel: ObservableObject {
     
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(managedObjectContextObjectsDidChange),
+            name: .NSManagedObjectContextObjectsDidChange,
+            object: viewContext)
     }
     
     func projectFetchRequest() -> NSFetchRequest<Project> {
@@ -20,6 +25,10 @@ class ProjectListViewModel: ObservableObject {
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Project.name, ascending: true)]
         request.predicate = NSPredicate(format: "deleted == NO")
         return request
+    }
+    
+    @objc private func managedObjectContextObjectsDidChange() {
+        objectWillChange.send()
     }
     
     func toggleAddProject() {

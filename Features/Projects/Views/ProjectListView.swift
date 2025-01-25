@@ -36,12 +36,27 @@ struct ProjectListView: View {
                 }
             }
             .sheet(isPresented: $viewModel.showingAddProject) {
-                AddProjectFormView(viewContext: viewModel.viewContext)
+                AddProjectFormView(
+                    viewModel: ProjectAddEditViewModel(
+                        project: Project(context: viewContext),
+                        viewContext: viewContext
+                    )
+                )
             }
         }
     }
 }
 
+struct ProjectListView_Previews: PreviewProvider {
+    static let context = CoreDataManager.shared.container.viewContext
+    
+    static var previews: some View {
+        let sampleData = PreviewingData()
+        let _ = sampleData.sampleProjects(context)
+        return ProjectListView(viewContext: context)
+            .environment(\.managedObjectContext, context)
+    }
+}
 
 /*struct ProjectListView: View {
     @Environment(\.managedObjectContext) private var viewContext

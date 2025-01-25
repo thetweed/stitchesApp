@@ -20,6 +20,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="patternNotes" optional="YES" attributeType="String"/>
         <attribute name="photoData" optional="YES" attributeType="Binary"/>
+        <attribute name="projectType" attributeType="String" defaultValueString="Crochet"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="status" optional="YES" attributeType="String"/>
         <attribute name="yarns" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -30,11 +31,10 @@
         <attribute name="brand" optional="YES" attributeType="String"/>
         <attribute name="colorName" optional="YES" attributeType="String"/>
         <attribute name="colorNumber" optional="YES" attributeType="String"/>
-        <attribute name="deleted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="deleted" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="fiberContent" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="photoData" optional="YES" attributeType="Binary"/>
-        <attribute name="price" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="projects" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="purchaseDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="totalYardage" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>

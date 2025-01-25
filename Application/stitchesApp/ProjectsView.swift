@@ -10,7 +10,7 @@ import CoreData
 
 struct ProjectsView: View {
     var body: some View{
-        ProjectListView(viewContext: <#NSManagedObjectContext#>)
+        Text("Projects")
         }
     }
 
