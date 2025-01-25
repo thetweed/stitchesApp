@@ -22,7 +22,7 @@
         <attribute name="photoData" optional="YES" attributeType="Binary"/>
         <attribute name="projectType" attributeType="String" defaultValueString="Crochet"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="status" optional="YES" attributeType="String"/>
+        <attribute name="status" optional="YES" attributeType="String" defaultValueString="Not Started"/>
         <attribute name="yarns" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="projectCounter" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Counter" inverseName="counterProject" inverseEntity="Counter"/>
         <relationship name="projectYarn" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Yarn" inverseName="yarnProject" inverseEntity="Yarn"/>

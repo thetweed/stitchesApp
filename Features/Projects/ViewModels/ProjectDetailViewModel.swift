@@ -41,7 +41,15 @@ class ProjectDetailViewModel: ObservableObject {
         return !yarns.isEmpty
     }
     
-    var yarns: [Yarn] {
-        Array(project.yarns ?? Set())
+    var yarns: Set<Yarn> {
+        project.yarns ?? Set()
+    }
+    
+    var sortedYarns: [Yarn] {
+        yarns.sorted { $0.colorName < $1.colorName }
+    }
+    
+    func removeYarn(_ yarn: Yarn) {
+        project.yarns?.remove(yarn)
     }
 }

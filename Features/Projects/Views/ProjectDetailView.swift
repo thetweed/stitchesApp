@@ -9,10 +9,12 @@ import SwiftUI
 import CoreData
 
 struct ProjectDetailView: View {
+    let project: Project
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel: ProjectDetailViewModel
     
     init(project: Project) {
+        self.project = project
         _viewModel = StateObject(wrappedValue: ProjectDetailViewModel(project: project))
     }
     
@@ -67,6 +69,19 @@ struct ProjectDetailView: View {
     }
     
     private var yarnsSection: some View {
+        Section(header: Text("Yarns")) {
+            if viewModel.yarns.isEmpty {
+                Text("No yarns added")
+                    .foregroundColor(.secondary)
+            } else {
+                ForEach(viewModel.sortedYarns) { yarn in
+                    YarnRowView(yarn: yarn)
+                }
+            }
+        }
+    }
+    
+/*    private var yarnsSection: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Yarns")
                 .font(.headline)
@@ -84,7 +99,39 @@ struct ProjectDetailView: View {
                     .cornerRadius(8)
             }
         }
-    }
+    }*/
+    
+/*    private var yarnsSection: some View {
+        List {
+            NavigationLink {
+                YarnSelectionView(
+                        selectedYarns: Binding(
+                            get: { self.project.yarns ?? Set() },
+                            set: { self.project.yarns = $0 }
+                        ),
+                        viewContext: viewContext
+                    )
+            } label: {
+                HStack {
+                    Text("Select Yarns")
+                    Spacer()
+                    Text("\(viewModel.yarns.count) selected")
+                        .foregroundColor(.gray)
+                }
+            }
+            
+            ForEach(viewModel.sortedYarns) { yarn in
+                YarnRowView(yarn: yarn)
+                    .swipeActions {
+                        Button(role: .destructive) {
+                            viewModel.removeYarn(yarn)
+                        } label: {
+                            Label("Remove", systemImage: "minus.circle")
+                        }
+                    }
+            }
+        }
+    }*/
 }
 
 struct ProjectDetailView_Previews: PreviewProvider {
@@ -175,7 +222,4 @@ struct ProjectDetailView_Previews: PreviewProvider {
      }
 }*/
 
-//#Preview {
- //   ProjectDetailView(project: <#Project#>)
-//}
 

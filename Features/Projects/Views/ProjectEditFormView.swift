@@ -115,7 +115,7 @@ struct ProjectEditFormView: View {
     }
 }
 
-struct ProjectEditFormView_Previews: PreviewProvider {
+/*struct ProjectEditFormView_Previews: PreviewProvider {
    static var previews: some View {
        NavigationView {
            Previewing(\.sampleProjects) { projects in
@@ -129,3 +129,4 @@ struct ProjectEditFormView_Previews: PreviewProvider {
        }
    }
 }
+*/

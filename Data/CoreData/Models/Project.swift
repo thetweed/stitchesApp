@@ -13,13 +13,15 @@ class Project: NSManagedObject {
     @NSManaged public var name: String
     @NSManaged public var projectType: String // "knitting" or "crochet"
     @NSManaged public var startDate: Date
-    @NSManaged public var status: String // "active", "completed", "paused for now"
+    @NSManaged public var status: String // "Not Started, In Progress, Completed, Frogged"
     @NSManaged public var patternNotes: String?
     @NSManaged public var currentRow: Int32
     @NSManaged public var photoData: Data?
     @NSManaged public var lastModified: Date
     @NSManaged public var yarns: Set<Yarn>?
     @NSManaged public var counters: Set<Counter>?
+    
+    let statuses = ["Not Started", "In Progress", "Completed", "Frogged"]
  }
 
 extension Project {

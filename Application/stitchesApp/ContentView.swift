@@ -72,6 +72,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let sampleData = PreviewingData()
         let _ = sampleData.sampleProjects(context)
+        let _ = sampleData.sampleYarns(context)
         return ContentView()
             .environment(\.managedObjectContext, context)
     }

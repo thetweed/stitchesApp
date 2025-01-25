@@ -46,10 +46,8 @@ class ProjectAddEditViewModel: ObservableObject {
         project.currentRow = currentRow
         project.lastModified = Date()
         
-        // Remove all existing yarns
         project.yarns?.forEach { project.removeFromYarns($0) }
-        
-        // Add new yarns
+
         yarns.forEach { project.addToYarns($0) }
         
         try? viewContext.save()
@@ -64,6 +62,10 @@ class ProjectAddEditViewModel: ObservableObject {
         project.currentRow = currentRow
         project.startDate = Date()
         project.lastModified = Date()
+        
+        project.yarns?.forEach { project.removeFromYarns($0) }
+
+        yarns.forEach { project.addToYarns($0) }
         
         try? viewContext.save()
     }
