@@ -9,47 +9,62 @@ import SwiftUI
 import CoreData
 
 struct YarnInventoryView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel: YarnInventoryViewModel
-    @FetchRequest private var yarns: FetchedResults<Yarn>
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \Yarn.colorName, ascending: true)],
+        predicate: NSPredicate(format: "deleted == NO"),
+        animation: .default
+    ) private var yarns: FetchedResults<Yarn>
     
     init(viewContext: NSManagedObjectContext) {
         let vm = YarnInventoryViewModel(viewContext: viewContext)
         _viewModel = StateObject(wrappedValue: vm)
-        _yarns = FetchRequest(fetchRequest: vm.yarnFetchRequest())
     }
     
     var body: some View {
-            NavigationView {
-                List {
-                    ForEach(yarns) { yarn in
+        NavigationStack {
+            List {
+                ForEach(yarns, id: \.safeID) { yarn in
+                    NavigationLink(value: yarn.safeID) {
                         YarnRowView(yarn: yarn)
                     }
-                    .onDelete(perform: deleteYarn)
                 }
-                .navigationTitle("Yarn Inventory")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: viewModel.toggleAddProject) {
-                            Label("New Yarn", systemImage: "plus")
-                        }
+                .onDelete(perform: deleteYarn)
+            }
+            .navigationTitle("Yarn Inventory")
+            .navigationDestination(for: NSManagedObjectID.self) { yarnID in
+                if let yarn = try? viewContext.existingObject(with: yarnID) as? Yarn {
+                    YarnDetailView(yarn: yarn)
+                        .environment(\.managedObjectContext, viewContext)
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: viewModel.toggleAddProject) {
+                        Label("New Yarn", systemImage: "plus")
                     }
                 }
-                .sheet(isPresented: $viewModel.showingAddYarn) {
-                    AddYarnView(viewModel: AddYarnViewModel(viewContext: viewModel.viewContext))
-                }
+            }
+            .sheet(isPresented: $viewModel.showingAddYarn) {
+                AddYarnView(viewModel: AddYarnViewModel(viewContext: viewModel.viewContext))
             }
         }
-        
+        .environment(\.managedObjectContext, viewContext)
+    }
+    
     private func deleteYarn(at offsets: IndexSet) {
-        viewModel.viewContext.performAndWait {
+        viewContext.performAndWait {
             for index in offsets {
                 let yarn = yarns[index]
-                viewModel.viewContext.delete(yarn)
+                viewContext.delete(yarn)
             }
-            try? viewModel.viewContext.save()
+            try? viewContext.save()
         }
     }
 }
+
+
 
 #Preview {
     Previewing(\.sampleYarns) { _ in

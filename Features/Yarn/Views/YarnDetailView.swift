@@ -11,8 +11,10 @@ import CoreData
 struct YarnDetailView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel: YarnDetailViewModel
+    @ObservedObject var yarn: Yarn
     
     init(yarn: Yarn) {
+        self.yarn = yarn
         _viewModel = StateObject(wrappedValue: YarnDetailViewModel(yarn: yarn))
     }
     
@@ -41,8 +43,15 @@ struct YarnDetailView: View {
             }
         }
         .sheet(isPresented: $viewModel.showingEditSheet) {
-            // Replace with your actual YarnEditView when available
-            Text("Yarn Edit View Placeholder")
+            NavigationView {
+                EditYarnView(viewModel: EditYarnViewModel(yarn: yarn))
+                    .environment(\.managedObjectContext, viewContext)
+            }
+        }
+        .onDisappear {
+            if let context = viewModel.yarn.managedObjectContext {
+                try? context.save()
+            }
         }
     }
     
@@ -104,7 +113,22 @@ struct YarnDetailView_Previews: PreviewProvider {
     static var previews: some View {
         let sampleData = PreviewingData()
         let yarns = sampleData.sampleYarns(context)
-        return YarnDetailView(yarn: yarns[0])
+        
+        Group {
+            NavigationStack {
+                YarnDetailView(yarn: yarns[0])
+                    .environment(\.managedObjectContext, context)
+            }
+            
+            YarnInventoryView(viewContext: context)
+                .environment(\.managedObjectContext, context)
+        }
+    }
+}
+extension YarnDetailView_Previews {
+    static var inventoryPreview: some View {
+        YarnInventoryView(viewContext: context)
             .environment(\.managedObjectContext, context)
     }
 }
+

@@ -10,10 +10,6 @@ import CoreData
 
 struct CountersView: View {
     var body: some View{
-        /*NavigationView {
-         Text("Counters")
-         .navigationTitle("My Counters")
-         }*/
         StitchCounterView(context: CoreDataManager.shared.container.viewContext)
     }
 }

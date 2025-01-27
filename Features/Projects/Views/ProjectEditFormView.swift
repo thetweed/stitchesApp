@@ -8,52 +8,6 @@
 import SwiftUI
 import CoreData
 
-/*struct ProjectEditFormView: View {
-    @ObservedObject var viewModel: ProjectEditViewModel
-    @Environment(\.managedObjectContext) var viewContext
-    
-    private var yarnNavigationLabel: some View {
-        HStack {
-            Text("Select Yarns")
-            Spacer()
-            Text("\(viewModel.yarns.count) selected")
-                .foregroundColor(.gray)
-        }
-    }
-    
-    var body: some View {
-        Form {
-            Section(header: Text("Project Details")) {
-                TextField("Project Name", text: $viewModel.name)
-                Picker("Status", selection: $viewModel.status) {
-                    ForEach(viewModel.statuses, id: \.self) { status in
-                        Text(status)
-                    }
-                }
-                TextField("Current Row", value: $viewModel.currentRow, formatter: NumberFormatter())
-                    .keyboardType(.numberPad)
-            }
-            
-            Section(header: Text("Pattern Notes")) {
-                TextEditor(text: $viewModel.patternNotes)
-                    .frame(height: 100)
-            }
-            
-            Section {
-                NavigationLink(
-                    destination: YarnSelectionView(selectedYarns: $viewModel.yarns, viewContext: viewContext),
-                    label: { yarnNavigationLabel }
-                )
-                
-                ForEach(viewModel.sortedYarns, id: \.objectID) { yarn in
-                    Text(yarn.colorName)
-                }
-            }
-        }
-    }
-}
-*/
-
 struct ProjectEditFormView: View {
     @ObservedObject var viewModel: ProjectAddEditViewModel
     @Environment(\.managedObjectContext) var viewContext
@@ -101,7 +55,7 @@ struct ProjectEditFormView: View {
                 }
             }
             
-            ForEach(viewModel.sortedYarns) { yarn in
+            ForEach(viewModel.sortedYarns, id: \.safeID) { yarn in
                 YarnRowView(yarn: yarn)
                     .swipeActions {
                         Button(role: .destructive) {
@@ -115,7 +69,7 @@ struct ProjectEditFormView: View {
     }
 }
 
-/*struct ProjectEditFormView_Previews: PreviewProvider {
+struct ProjectEditFormView_Previews: PreviewProvider {
    static var previews: some View {
        NavigationView {
            Previewing(\.sampleProjects) { projects in
@@ -128,5 +82,51 @@ struct ProjectEditFormView: View {
            }
        }
    }
+}
+
+
+/*struct ProjectEditFormView: View {
+    @ObservedObject var viewModel: ProjectEditViewModel
+    @Environment(\.managedObjectContext) var viewContext
+    
+    private var yarnNavigationLabel: some View {
+        HStack {
+            Text("Select Yarns")
+            Spacer()
+            Text("\(viewModel.yarns.count) selected")
+                .foregroundColor(.gray)
+        }
+    }
+    
+    var body: some View {
+        Form {
+            Section(header: Text("Project Details")) {
+                TextField("Project Name", text: $viewModel.name)
+                Picker("Status", selection: $viewModel.status) {
+                    ForEach(viewModel.statuses, id: \.self) { status in
+                        Text(status)
+                    }
+                }
+                TextField("Current Row", value: $viewModel.currentRow, formatter: NumberFormatter())
+                    .keyboardType(.numberPad)
+            }
+            
+            Section(header: Text("Pattern Notes")) {
+                TextEditor(text: $viewModel.patternNotes)
+                    .frame(height: 100)
+            }
+            
+            Section {
+                NavigationLink(
+                    destination: YarnSelectionView(selectedYarns: $viewModel.yarns, viewContext: viewContext),
+                    label: { yarnNavigationLabel }
+                )
+                
+                ForEach(viewModel.sortedYarns, id: \.objectID) { yarn in
+                    Text(yarn.colorName)
+                }
+            }
+        }
+    }
 }
 */

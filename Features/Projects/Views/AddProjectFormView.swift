@@ -14,30 +14,31 @@ struct AddProjectFormView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        NavigationView {
-                    Form {
-                        projectDetailsSection
-                        patternNotesSection
-                        yarnSection
+            NavigationStack {
+                Form {
+                    projectDetailsSection
+                    patternNotesSection
+                    yarnSection
+                }
+                .navigationTitle("New Project")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button("Cancel") {
+                            dismiss()
+                        }
                     }
-                    .navigationTitle("New Project")
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Cancel") {
-                                dismiss()
-                            }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Save") {
+                            viewModel.saveProject()
+                            dismiss()
                         }
-                        ToolbarItem(placement: .confirmationAction) {
-                            Button("Save") {
-                                viewModel.saveProject()
-                                dismiss()
-                            }
-                            .disabled(!viewModel.isValid)
-                        }
+                        .disabled(!viewModel.isValid)
                     }
                 }
-    }
-    
+            }
+        }
+
     private var projectDetailsSection: some View {
        Section(header: Text("Project Details")) {
            TextField("Project Name", text: $viewModel.name)
@@ -75,7 +76,7 @@ struct AddProjectFormView: View {
                 }
             }
             
-            ForEach(viewModel.sortedYarns) { yarn in
+            ForEach(viewModel.sortedYarns, id: \.safeID) { yarn in
                 YarnRowView(yarn: yarn)
                     .swipeActions {
                         Button(role: .destructive) {
@@ -103,6 +104,58 @@ struct AddProjectFormView_Previews: PreviewProvider {
        }
    }
 }
+
+/*struct AddProjectFormView: View {
+    @ObservedObject var viewModel: ProjectAddEditViewModel
+    @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.dismiss) var dismiss
+    
+    var body: some View {
+        NavigationStack {
+                    Form {
+                        projectDetailsSection
+                        patternNotesSection
+                        yarnSection
+                    }
+                    .navigationTitle("New Project")
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Cancel") {
+                                dismiss()
+                            }
+                        }
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Save") {
+                                viewModel.saveProject()
+                                dismiss()
+                            }
+                            .disabled(!viewModel.isValid)
+                        }
+                    }
+                }
+    }*/
+/*var body: some View {
+    Form {
+        projectDetailsSection
+        patternNotesSection
+        yarnSection
+    }
+    .navigationTitle("New Project")
+    .toolbar {
+        ToolbarItem(placement: .cancellationAction) {
+            Button("Cancel") {
+                dismiss()
+            }
+        }
+        ToolbarItem(placement: .confirmationAction) {
+            Button("Save") {
+                viewModel.saveProject()
+                dismiss()
+            }
+            .disabled(!viewModel.isValid)
+        }
+    }
+}*/
 
 /*struct AddProjectFormView: View {
     @StateObject private var viewModel: AddProjectViewModel

@@ -48,10 +48,6 @@ struct ContentView: View {
 
 struct HomeView: View {
     var body: some View{
-        /*NavigationView {
-            Text("Home")
-                .navigationTitle("Home")
-        }*/
         VStack {
             Text("StitchCounter")
                 .padding(.top, 50)

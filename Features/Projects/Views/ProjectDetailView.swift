@@ -74,76 +74,78 @@ struct ProjectDetailView: View {
                 Text("No yarns added")
                     .foregroundColor(.secondary)
             } else {
-                ForEach(viewModel.sortedYarns) { yarn in
+                ForEach(viewModel.sortedYarns, id: \.safeID) { yarn in
                     YarnRowView(yarn: yarn)
                 }
             }
         }
     }
-    
-/*    private var yarnsSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Yarns")
-                .font(.headline)
-            if viewModel.hasYarns {
-                ForEach(viewModel.yarns, id: \.self) { yarn in
-                    Text(yarn.colorName)
-                        .padding()
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(8)
-                }
-            } else {
-                Text("No yarns added")
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(8)
-            }
-        }
-    }*/
-    
-/*    private var yarnsSection: some View {
-        List {
-            NavigationLink {
-                YarnSelectionView(
-                        selectedYarns: Binding(
-                            get: { self.project.yarns ?? Set() },
-                            set: { self.project.yarns = $0 }
-                        ),
-                        viewContext: viewContext
-                    )
-            } label: {
-                HStack {
-                    Text("Select Yarns")
-                    Spacer()
-                    Text("\(viewModel.yarns.count) selected")
-                        .foregroundColor(.gray)
-                }
-            }
-            
-            ForEach(viewModel.sortedYarns) { yarn in
-                YarnRowView(yarn: yarn)
-                    .swipeActions {
-                        Button(role: .destructive) {
-                            viewModel.removeYarn(yarn)
-                        } label: {
-                            Label("Remove", systemImage: "minus.circle")
-                        }
-                    }
-            }
-        }
-    }*/
 }
 
 struct ProjectDetailView_Previews: PreviewProvider {
    static let context = CoreDataManager.shared.container.viewContext
    
-   static var previews: some View {
-       let sampleData = PreviewingData()
-       let projects = sampleData.sampleProjects(context)
-       return ProjectDetailView(project: projects[0])
-           .environment(\.managedObjectContext, context)
-   }
+    static var previews: some View {
+        let sampleData = PreviewingData()
+        let projects = sampleData.sampleProjects(context)
+        return NavigationStack {
+            ProjectDetailView(project: projects[0])
+                .environment(\.managedObjectContext, context)
+        }
+    }
 }
+
+/*    private var yarnsSection: some View {
+    VStack(alignment: .leading, spacing: 8) {
+        Text("Yarns")
+            .font(.headline)
+        if viewModel.hasYarns {
+            ForEach(viewModel.yarns, id: \.self) { yarn in
+                Text(yarn.colorName)
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(8)
+            }
+        } else {
+            Text("No yarns added")
+                .padding()
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(8)
+        }
+    }
+}*/
+
+/*    private var yarnsSection: some View {
+    List {
+        NavigationLink {
+            YarnSelectionView(
+                    selectedYarns: Binding(
+                        get: { self.project.yarns ?? Set() },
+                        set: { self.project.yarns = $0 }
+                    ),
+                    viewContext: viewContext
+                )
+        } label: {
+            HStack {
+                Text("Select Yarns")
+                Spacer()
+                Text("\(viewModel.yarns.count) selected")
+                    .foregroundColor(.gray)
+            }
+        }
+        
+        ForEach(viewModel.sortedYarns) { yarn in
+            YarnRowView(yarn: yarn)
+                .swipeActions {
+                    Button(role: .destructive) {
+                        viewModel.removeYarn(yarn)
+                    } label: {
+                        Label("Remove", systemImage: "minus.circle")
+                    }
+                }
+        }
+    }
+}*/
 
 /*struct ProjectDetailView: View {
     @Environment(\.managedObjectContext) private var viewContext

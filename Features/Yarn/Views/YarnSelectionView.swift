@@ -22,7 +22,7 @@ struct YarnSelectionView: View {
     
     var body: some View {
         List {
-            ForEach(yarns, id: \.id) { yarn in
+            ForEach(yarns, id: \.safeID) { yarn in
                 HStack {
                     Text(yarn.colorName)
                     Spacer()
@@ -46,7 +46,7 @@ struct YarnSelectionView_Previews: PreviewProvider {
         let previewData = PreviewingData()
         let sampleYarns = previewData.sampleYarns(context)
         
-        NavigationView {
+        NavigationStack {
             YarnSelectionView(
                 selectedYarns: .constant(Set(sampleYarns.prefix(2))),
                 viewContext: context

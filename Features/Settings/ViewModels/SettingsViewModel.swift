@@ -20,7 +20,6 @@ class SettingsViewModel: ObservableObject {
     @Published var showMeasurementSystem: Bool = false
  */
     
-//settings options
     enum AppTheme: String, CaseIterable {
         case light
         case dark
@@ -36,8 +35,6 @@ class SettingsViewModel: ObservableObject {
         case metric
         case imperial
     }
-    
-//setting defaults/storing changes to settings options
     
     @UserDefaultsStorage(key: "AppTheme", defaultValue: .system)
     var appTheme: AppTheme {
@@ -126,7 +123,6 @@ class SettingsViewModel: ObservableObject {
     }
 }
 
-//allows saving user choices for defaults
 @propertyWrapper
 struct UserDefaultsStorage<T: RawRepresentable> where T.RawValue == String {
     let key: String

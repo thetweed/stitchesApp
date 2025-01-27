@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct YarnRowView: View {
-    let yarn: Yarn
+    @ObservedObject var yarn: Yarn
     
     var body: some View {
         VStack(alignment: .leading) {

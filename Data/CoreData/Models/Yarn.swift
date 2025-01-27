@@ -8,7 +8,6 @@
 import Foundation
 import CoreData
 
-// Yarn Entity
 class Yarn: NSManagedObject {
     @NSManaged public var id: UUID
     @NSManaged public var brand: String
@@ -23,7 +22,7 @@ class Yarn: NSManagedObject {
     @NSManaged public var photoData: Data?
 }
 
-extension Yarn: Identifiable {
+extension Yarn {
     @discardableResult
     static func create(in context: NSManagedObjectContext,
                       brand: String,
@@ -58,4 +57,21 @@ extension Yarn {
     
     @objc(removeProjectsObject:)
     @NSManaged public func removeFromProjects(_ value: Project)
+}
+
+extension Yarn {
+    @objc var yarnID: UUID {
+        get {
+            id
+        }
+        set {
+            id = newValue
+        }
+    }
+}
+
+extension Yarn {
+    var safeID: NSManagedObjectID {
+        self.objectID
+    }
 }

@@ -31,6 +31,7 @@
 		5B0637F32D44AD12001D35E2 /* YarnDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637F22D44AD10001D35E2 /* YarnDetailView.swift */; };
 		5B0637FB2D44CDAD001D35E2 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637FA2D44CDA6001D35E2 /* View.swift */; };
 		5B0637FD2D44DD62001D35E2 /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637FC2D44DD5B001D35E2 /* AlbumView.swift */; };
+		5B06380B2D46F7C2001D35E2 /* AddProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B06380A2D46F7BD001D35E2 /* AddProjectView.swift */; };
 		5B1D8F522D13774100297376 /* stitchesAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1D8F512D13774100297376 /* stitchesAppApp.swift */; };
 		5B1D8F542D13774100297376 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1D8F532D13774100297376 /* ContentView.swift */; };
 		5B1D8F592D13774200297376 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B1D8F582D13774200297376 /* Preview Assets.xcassets */; };
@@ -49,6 +50,7 @@
 		5B37E50A2D384D36005A3031 /* ProjectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B37E5092D384D36005A3031 /* ProjectsView.swift */; };
 		5B37E50C2D384D6C005A3031 /* CountersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B37E50B2D384D6C005A3031 /* CountersView.swift */; };
 		5B37E50E2D384DAE005A3031 /* YarnbookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B37E50D2D384DAE005A3031 /* YarnbookView.swift */; };
+		5B4305602D48417C0038D6C7 /* TestYarnListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43055F2D4841790038D6C7 /* TestYarnListView.swift */; };
 		5B6242A22D385EC2008DE40D /* BasicStitchCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6242A12D385EC2008DE40D /* BasicStitchCounterViewModel.swift */; };
 		5B6242A42D3860CB008DE40D /* BasicStitchCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6242A32D3860CB008DE40D /* BasicStitchCounterView.swift */; };
 /* End PBXBuildFile section */
@@ -95,6 +97,7 @@
 		5B0637F22D44AD10001D35E2 /* YarnDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YarnDetailView.swift; sourceTree = "<group>"; };
 		5B0637FA2D44CDA6001D35E2 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		5B0637FC2D44DD5B001D35E2 /* AlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumView.swift; sourceTree = "<group>"; };
+		5B06380A2D46F7BD001D35E2 /* AddProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectView.swift; sourceTree = "<group>"; };
 		5B1D8F4E2D13774100297376 /* stitchesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stitchesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B1D8F512D13774100297376 /* stitchesAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stitchesAppApp.swift; sourceTree = "<group>"; };
 		5B1D8F532D13774100297376 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -116,6 +119,7 @@
 		5B37E5092D384D36005A3031 /* ProjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsView.swift; sourceTree = "<group>"; };
 		5B37E50B2D384D6C005A3031 /* CountersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountersView.swift; sourceTree = "<group>"; };
 		5B37E50D2D384DAE005A3031 /* YarnbookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YarnbookView.swift; sourceTree = "<group>"; };
+		5B43055F2D4841790038D6C7 /* TestYarnListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestYarnListView.swift; sourceTree = "<group>"; };
 		5B6242A12D385EC2008DE40D /* BasicStitchCounterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStitchCounterViewModel.swift; sourceTree = "<group>"; };
 		5B6242A32D3860CB008DE40D /* BasicStitchCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStitchCounterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -267,6 +271,7 @@
 		5B37E4EC2D138276005A3031 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B43055F2D4841790038D6C7 /* TestYarnListView.swift */,
 				5B0637F22D44AD10001D35E2 /* YarnDetailView.swift */,
 				5B0637BE2D4438A0001D35E2 /* YarnRowView.swift */,
 				5B0637B62D442B89001D35E2 /* YarnInventoryView.swift */,
@@ -308,6 +313,7 @@
 		5B37E4F02D138291005A3031 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B06380A2D46F7BD001D35E2 /* AddProjectView.swift */,
 				5B0637AD2D430E05001D35E2 /* ProjectEditFormView.swift */,
 				5B06374E2D3AFB2B001D35E2 /* ProjectEditView.swift */,
 				5B06374C2D3AFB21001D35E2 /* ProjectDetailView.swift */,
@@ -632,6 +638,7 @@
 				5B37E50E2D384DAE005A3031 /* YarnbookView.swift in Sources */,
 				5B0637A62D4305C8001D35E2 /* AddYarnView.swift in Sources */,
 				5B1D8F522D13774100297376 /* stitchesAppApp.swift in Sources */,
+				5B06380B2D46F7C2001D35E2 /* AddProjectView.swift in Sources */,
 				5B0637B02D431130001D35E2 /* ProjectListViewModel.swift in Sources */,
 				5B0637422D3AFAD9001D35E2 /* ProjectDetailViewModel.swift in Sources */,
 				5B37E4FC2D372D01005A3031 /* Yarn.swift in Sources */,
@@ -640,6 +647,7 @@
 				5B37E50C2D384D6C005A3031 /* CountersView.swift in Sources */,
 				5B37E5002D3730E4005A3031 /* CoreDataManager.swift in Sources */,
 				5B0637FB2D44CDAD001D35E2 /* View.swift in Sources */,
+				5B4305602D48417C0038D6C7 /* TestYarnListView.swift in Sources */,
 				5B37E4FE2D372D0B005A3031 /* Counter.swift in Sources */,
 				5B6242A22D385EC2008DE40D /* BasicStitchCounterViewModel.swift in Sources */,
 				5B0637512D419CD0001D35E2 /* YarnSelectionView.swift in Sources */,

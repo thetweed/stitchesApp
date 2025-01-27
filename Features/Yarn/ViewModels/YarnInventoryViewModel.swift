@@ -8,20 +8,19 @@
 import SwiftUI
 import CoreData
 
-
 class YarnInventoryViewModel: ObservableObject {
     @Published var showingAddYarn = false
     let viewContext: NSManagedObjectContext
     
+    var yarns: FetchRequest<Yarn>
+    
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
-    }
-    
-    func yarnFetchRequest() -> NSFetchRequest<Yarn> {
-        let request: NSFetchRequest<Yarn> = Yarn.fetchRequest() as! NSFetchRequest<Yarn>
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Yarn.colorName, ascending: true)]
-        request.predicate = NSPredicate(format: "deleted == NO")
-        return request
+        self.yarns = FetchRequest(
+            entity: Yarn.entity(),
+            sortDescriptors: [NSSortDescriptor(keyPath: \Yarn.colorName, ascending: true)],
+            predicate: NSPredicate(format: "deleted == NO")
+        )
     }
     
     func toggleAddProject() {

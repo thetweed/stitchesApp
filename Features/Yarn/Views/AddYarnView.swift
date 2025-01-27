@@ -19,7 +19,7 @@ struct AddYarnView: View {
     let context = CoreDataManager.shared.container.viewContext
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section {
                     TextField("Brand", text: $viewModel.brand)

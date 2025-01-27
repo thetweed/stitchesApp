@@ -7,7 +7,7 @@
 
 import Foundation
 import CoreData
-// Project Entity
+
 class Project: NSManagedObject {
     @NSManaged public var id: UUID
     @NSManaged public var name: String
@@ -66,9 +66,3 @@ extension Project {
         }
     }
 }
-
-// Project status types
-//static let statusTypes = ["active", "completed", "paused for now"]
-
-// Project types
-//static let projectTypes = ["knitting", "crochet"]

@@ -10,7 +10,7 @@ import CoreData
 class ProjectListViewModel: ObservableObject {
     @Published var showingAddProject = false {
             didSet {
-                print("showingAddProject didSet: \(showingAddProject)")  // Debug
+                print("showingAddProject didSet: \(showingAddProject)")
                 objectWillChange.send()
             }
         }
@@ -35,8 +35,10 @@ class ProjectListViewModel: ObservableObject {
     @objc private func managedObjectContextObjectsDidChange() {
         objectWillChange.send()
     }
-    
+      
     func toggleAddProject() {
         showingAddProject.toggle()
+        print("Toggle called: \(showingAddProject)") // Debug
     }
+    
 }
