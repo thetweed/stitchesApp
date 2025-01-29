@@ -18,19 +18,62 @@ struct DashboardView: View {
     @State private var showingAddProject = false
     @State private var showingAddYarn = false
     
+    private var welcomeSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Welcome Back")
+                .font(.title)
+                .fontWeight(.bold)
+            
+            Text("Track your progress and manage your projects")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.bottom, 4)
+    }
+    
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                welcomeSection
-                statsGrid
-                
-                if !activeProjects.isEmpty {
-                    recentProjectsSection
+        NavigationStack {
+            ScrollView {
+                LazyVStack(spacing: 20) {
+                    // Welcome Section
+                    welcomeSection
+                    
+                    // Stats Section
+                    statsSection
+                    
+                    // Active Projects Section
+                    if !activeProjects.isEmpty {
+                        projectSection(
+                            title: "Active Projects",
+                            systemImage: "flag.pattern.checkered",
+                            projects: Array(activeProjects.prefix(3)),
+                            accentColor: .blue
+                        )
+                    }
+                    
+                    // Quick Actions Section
+                    quickActionsSection
+                    
+                    if activeProjects.isEmpty {
+                        emptyStateView
+                    }
                 }
-                
-                quickActionsSection
+                .padding(.horizontal)
+                .padding(.vertical, 20)
+                .frame(maxWidth: 650) // Constrain maximum width
+                .frame(maxWidth: .infinity) // Center horizontally
             }
-            .padding()
+            .navigationTitle("Dashboard")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        showingAddProject = true
+                    } label: {
+                        Label("Add Project", systemImage: "plus")
+                    }
+                }
+            }
         }
         .sheet(isPresented: $showingAddProject) {
             NavigationStack {
@@ -44,32 +87,19 @@ struct DashboardView: View {
         }
     }
     
-    private var welcomeSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Welcome to Stitches")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
-            Text("Track your knitting and crochet projects")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-        }
-        .padding(.top, 8)
-    }
-    
-    private var statsGrid: some View {
+    private var statsSection: some View {
         LazyVGrid(columns: [
             GridItem(.flexible()),
             GridItem(.flexible())
         ], spacing: 16) {
-            StatsCard(
+            statsCard(
                 title: "Active Projects",
                 value: "\(activeProjects.count)",
-                systemImage: "square.stack.3d.up.fill",
+                systemImage: "flag.pattern.checkered",
                 color: .blue
             )
             
-            StatsCard(
+            statsCard(
                 title: "Active Counters",
                 value: "0", // Implement counter fetch
                 systemImage: "number.circle.fill",
@@ -78,25 +108,35 @@ struct DashboardView: View {
         }
     }
     
-    private var recentProjectsSection: some View {
+    private func projectSection(title: String, systemImage: String, projects: [Project], accentColor: Color) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("Recent Projects")
-                    .font(.title2)
-                    .fontWeight(.bold)
+                Label(title, systemImage: systemImage)
+                    .font(.headline)
+                    .foregroundStyle(accentColor)
                 
                 Spacer()
                 
                 NavigationLink(destination: ProjectListView(viewContext: viewContext)) {
                     Text("See All")
                         .font(.subheadline)
-                        .foregroundColor(.blue)
+                        .foregroundColor(accentColor)
                 }
             }
+            .padding(.leading, 4)
             
-            ForEach(Array(activeProjects.prefix(3))) { project in
-                NavigationLink(destination: ProjectDetailView(project: project)) {
-                    ProjectCard(project: project)
+            VStack(spacing: 12) {
+                ForEach(projects) { project in
+                    NavigationLink(destination: ProjectDetailView(project: project)) {
+                        ProjectRowView(project: project)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 12)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color(.systemBackground))
+                                    .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
+                            )
+                    }
                 }
             }
         }
@@ -104,12 +144,13 @@ struct DashboardView: View {
     
     private var quickActionsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Quick Actions")
-                .font(.title2)
-                .fontWeight(.bold)
+            Label("Quick Actions", systemImage: "bolt.fill")
+                .font(.headline)
+                .foregroundStyle(.purple)
+                .padding(.leading, 4)
             
             HStack(spacing: 16) {
-                ActionButton(
+                quickActionButton(
                     title: "New Project",
                     systemImage: "plus.app.fill",
                     color: .blue
@@ -117,9 +158,9 @@ struct DashboardView: View {
                     showingAddProject = true
                 }
                 
-                ActionButton(
+                quickActionButton(
                     title: "Add Yarn",
-                    systemImage: "plus.circle.fill",
+                    systemImage: "circle.hexagongrid.fill",
                     color: .green
                 ) {
                     showingAddYarn = true
@@ -127,17 +168,26 @@ struct DashboardView: View {
             }
         }
     }
-}
-
-// Supporting Views
-
-struct StatsCard: View {
-    let title: String
-    let value: String
-    let systemImage: String
-    let color: Color
     
-    var body: some View {
+    private var emptyStateView: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "square.stack.3d.up")
+                .font(.system(size: 48))
+                .foregroundStyle(.secondary)
+            
+            Text("No Active Projects")
+                .font(.headline)
+            
+            Text("Tap the + button to start your first project")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 40)
+    }
+    
+    private func statsCard(title: String, value: String, systemImage: String, color: Color) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Image(systemName: systemImage)
@@ -145,7 +195,7 @@ struct StatsCard: View {
                     .foregroundColor(color)
                 Spacer()
                 Text(value)
-                    .font(.title)
+                    .font(.title2)
                     .fontWeight(.bold)
                     .foregroundColor(color)
             }
@@ -158,73 +208,12 @@ struct StatsCard: View {
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color(.systemBackground))
-                .shadow(color: color.opacity(0.1), radius: 10, x: 0, y: 4)
+                .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
         )
     }
-}
-
-struct ProjectCard: View {
-    let project: Project
     
-    var body: some View {
-        HStack(spacing: 16) {
-            // Project Image or Icon
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.blue.opacity(0.1))
-                    .frame(width: 60, height: 60)
-                
-                Image(systemName: "square.stack.3d.up.fill")
-                    .font(.title2)
-                    .foregroundColor(.blue)
-            }
-            
-            // Project Details
-            VStack(alignment: .leading, spacing: 4) {
-                Text(project.name)
-                    .font(.headline)
-                
-                Text(project.patternNotes ?? "No Pattern")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                
-                // Progress Bar
-                ProgressView(value: 0.6) // Replace with actual progress
-                    .tint(.blue)
-            }
-            
-            Spacer()
-            
-            Image(systemName: "chevron.right")
-                .foregroundColor(.secondary)
-        }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color(.systemBackground))
-                .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 2)
-        )
-    }
-}
-
-struct ActionButton: View {
-    let title: String
-    let systemImage: String
-    let color: Color
-    let action: () -> Void
-    
-    @State private var isPressed = false
-    
-    var body: some View {
-        Button(action: {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                isPressed = true
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                isPressed = false
-                action()
-            }
-        }) {
+    private func quickActionButton(title: String, systemImage: String, color: Color, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
             VStack(spacing: 8) {
                 Image(systemName: systemImage)
                     .font(.title2)
@@ -243,8 +232,20 @@ struct ActionButton: View {
                     .stroke(color.opacity(0.2), lineWidth: 1)
             )
             .foregroundColor(color)
-            .scaleEffect(isPressed ? 0.95 : 1.0)
         }
         .buttonStyle(PlainButtonStyle())
+    }
+}
+
+
+struct DashboardView_Previews: PreviewProvider {
+    static let context = CoreDataManager.shared.container.viewContext
+    
+    static var previews: some View {
+        let sampleData = PreviewingData()
+        let _ = sampleData.sampleProjects(context)
+        let _ = sampleData.sampleYarns(context)
+        return DashboardView()
+            .environment(\.managedObjectContext, context)
     }
 }

@@ -19,7 +19,7 @@ struct ContentView: View {
                 DashboardView()
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
+                        ToolbarItem(placement: .navigationBarLeading) {
                             NavigationLink(destination: SettingsView()) {
                                 Image(systemName: "gear")
                             }

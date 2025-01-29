@@ -260,14 +260,14 @@
 		5B1D8F502D13774100297376 /* stitchesApp */ = {
 			isa = PBXGroup;
 			children = (
-				5B4305902D4A26DF0038D6C7 /* DeprecatedContentView.swift */,
-				5B43058E2D4A22190038D6C7 /* DashboardView.swift */,
-				5B0637FC2D44DD5B001D35E2 /* AlbumView.swift */,
-				5B1D8F532D13774100297376 /* ContentView.swift */,
 				5B1D8F512D13774100297376 /* stitchesAppApp.swift */,
+				5B1D8F532D13774100297376 /* ContentView.swift */,
+				5B43058E2D4A22190038D6C7 /* DashboardView.swift */,
 				5B37E5092D384D36005A3031 /* ProjectsView.swift */,
 				5B37E50B2D384D6C005A3031 /* CountersView.swift */,
 				5B37E50D2D384DAE005A3031 /* YarnbookView.swift */,
+				5B0637FC2D44DD5B001D35E2 /* AlbumView.swift */,
+				5B4305902D4A26DF0038D6C7 /* DeprecatedContentView.swift */,
 			);
 			path = stitchesApp;
 			sourceTree = "<group>";
