@@ -20,6 +20,7 @@ class Counter: NSManagedObject {
     @NSManaged public var lastModified: Date
 }
 
+
 extension Counter: Identifiable {
     @discardableResult
     static func create(in context: NSManagedObjectContext,
@@ -35,4 +36,16 @@ extension Counter: Identifiable {
     }
     
     static let counterTypes = ["row", "stitch", "repeat"]
+}
+
+extension Counter {
+    @NSManaged public var stitchesPerRepeat: Int32  // For repeat counters
+    @NSManaged public var isActive: Bool            // To track active vs archived counters
+    @NSManaged public var sequence: Int16           // To maintain order of counters in a project
+}
+
+extension Counter {
+    var safeID: NSManagedObjectID {
+        self.objectID
+    }
 }

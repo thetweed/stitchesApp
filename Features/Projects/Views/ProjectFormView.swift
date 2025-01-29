@@ -20,26 +20,25 @@ struct ProjectFormView: View {
                 projectDetailsSection
                 patternNotesSection
                 yarnSection
+                counterSection
             }
             .navigationTitle(isNewProject ? "New Project" : "Edit Project")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel", role: .cancel) {
-                        dismiss()
-                    }
+            .toolbar(content: toolbarContent)
+        }
+        .sheet(isPresented: $viewModel.showingNewCounterSheet) {
+            CounterSetupView(project: viewModel.project)
+                .onDisappear {
+                    viewModel.refreshAttachedCounters()
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Save") {
-                        if isNewProject {
-                            viewModel.saveProject()
-                        } else {
-                            viewModel.updateProject()
-                        }
-                        dismiss()
-                    }
-                    .disabled(!viewModel.isValid)
-                }
+        }
+        .sheet(isPresented: $viewModel.showingAttachCounterSheet) {
+            UnattachedCounterSelectionView(
+                selectedCounters: $viewModel.countersToAttach,
+                project: viewModel.project
+            )
+            .onDisappear {
+                viewModel.refreshAttachedCounters()
             }
         }
     }
@@ -94,4 +93,55 @@ struct ProjectFormView: View {
             }
         }
     }
+    
+    private var counterSection: some View {
+        Section(header: Text("Counters")) {
+            // Button to create new counter
+            Button(action: {
+                viewModel.showingNewCounterSheet.toggle()
+            }) {
+                Label("Add New Counter", systemImage: "plus.circle")
+            }
+            
+            // Button to attach existing counter
+            Button(action: {
+                viewModel.showingAttachCounterSheet.toggle()
+            }) {
+                Label("Attach Existing Counter", systemImage: "link")
+            }
+            
+            // Display currently attached counters
+            ForEach(viewModel.attachedCounters, id: \.safeID) { counter in
+                CounterRowView(counter: counter)
+                    .swipeActions {
+                        Button(role: .destructive) {
+                            viewModel.detachCounter(counter)
+                        } label: {
+                            Label("Detach", systemImage: "link.badge.minus")
+                        }
+                    }
+            }
+        }
+    }
+    
+    @ToolbarContentBuilder
+        private func toolbarContent() -> some ToolbarContent {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("Cancel", role: .cancel) {
+                    dismiss()
+                }
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Save") {
+                    if isNewProject {
+                        viewModel.saveProject()
+                    } else {
+                        viewModel.updateProject()
+                    }
+                    dismiss()
+                }
+                .disabled(!viewModel.isValid)
+            }
+        }
 }

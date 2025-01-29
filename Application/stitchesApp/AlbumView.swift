@@ -13,3 +13,4 @@ struct AlbumView: View {
         Text("Photo Album")
     }
 }
+

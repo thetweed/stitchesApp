@@ -11,10 +11,11 @@ import CoreData
 
 
 struct CountersView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    
     var body: some View {
-        BasicStitchCounterView(
-            context: CoreDataManager.shared.container.viewContext
-        )
+        CounterHomeView()
+            .environment(\.managedObjectContext, viewContext)
     }
 }
 

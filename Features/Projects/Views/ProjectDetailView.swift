@@ -25,6 +25,7 @@ struct ProjectDetailView: View {
                 projectDetails
                 patternNotesSection
                 yarnsSection
+                countersSection
             }
             .padding()
         }
@@ -109,6 +110,39 @@ struct ProjectDetailView: View {
         .onAppear {
             viewModel.refreshYarns()
             viewModel.debugYarns()
+        }
+        .onChange(of: viewModel.showingEditSheet) { oldValue, newValue in
+            if !newValue {
+                viewModel.refreshCounters()
+            }
+        }
+    }
+    
+    private var countersSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label("Counters", systemImage: "number.circle.fill")
+                .font(.headline)
+            
+            if viewModel.counters.isEmpty {
+                Text("No counters attached")
+                    .foregroundColor(.secondary)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(8)
+            } else {
+                VStack(spacing: 8) {
+                    ForEach(viewModel.counters) { counter in
+                        NavigationLink(destination: BasicStitchCounterView(context: viewContext, counter: counter)) {
+                            CounterRowView(counter: counter)
+                                .padding(.vertical, 8)
+                                .padding(.horizontal, 12)
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(8)
+                        }
+                    }
+                }
+            }
         }
     }
 }

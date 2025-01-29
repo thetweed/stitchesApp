@@ -55,15 +55,17 @@
 		5B43056F2D49D1470038D6C7 /* ProjectFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43056E2D49D1420038D6C7 /* ProjectFormView.swift */; };
 		5B4305712D49EBE90038D6C7 /* CounterSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305702D49EBE40038D6C7 /* CounterSetupView.swift */; };
 		5B4305732D49EC3A0038D6C7 /* StitchCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305722D49EC330038D6C7 /* StitchCounterViewModel.swift */; };
-		5B4305752D49EC8A0038D6C7 /* StitchCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305742D49EC850038D6C7 /* StitchCounterView.swift */; };
 		5B4305772D49ECEA0038D6C7 /* CounterRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305762D49ECE60038D6C7 /* CounterRowView.swift */; };
 		5B43057F2D4A0F720038D6C7 /* Notification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43057E2D4A0F6B0038D6C7 /* Notification.Name.swift */; };
 		5B4305812D4A0F960038D6C7 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305802D4A0F920038D6C7 /* NotificationManager.swift */; };
-		5B4305892D4A18220038D6C7 /* CounterNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305882D4A181E0038D6C7 /* CounterNavigationView.swift */; };
-		5B43058B2D4A18460038D6C7 /* CounterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43058A2D4A18430038D6C7 /* CounterListView.swift */; };
+		5B4305892D4A18220038D6C7 /* CounterHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305882D4A181E0038D6C7 /* CounterHomeView.swift */; };
+		5B43058B2D4A18460038D6C7 /* ProjectCountersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43058A2D4A18430038D6C7 /* ProjectCountersView.swift */; };
 		5B43058D2D4A19450038D6C7 /* AllCountersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43058C2D4A19420038D6C7 /* AllCountersListView.swift */; };
 		5B43058F2D4A221C0038D6C7 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43058E2D4A22190038D6C7 /* DashboardView.swift */; };
 		5B4305912D4A26E30038D6C7 /* DeprecatedContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305902D4A26DF0038D6C7 /* DeprecatedContentView.swift */; };
+		5B4305A32D4AD3AA0038D6C7 /* CounterSetUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305A22D4AD3A30038D6C7 /* CounterSetUpViewModel.swift */; };
+		5B4305A52D4AE76C0038D6C7 /* ProjectCountersRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305A42D4AE7670038D6C7 /* ProjectCountersRow.swift */; };
+		5B4305A72D4AEAD90038D6C7 /* UnattachedCounterSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305A62D4AEAC90038D6C7 /* UnattachedCounterSelectionView.swift */; };
 		5B6242A22D385EC2008DE40D /* BasicStitchCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6242A12D385EC2008DE40D /* BasicStitchCounterViewModel.swift */; };
 		5B6242A42D3860CB008DE40D /* BasicStitchCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6242A32D3860CB008DE40D /* BasicStitchCounterView.swift */; };
 /* End PBXBuildFile section */
@@ -137,15 +139,17 @@
 		5B43056E2D49D1420038D6C7 /* ProjectFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFormView.swift; sourceTree = "<group>"; };
 		5B4305702D49EBE40038D6C7 /* CounterSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterSetupView.swift; sourceTree = "<group>"; };
 		5B4305722D49EC330038D6C7 /* StitchCounterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StitchCounterViewModel.swift; sourceTree = "<group>"; };
-		5B4305742D49EC850038D6C7 /* StitchCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StitchCounterView.swift; sourceTree = "<group>"; };
 		5B4305762D49ECE60038D6C7 /* CounterRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterRowView.swift; sourceTree = "<group>"; };
 		5B43057E2D4A0F6B0038D6C7 /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
 		5B4305802D4A0F920038D6C7 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		5B4305882D4A181E0038D6C7 /* CounterNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterNavigationView.swift; sourceTree = "<group>"; };
-		5B43058A2D4A18430038D6C7 /* CounterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterListView.swift; sourceTree = "<group>"; };
+		5B4305882D4A181E0038D6C7 /* CounterHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterHomeView.swift; sourceTree = "<group>"; };
+		5B43058A2D4A18430038D6C7 /* ProjectCountersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCountersView.swift; sourceTree = "<group>"; };
 		5B43058C2D4A19420038D6C7 /* AllCountersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCountersListView.swift; sourceTree = "<group>"; };
 		5B43058E2D4A22190038D6C7 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		5B4305902D4A26DF0038D6C7 /* DeprecatedContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeprecatedContentView.swift; sourceTree = "<group>"; };
+		5B4305A22D4AD3A30038D6C7 /* CounterSetUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterSetUpViewModel.swift; sourceTree = "<group>"; };
+		5B4305A42D4AE7670038D6C7 /* ProjectCountersRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCountersRow.swift; sourceTree = "<group>"; };
+		5B4305A62D4AEAC90038D6C7 /* UnattachedCounterSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnattachedCounterSelectionView.swift; sourceTree = "<group>"; };
 		5B6242A12D385EC2008DE40D /* BasicStitchCounterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStitchCounterViewModel.swift; sourceTree = "<group>"; };
 		5B6242A32D3860CB008DE40D /* BasicStitchCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStitchCounterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -302,13 +306,13 @@
 		5B37E4EC2D138276005A3031 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5B43055F2D4841790038D6C7 /* TestYarnListView.swift */,
 				5B0637F22D44AD10001D35E2 /* YarnDetailView.swift */,
 				5B0637BE2D4438A0001D35E2 /* YarnRowView.swift */,
 				5B0637B62D442B89001D35E2 /* YarnInventoryView.swift */,
 				5B0637A92D430CB5001D35E2 /* EditYarnView.swift */,
 				5B0637A52D4305C5001D35E2 /* AddYarnView.swift */,
 				5B0637502D419CCA001D35E2 /* YarnSelectionView.swift */,
+				5B43055F2D4841790038D6C7 /* TestYarnListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -328,13 +332,14 @@
 		5B37E4EE2D138284005A3031 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B4305A42D4AE7670038D6C7 /* ProjectCountersRow.swift */,
 				5B43058C2D4A19420038D6C7 /* AllCountersListView.swift */,
-				5B43058A2D4A18430038D6C7 /* CounterListView.swift */,
-				5B4305882D4A181E0038D6C7 /* CounterNavigationView.swift */,
+				5B43058A2D4A18430038D6C7 /* ProjectCountersView.swift */,
+				5B4305882D4A181E0038D6C7 /* CounterHomeView.swift */,
 				5B4305762D49ECE60038D6C7 /* CounterRowView.swift */,
-				5B4305742D49EC850038D6C7 /* StitchCounterView.swift */,
 				5B4305702D49EBE40038D6C7 /* CounterSetupView.swift */,
 				5B6242A32D3860CB008DE40D /* BasicStitchCounterView.swift */,
+				5B4305A62D4AEAC90038D6C7 /* UnattachedCounterSelectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -342,6 +347,7 @@
 		5B37E4EF2D138288005A3031 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				5B4305A22D4AD3A30038D6C7 /* CounterSetUpViewModel.swift */,
 				5B4305722D49EC330038D6C7 /* StitchCounterViewModel.swift */,
 				5B6242A12D385EC2008DE40D /* BasicStitchCounterViewModel.swift */,
 			);
@@ -418,6 +424,29 @@
 			path = UITests;
 			sourceTree = "<group>";
 		};
+		5B4305922D4A31330038D6C7 /* Photos */ = {
+			isa = PBXGroup;
+			children = (
+				5B4305932D4A313A0038D6C7 /* View Models */,
+				5B4305942D4A31400038D6C7 /* Views */,
+			);
+			path = Photos;
+			sourceTree = "<group>";
+		};
+		5B4305932D4A313A0038D6C7 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		5B4305942D4A31400038D6C7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		5B92DDD02D137E8100306A26 /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -449,6 +478,7 @@
 		5B92DDD32D137EAB00306A26 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				5B4305922D4A31330038D6C7 /* Photos */,
 				5BA3A1022D39B9790068BFBB /* Settings */,
 				5BA9AA882D1380FA00E068BE /* Counter */,
 				5BA9AA872D1380F500E068BE /* Projects */,
@@ -669,13 +699,14 @@
 				5B4305712D49EBE90038D6C7 /* CounterSetupView.swift in Sources */,
 				5B4305672D49BE4F0038D6C7 /* ProjectYarnManager.swift in Sources */,
 				5B4305772D49ECEA0038D6C7 /* CounterRowView.swift in Sources */,
-				5B43058B2D4A18460038D6C7 /* CounterListView.swift in Sources */,
-				5B4305892D4A18220038D6C7 /* CounterNavigationView.swift in Sources */,
+				5B43058B2D4A18460038D6C7 /* ProjectCountersView.swift in Sources */,
+				5B4305892D4A18220038D6C7 /* CounterHomeView.swift in Sources */,
 				5B4305812D4A0F960038D6C7 /* NotificationManager.swift in Sources */,
 				5B0637AC2D430D87001D35E2 /* ProjectAddEditViewModel.swift in Sources */,
 				5B43058D2D4A19450038D6C7 /* AllCountersListView.swift in Sources */,
 				5B0637F12D44ACE3001D35E2 /* YarnDetailViewModel.swift in Sources */,
 				5B0637B42D442B72001D35E2 /* YarnInventoryViewModel.swift in Sources */,
+				5B4305A52D4AE76C0038D6C7 /* ProjectCountersRow.swift in Sources */,
 				5B0637E92D4498BE001D35E2 /* SingleYarnPreview.swift in Sources */,
 				5B6242A42D3860CB008DE40D /* BasicStitchCounterView.swift in Sources */,
 				5B37E5022D3738AB005A3031 /* ProjectRepository.swift in Sources */,
@@ -683,9 +714,9 @@
 				5B4305652D499FC40038D6C7 /* TestProjectDetailView.swift in Sources */,
 				5B37E50E2D384DAE005A3031 /* YarnbookView.swift in Sources */,
 				5B43056F2D49D1470038D6C7 /* ProjectFormView.swift in Sources */,
-				5B4305752D49EC8A0038D6C7 /* StitchCounterView.swift in Sources */,
 				5B0637A62D4305C8001D35E2 /* AddYarnView.swift in Sources */,
 				5B1D8F522D13774100297376 /* stitchesAppApp.swift in Sources */,
+				5B4305A32D4AD3AA0038D6C7 /* CounterSetUpViewModel.swift in Sources */,
 				5B06380B2D46F7C2001D35E2 /* AddProjectView.swift in Sources */,
 				5B43057F2D4A0F720038D6C7 /* Notification.Name.swift in Sources */,
 				5B0637B02D431130001D35E2 /* ProjectListViewModel.swift in Sources */,
@@ -701,6 +732,7 @@
 				5B37E4FE2D372D0B005A3031 /* Counter.swift in Sources */,
 				5B6242A22D385EC2008DE40D /* BasicStitchCounterViewModel.swift in Sources */,
 				5B0637512D419CD0001D35E2 /* YarnSelectionView.swift in Sources */,
+				5B4305A72D4AEAD90038D6C7 /* UnattachedCounterSelectionView.swift in Sources */,
 				5B4305732D49EC3A0038D6C7 /* StitchCounterViewModel.swift in Sources */,
 				5B37E50A2D384D36005A3031 /* ProjectsView.swift in Sources */,
 				5B37E5042D3738BB005A3031 /* YarnRepository.swift in Sources */,

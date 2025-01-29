@@ -14,9 +14,13 @@ class ProjectAddEditViewModel: ObservableObject {
     @Published var status: String = "Not Started"
     @Published var currentRow: Int32 = 0
     @Published var yarns: Set<Yarn> = []
+    @Published var showingNewCounterSheet = false
+    @Published var showingAttachCounterSheet = false
+    @Published var countersToAttach: Set<Counter> = []
+    @Published var attachedCounters: [Counter] = []
     
     let statuses = ["Not Started", "In Progress", "Completed", "Frogged"]
-    private let project: Project
+    let project: Project
     private let viewContext: NSManagedObjectContext
     
     init(project: Project, viewContext: NSManagedObjectContext) {
@@ -28,6 +32,7 @@ class ProjectAddEditViewModel: ObservableObject {
         self.status = project.status
         self.currentRow = project.currentRow
         self.yarns = project.yarns as? Set<Yarn> ?? []
+        self.attachedCounters = Array(project.counters?.allObjects as? [Counter] ?? [])
     }
     
     var sortedYarns: [Yarn] {
@@ -39,25 +44,49 @@ class ProjectAddEditViewModel: ObservableObject {
     }
     
     func updateProject() {
-        guard isValid else { return }
-        
+            guard isValid else { return }
+            
+            viewContext.performAndWait {
+                project.name = name
+                project.patternNotes = patternNotes
+                project.status = status
+                project.currentRow = currentRow
+                project.lastModified = Date()
+                
+                let currentYarns = project.yarns as? Set<Yarn> ?? []
+                currentYarns.subtracting(yarns).forEach { yarn in
+                    project.removeYarn(yarn, context: viewContext)
+                }
+                yarns.subtracting(currentYarns).forEach { yarn in
+                    project.addYarn(yarn, context: viewContext)
+                }
+                
+                    countersToAttach.forEach { counter in
+                    project.addToCounters(counter)
+                    counter.project = project
+                }
+                attachedCounters = Array(project.counters?.allObjects as? [Counter] ?? [])
+                
+                do {
+                    try viewContext.save()
+                    print("Project updated successfully with \(attachedCounters.count) counters")
+                } catch {
+                    print("Error updating project: \(error)")
+                }
+            }
+        }
+    
+    func refreshAttachedCounters() {
+        viewContext.refresh(project, mergeChanges: true)
+        attachedCounters = Array(project.counters?.allObjects as? [Counter] ?? [])
+        objectWillChange.send()
+    }
+    
+    func detachCounter(_ counter: Counter) {
         viewContext.performAndWait {
-            project.name = name
-            project.patternNotes = patternNotes
-            project.status = status
-            project.currentRow = currentRow
-            project.lastModified = Date()
- 
-            let currentYarns = project.yarns as? Set<Yarn> ?? []
-            
-            currentYarns.subtracting(yarns).forEach { yarn in
-                project.removeYarn(yarn, context: viewContext)
-            }
-            yarns.subtracting(currentYarns).forEach { yarn in
-                project.addYarn(yarn, context: viewContext)
-            }
-            
+            counter.project = nil
             try? viewContext.save()
+            attachedCounters.removeAll(where: { $0.id == counter.id })
         }
     }
     
@@ -76,6 +105,10 @@ class ProjectAddEditViewModel: ObservableObject {
             yarns.forEach { yarn in
                 project.addYarn(yarn, context: viewContext)
             }
+            countersToAttach.forEach { counter in
+                            project.addToCounters(counter)
+                            counter.project = project
+                        }
             
             try? viewContext.save()
         }

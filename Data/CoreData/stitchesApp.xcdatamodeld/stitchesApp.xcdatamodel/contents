@@ -9,7 +9,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="targetCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="toProject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="counters" inverseEntity="Project"/>
+        <relationship name="project" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="counters" inverseEntity="Project"/>
     </entity>
     <entity name="Project" representedClassName=".Project" syncable="YES">
         <attribute name="currentRow" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
@@ -22,7 +22,7 @@
         <attribute name="projectType" attributeType="String" defaultValueString="Crochet"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="status" optional="YES" attributeType="String" defaultValueString="Not Started"/>
-        <relationship name="counters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Counter" inverseName="toProject" inverseEntity="Counter"/>
+        <relationship name="counters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Counter" inverseName="project" inverseEntity="Counter"/>
         <relationship name="yarns" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Yarn" inverseName="projects" inverseEntity="Yarn"/>
     </entity>
     <entity name="Yarn" representedClassName=".Yarn" syncable="YES">

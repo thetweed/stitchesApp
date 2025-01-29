@@ -55,7 +55,7 @@ class StitchCounterViewModel: ObservableObject {
     }
     
     
-    private func saveCount() {
+    func saveCount() {
         context.performAndWait {
             if counter == nil {
                 counter = Counter(context: context)

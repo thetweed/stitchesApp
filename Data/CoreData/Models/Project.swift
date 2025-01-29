@@ -52,6 +52,17 @@ extension Project {
 }
 
 extension Project {
+    @objc var projectID: UUID {
+        get {
+            id
+        }
+        set {
+            id = newValue
+        }
+    }
+}
+
+extension Project {
     var yarnsArray: [Yarn] {
         let set = yarns as? Set<Yarn> ?? []
         return Array(set).sorted { $0.brand < $1.brand }
@@ -73,15 +84,12 @@ extension Project {
 extension Project {
     func addYarn(_ yarn: Yarn, context: NSManagedObjectContext) {
         context.performAndWait {
-            // Create mutable copies of both sets
             let projectYarns = self.yarns?.mutableCopy() as? NSMutableSet ?? NSMutableSet()
             let yarnProjects = yarn.projects?.mutableCopy() as? NSMutableSet ?? NSMutableSet()
             
-            // Add the objects to their respective sets
             projectYarns.add(yarn)
             yarnProjects.add(self)
             
-            // Update both sides of the relationship
             self.yarns = projectYarns as NSSet
             yarn.projects = yarnProjects as NSSet
             
@@ -95,15 +103,12 @@ extension Project {
     
     func removeYarn(_ yarn: Yarn, context: NSManagedObjectContext) {
         context.performAndWait {
-            // Create mutable copies of both sets
             let projectYarns = self.yarns?.mutableCopy() as? NSMutableSet ?? NSMutableSet()
             let yarnProjects = yarn.projects?.mutableCopy() as? NSMutableSet ?? NSMutableSet()
             
-            // Remove the objects from their respective sets
             projectYarns.remove(yarn)
             yarnProjects.remove(self)
             
-            // Update both sides of the relationship
             self.yarns = projectYarns as NSSet
             yarn.projects = yarnProjects as NSSet
             
@@ -123,17 +128,6 @@ extension Project {
 }
 
 extension Project {
-    @objc var projectID: UUID {
-        get {
-            id
-        }
-        set {
-            id = newValue
-        }
-    }
-}
-
-extension Project {
     func debugYarnRelationship() {
         print("Current yarns set: \(String(describing: yarns))")
         print("Yarns count: \(yarns?.count ?? 0)")
@@ -141,46 +135,21 @@ extension Project {
     }
 }
 
-
-
-/*extension Project {
-    func addYarn(_ yarn: Yarn, context: NSManagedObjectContext) {
-        context.performAndWait {
-            addToYarns(yarn)
-            yarn.addToProjects(self)
-            
-            do {
-                try context.save()
-            } catch {
-                print("Error saving context after adding yarn: \(error)")
-            }
-        }
+extension Project {
+    var countersArray: [Counter] {
+        let set = counters as? Set<Counter> ?? []
+        return Array(set).sorted { $0.lastModified > $1.lastModified }
     }
     
-    func removeYarn(_ yarn: Yarn, context: NSManagedObjectContext) {
-        context.performAndWait {
-            removeFromYarns(yarn)
-            yarn.removeFromProjects(self)
-            
-            do {
-                try context.save()
-            } catch {
-                print("Error saving context after removing yarn: \(error)")
-            }
-        }
+    func addToCounters(_ counter: Counter) {
+        let counterSet = self.counters?.mutableCopy() as? NSMutableSet ?? NSMutableSet()
+        counterSet.add(counter)
+        self.counters = counterSet as NSSet
     }
-}*/
-
-/*extension Project {
-    @objc(addYarnsObject:)
-    @NSManaged public func addToYarns(_ value: Yarn)
     
-    @objc(removeYarnsObject:)
-    @NSManaged public func removeFromYarns(_ value: Yarn)
-    
-    @objc(addYarns:)
-    @NSManaged public func addToYarns(_ values: NSSet)
-    
-    @objc(removeYarns:)
-    @NSManaged public func removeFromYarns(_ values: NSSet)
-}*/
+    func removeFromCounters(_ counter: Counter) {
+        let counterSet = self.counters?.mutableCopy() as? NSMutableSet ?? NSMutableSet()
+        counterSet.remove(counter)
+        self.counters = counterSet as NSSet
+    }
+}

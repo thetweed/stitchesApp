@@ -31,7 +31,6 @@ struct ContentView: View {
             }
             .tag(0)
             
-            // Projects Tab
             NavigationStack {
                 ProjectListView(viewContext: viewContext)
                     .navigationBarTitleDisplayMode(.inline)
@@ -41,7 +40,6 @@ struct ContentView: View {
             }
             .tag(1)
             
-            // Counters Tab
             NavigationStack {
                 CountersView()
                     .navigationBarTitleDisplayMode(.inline)
@@ -51,7 +49,6 @@ struct ContentView: View {
             }
             .tag(2)
             
-            // Yarn Tab
             NavigationStack {
                 YarnbookView()
                     .navigationBarTitleDisplayMode(.inline)
@@ -61,7 +58,6 @@ struct ContentView: View {
             }
             .tag(3)
             
-            // Album Tab
             NavigationStack {
                 AlbumView()
                     .navigationBarTitleDisplayMode(.inline)
@@ -71,7 +67,7 @@ struct ContentView: View {
             }
             .tag(4)
         }
-        .tint(.blue) // You can customize the accent color
+        .tint(.accentColor) //accent color
     }
 }
 

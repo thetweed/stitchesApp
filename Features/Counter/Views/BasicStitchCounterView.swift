@@ -11,6 +11,8 @@ import CoreData
 struct BasicStitchCounterView: View {
     @StateObject private var viewModel: StitchCounterViewModel
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.dismiss) private var dismiss
+    @State private var showingSaveConfirmation = false
     
     init(context: NSManagedObjectContext, counter: Counter? = nil) {
         _viewModel = StateObject(wrappedValue:
@@ -113,10 +115,48 @@ struct BasicStitchCounterView: View {
                 .frame(minHeight: geometry.size.height)
             }
         }
+        .navigationTitle(viewModel.counterName)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Done") {
+                    viewModel.saveCount()
+                    showingSaveConfirmation = true
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        dismiss()
+                    }
+                }
+            }
+        }
+        .overlay {
+            if showingSaveConfirmation {
+                SaveConfirmationView()
+            }
+        }
     }
     
     private var progressColor: Color {
         viewModel.currentCount >= viewModel.targetCount ? .green : .blue
+    }
+}
+
+struct SaveConfirmationView: View {
+    var body: some View {
+        HStack {
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundStyle(.green)
+            Text("Saved")
+                .foregroundStyle(.secondary)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color(.systemBackground))
+                .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
+        )
+        .transition(.scale.combined(with: .opacity))
     }
 }
 

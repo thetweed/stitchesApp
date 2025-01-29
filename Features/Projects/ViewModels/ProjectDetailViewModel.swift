@@ -12,6 +12,7 @@ class ProjectDetailViewModel: ObservableObject {
     @Published var project: Project
     @Published var showingEditSheet = false
     @Published private(set) var yarns: [Yarn] = []
+    @Published private(set) var counters: [Counter] = []
     
     private let context: NSManagedObjectContext
     
@@ -19,6 +20,9 @@ class ProjectDetailViewModel: ObservableObject {
         self.project = project
         self.context = context
         self.yarns = project.yarnsArray
+        self.counters = Array(project.counters?.allObjects as? [Counter] ?? [])
+        self.refreshYarns()
+        self.refreshCounters()
     }
     
     var statusText: String {
@@ -65,6 +69,13 @@ class ProjectDetailViewModel: ObservableObject {
         yarns = project.yarnsArray
         objectWillChange.send()
     }
+    
+    func refreshCounters() {
+            let projectCounters = project.counters?.allObjects as? [Counter] ?? []
+            counters = projectCounters
+            print("Refreshed counters: Found \(counters.count) counters")
+            objectWillChange.send()
+        }
 
     func debugYarns() {
         #if DEBUG

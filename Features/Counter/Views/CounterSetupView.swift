@@ -8,40 +8,67 @@
 import SwiftUI
 import CoreData
 
-/*struct CounterSetupView: View {
+struct CounterSetupView: View {
     @Environment(\.managedObjectContext) private var context
-        @Environment(\.dismiss) private var dismiss
-        
-        var project: Project?  // Make this optional
-        
-        @State private var counterName: String = ""
-        @State private var selectedCounterType: String = Counter.counterTypes[0]
-        @State private var targetCount: String = ""
-        @State private var notes: String = ""
+    @Environment(\.dismiss) private var dismiss
+    @StateObject var viewModel: CounterSetupViewModel
+    
+    @FetchRequest(
+        entity: Project.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Project.name, ascending: true)],
+        animation: .default
+    ) var projects: FetchedResults<Project>
+    
+    init(project: Project? = nil) {
+        _viewModel = StateObject(wrappedValue: CounterSetupViewModel(project: project))
+    }
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             Form {
-                Section(header: Text("Counter Details")) {
-                    TextField("Counter Name", text: $counterName)
+                Section("Counter Details") {
+                    TextField("Counter Name", text: $viewModel.counterName)
                     
-                    Picker("Counter Type", selection: $selectedCounterType) {
+                    Picker("Counter Type", selection: $viewModel.counterType) {
                         ForEach(Counter.counterTypes, id: \.self) { type in
                             Text(type.capitalized)
                                 .tag(type)
                         }
                     }
                     
-                    TextField("Target Count", text: $targetCount)
+                    TextField("Target Count", value: $viewModel.targetCount, format: .number)
                         .keyboardType(.numberPad)
                 }
                 
-                Section(header: Text("Notes")) {
-                    TextEditor(text: $notes)
-                        .frame(height: 100)
+                Section("Project") {
+                    Picker("Attach to Project", selection: $viewModel.selectedProject) {
+                        Text("None")
+                            .tag(Optional<Project>.none)
+                        
+                        ForEach(projects) { project in
+                            Text(project.name)
+                                .tag(Optional(project))
+                        }
+                    }
+                }
+                
+                Section("Additional Settings") {
+                    TextField("Starting Count", value: $viewModel.startingCount, format: .number)
+                        .keyboardType(.numberPad)
+                    
+                    if viewModel.counterType == "repeat" {
+                        TextField("Stitches per Repeat", value: $viewModel.stitchesPerRepeat, format: .number)
+                            .keyboardType(.numberPad)
+                    }
+                }
+                
+                Section("Notes") {
+                    TextEditor(text: $viewModel.notes)
+                        .frame(minHeight: 100)
                 }
             }
             .navigationTitle("New Counter")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
@@ -51,31 +78,24 @@ import CoreData
                 
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
-                        saveCounter()
+                        viewModel.saveCounter(context: context)
+                        dismiss()
                     }
-                    .disabled(counterName.isEmpty)
                 }
             }
         }
     }
-    
-    private func saveCounter() {
-        let counter = Counter(context: context)
-        counter.id = UUID()
-        counter.name = counterName
-        counter.counterType = selectedCounterType
-        counter.currentCount = 0
-        counter.targetCount = Int32(targetCount) ?? 0
-        counter.notes = notes
-        counter.lastModified = Date()
-        counter.project = project  // This will be nil if no project is associated
-        
-        do {
-            try context.save()
-            dismiss()
-        } catch {
-            print("Error saving counter: \(error)")
+}
+
+struct CounterSetupView_Previews: PreviewProvider {
+    static var previews: some View {
+        Previewing(\.sampleProjectWithCounter) { project in
+            CounterSetupView(project: project)
         }
+        
+        Previewing(\.sampleProjectWithCounter) { _ in
+            CounterSetupView(project: nil)
+        }
+        .previewDisplayName("No Project")
     }
 }
-*/

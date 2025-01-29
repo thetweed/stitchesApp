@@ -10,13 +10,19 @@ import CoreData
 
 struct DashboardView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Project.startDate, ascending: false)],
         predicate: NSPredicate(format: "status == %@", "In Progress")
     ) private var activeProjects: FetchedResults<Project>
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \Counter.lastModified, ascending: false)],
+        predicate: NSPredicate(format: "currentCount < targetCount AND project.status == %@", "In Progress")
+    ) private var activeCounters: FetchedResults<Counter>
     
     @State private var showingAddProject = false
     @State private var showingAddYarn = false
+    @State private var showingAddCounter = false
     
     private var welcomeSection: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -36,13 +42,9 @@ struct DashboardView: View {
         NavigationStack {
             ScrollView {
                 LazyVStack(spacing: 20) {
-                    // Welcome Section
                     welcomeSection
-                    
-                    // Stats Section
                     statsSection
                     
-                    // Active Projects Section
                     if !activeProjects.isEmpty {
                         projectSection(
                             title: "Active Projects",
@@ -52,7 +54,6 @@ struct DashboardView: View {
                         )
                     }
                     
-                    // Quick Actions Section
                     quickActionsSection
                     
                     if activeProjects.isEmpty {
@@ -80,6 +81,9 @@ struct DashboardView: View {
                 AddProjectView(viewContext: viewContext)
             }
         }
+        .sheet(isPresented: $showingAddCounter) {
+                CounterSetupView()
+        }
         .sheet(isPresented: $showingAddYarn) {
             NavigationStack {
                 AddYarnView(viewModel: AddYarnViewModel(viewContext: viewContext))
@@ -101,7 +105,7 @@ struct DashboardView: View {
             
             statsCard(
                 title: "Active Counters",
-                value: "0", // Implement counter fetch
+                value: "\(activeCounters.count)", // Now using the actual count
                 systemImage: "number.circle.fill",
                 color: .orange
             )
@@ -151,11 +155,11 @@ struct DashboardView: View {
             
             HStack(spacing: 16) {
                 quickActionButton(
-                    title: "New Project",
-                    systemImage: "plus.app.fill",
-                    color: .blue
+                    title: "New Counter",
+                    systemImage: "number.circle.fill",
+                    color: .orange
                 ) {
-                    showingAddProject = true
+                    showingAddCounter = true
                 }
                 
                 quickActionButton(
