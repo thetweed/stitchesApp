@@ -15,7 +15,7 @@ struct ProjectDetailView: View {
     
     init(project: Project) {
         self.project = project
-        _viewModel = StateObject(wrappedValue: ProjectDetailViewModel(project: project))
+        _viewModel = StateObject(wrappedValue: ProjectDetailViewModel(project: project, context: CoreDataManager.shared.container.viewContext))
     }
     
     var body: some View {
@@ -29,13 +29,20 @@ struct ProjectDetailView: View {
             .padding()
         }
         .navigationTitle(viewModel.project.name)
+        .navigationBarTitleDisplayMode(.large)
         .toolbar {
-            Button("Edit") {
-                viewModel.showingEditSheet.toggle()
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    viewModel.showingEditSheet.toggle()
+                } label: {
+                    Label("Edit", systemImage: "pencil")
+                }
             }
         }
         .sheet(isPresented: $viewModel.showingEditSheet) {
-            ProjectEditView(project: viewModel.project, viewContext: viewContext)
+            NavigationStack {
+                ProjectEditView(project: viewModel.project, viewContext: viewContext)
+            }
         }
     }
     
@@ -45,186 +52,79 @@ struct ProjectDetailView: View {
                 .font(.headline)
             Text(viewModel.startDateText)
                 .font(.subheadline)
+                .foregroundColor(.secondary)
             Text(viewModel.lastModifiedText)
                 .font(.subheadline)
+                .foregroundColor(.secondary)
         }
+        .padding(.vertical, 4)
     }
     
     private var projectDetails: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(viewModel.currentRowText)
                 .font(.headline)
+                .padding(.vertical, 4)
         }
     }
     
     private var patternNotesSection: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Pattern Notes")
+            Label("Pattern Notes", systemImage: "note.text")
                 .font(.headline)
             Text(viewModel.patternNotes)
                 .padding()
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .background(Color.gray.opacity(0.1))
                 .cornerRadius(8)
         }
     }
     
     private var yarnsSection: some View {
-        Section(header: Text("Yarns")) {
-            if viewModel.yarns.isEmpty {
+        VStack(alignment: .leading, spacing: 8) {
+            Label("Yarns", systemImage: "circle.hexagongrid.fill")
+                .font(.headline)
+            
+            if viewModel.yarnsArray.isEmpty {
                 Text("No yarns added")
                     .foregroundColor(.secondary)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(8)
             } else {
-                ForEach(viewModel.sortedYarns, id: \.safeID) { yarn in
-                    YarnRowView(yarn: yarn)
+                VStack(spacing: 8) {
+                    ForEach(viewModel.yarnsArray, id: \.safeID) { yarn in
+                        NavigationLink(destination: YarnDetailView(yarn: yarn)) {
+                            YarnRowView(yarn: yarn)
+                                .padding(.vertical, 8)
+                                .padding(.horizontal, 12)
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(8)
+                        }
+                    }
                 }
             }
         }
         .onAppear {
+            viewModel.refreshYarns()
             viewModel.debugYarns()
         }
     }
 }
 
 struct ProjectDetailView_Previews: PreviewProvider {
-   static let context = CoreDataManager.shared.container.viewContext
-   
     static var previews: some View {
-        let sampleData = PreviewingData()
-        let projects = sampleData.sampleProjects(context)
-        return NavigationStack {
-            ProjectDetailView(project: projects[0])
-                .environment(\.managedObjectContext, context)
+        Previewing(\.sampleProjectWithYarns) { project in
+            NavigationStack {
+                ProjectDetailView(project: project)
+                    .onAppear {
+                        print("Preview project ID: \(project.id)")
+                        print("Preview project yarns count: \(project.yarns?.count ?? 0)")
+                        project.debugYarnRelationship() 
+                    }
+            }
         }
     }
 }
-
-/*    private var yarnsSection: some View {
-    VStack(alignment: .leading, spacing: 8) {
-        Text("Yarns")
-            .font(.headline)
-        if viewModel.hasYarns {
-            ForEach(viewModel.yarns, id: \.self) { yarn in
-                Text(yarn.colorName)
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(8)
-            }
-        } else {
-            Text("No yarns added")
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
-        }
-    }
-}*/
-
-/*    private var yarnsSection: some View {
-    List {
-        NavigationLink {
-            YarnSelectionView(
-                    selectedYarns: Binding(
-                        get: { self.project.yarns ?? Set() },
-                        set: { self.project.yarns = $0 }
-                    ),
-                    viewContext: viewContext
-                )
-        } label: {
-            HStack {
-                Text("Select Yarns")
-                Spacer()
-                Text("\(viewModel.yarns.count) selected")
-                    .foregroundColor(.gray)
-            }
-        }
-        
-        ForEach(viewModel.sortedYarns) { yarn in
-            YarnRowView(yarn: yarn)
-                .swipeActions {
-                    Button(role: .destructive) {
-                        viewModel.removeYarn(yarn)
-                    } label: {
-                        Label("Remove", systemImage: "minus.circle")
-                    }
-                }
-        }
-    }
-}*/
-
-/*struct ProjectDetailView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-//    @ObservedObject var project: Project
-    let project: Project
-    @State private var showingEditSheet = false
-    
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                projectHeader
-                projectDetails
-                patternNotesSection
-//                yarnsSection
-            }
-            .padding()
-        }
-        .navigationTitle(project.name)
-        .toolbar {
-            Button("Edit") {
-                showingEditSheet.toggle()
-            }
-        }
-        .sheet(isPresented: $showingEditSheet) {
-            ProjectEditView(project: project)
-        }
-    }
-    
-    private var projectHeader: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Status: \(project.status)")
-                .font(.headline)
-            Text("Started: \(project.startDate)")
-                .font(.subheadline)
-            Text("Last modified: \(project.lastModified)")
-                .font(.subheadline)
-        }
-    }
-    
-    private var projectDetails: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Current Row: \(project.currentRow)")
-                .font(.headline)
-        }
-    }
-    
-    private var patternNotesSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Pattern Notes")
-                .font(.headline)
-            Text(project.patternNotes ?? "No pattern notes")
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
-        }
-    }
-    
-    private var yarnsSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Yarns")
-                .font(.headline)
-            if let yarns = project.yarns, !yarns.isEmpty {
-                ForEach(Array(yarns), id: \.self) { yarn in
-                    Text(yarn.colorName)
-                        .padding()
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(8) 
-                }
-            } else {
-                Text("No yarns added")
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(8)
-            }
-        }
-     }
-}*/
-
 

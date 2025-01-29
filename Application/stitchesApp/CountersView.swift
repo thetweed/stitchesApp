@@ -8,9 +8,18 @@
 import SwiftUI
 import CoreData
 
+
+
 struct CountersView: View {
-    var body: some View{
-        StitchCounterView(context: CoreDataManager.shared.container.viewContext)
+    var body: some View {
+        BasicStitchCounterView(
+            context: CoreDataManager.shared.container.viewContext
+        )
     }
 }
 
+#Preview {
+    Previewing(\.sampleCounter) { counter in
+        CountersView()
+    }
+}

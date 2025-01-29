@@ -11,9 +11,14 @@ import CoreData
 class ProjectDetailViewModel: ObservableObject {
     @Published var project: Project
     @Published var showingEditSheet = false
+    @Published private(set) var yarns: [Yarn] = []
     
-    init(project: Project) {
+    private let context: NSManagedObjectContext
+    
+    init(project: Project, context: NSManagedObjectContext) {
         self.project = project
+        self.context = context
+        self.yarns = project.yarnsArray
     }
     
     var statusText: String {
@@ -21,11 +26,16 @@ class ProjectDetailViewModel: ObservableObject {
     }
     
     var startDateText: String {
-        "Started: \(project.startDate)"
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return "Started: \(formatter.string(from: project.startDate))"
     }
     
     var lastModifiedText: String {
-        "Last modified: \(project.lastModified)"
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        return "Last modified: \(formatter.string(from: project.lastModified))"
     }
     
     var currentRowText: String {
@@ -37,37 +47,44 @@ class ProjectDetailViewModel: ObservableObject {
     }
     
     var hasYarns: Bool {
-        guard let yarns = project.yarns else { return false }
-        return !yarns.isEmpty
+        !yarnsArray.isEmpty
     }
     
-    var yarns: Set<Yarn> {
-        project.yarns ?? Set()
-    }
-    
-    var sortedYarns: [Yarn] {
-        yarns.sorted { $0.colorName < $1.colorName }
+    var yarnsArray: [Yarn] {
+        project.yarnsArray
     }
     
     func removeYarn(_ yarn: Yarn) {
-        project.yarns?.remove(yarn)
+        context.performAndWait {
+            project.removeYarn(yarn, context: context)
+            objectWillChange.send()
+        }
     }
     
+    func refreshYarns() {
+        yarns = project.yarnsArray
+        objectWillChange.send()
+    }
+
     func debugYarns() {
         #if DEBUG
         print("📊 ViewModel Yarn Debug:")
         print("Project: \(project.name)")
-        print("Yarns count in ViewModel: \(yarns.count)")
+        print("Yarns count in ViewModel: \(yarnsArray.count)")
         
-        // Check if yarns array matches CoreData relationship
-        if let coreDataYarns = project.yarns {
-            let matchingYarns = yarns.filter { viewModelYarn in
-                coreDataYarns.contains { coreDataYarn in
-                    coreDataYarn.id == viewModelYarn.id
-                }
-            }
-            print("Matching yarns count: \(matchingYarns.count)")
-            print("Mismatched yarns count: \(yarns.count - matchingYarns.count)")
+        let coreDataYarns = project.yarns as? Set<Yarn> ?? []
+        print("CoreData yarns count: \(coreDataYarns.count)")
+        
+        let yarnsSet = Set(yarnsArray)
+        let matchingYarns = yarnsSet.intersection(coreDataYarns)
+        print("Matching yarns count: \(matchingYarns.count)")
+        print("Mismatched yarns count: \(yarnsSet.count - matchingYarns.count)")
+        
+        print("\nDetailed Yarn Information:")
+        yarnsArray.forEach { yarn in
+            print("- Yarn: \(yarn.colorName)")
+            print("  Brand: \(yarn.brand)")
+            print("  ID: \(yarn.id)")
         }
         #endif
     }

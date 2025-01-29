@@ -22,11 +22,12 @@ class ProjectAddEditViewModel: ObservableObject {
     init(project: Project, viewContext: NSManagedObjectContext) {
         self.project = project
         self.viewContext = viewContext
+        
         self.name = project.name
         self.patternNotes = project.patternNotes ?? ""
         self.status = project.status
         self.currentRow = project.currentRow
-        self.yarns = project.yarns ?? []
+        self.yarns = project.yarns as? Set<Yarn> ?? []
     }
     
     var sortedYarns: [Yarn] {
@@ -37,28 +38,6 @@ class ProjectAddEditViewModel: ObservableObject {
         !name.isEmpty
     }
     
-    /*func updateProject() {
-        guard isValid else { return }
-        
-        viewContext.performAndWait {
-            project.name = name
-            project.patternNotes = patternNotes
-            project.status = status
-            project.currentRow = currentRow
-            project.lastModified = Date()
-            
-            let currentYarns = project.yarns ?? Set<Yarn>()
-            
-            let yarnsToRemove = currentYarns.subtracting(yarns)
-            let yarnsToAdd = yarns.subtracting(currentYarns)
-            
-            yarnsToRemove.forEach { project.removeFromYarns($0) }
-            yarnsToAdd.forEach { project.addToYarns($0) }
-            
-            try? viewContext.save()
-        }
-    }*/
-    
     func updateProject() {
         guard isValid else { return }
         
@@ -68,46 +47,35 @@ class ProjectAddEditViewModel: ObservableObject {
             project.status = status
             project.currentRow = currentRow
             project.lastModified = Date()
-            let currentYarns = project.yarns ?? Set<Yarn>()
+ 
+            let currentYarns = project.yarns as? Set<Yarn> ?? []
             
             currentYarns.subtracting(yarns).forEach { yarn in
-                project.removeFromYarns(yarn)
-                yarn.removeFromProjects(project)
+                project.removeYarn(yarn, context: viewContext)
             }
-
             yarns.subtracting(currentYarns).forEach { yarn in
-                project.addToYarns(yarn)
-                yarn.addToProjects(project)
+                project.addYarn(yarn, context: viewContext)
             }
             
-            do {
-                try viewContext.save()
-            } catch {
-                print("Failed to save context: \(error)")
-            }
-#if DEBUG
-print("Before update - Current yarns count: \(currentYarns.count)")
-print("View model yarns count: \(yarns.count)")
-#endif
+            try? viewContext.save()
         }
-#if DEBUG
-print("After update - Project yarns count: \(project.yarns?.count ?? 0)")
-#endif
     }
     
     func saveProject() {
         viewContext.performAndWait {
-            let project = Project(context: viewContext)
-            project.id = UUID()
-            project.name = name
+            let project = Project.create(
+                in: viewContext,
+                name: name,
+                projectType: "knitting", // You might want to make this configurable
+                startDate: Date()
+            )
+            
             project.patternNotes = patternNotes
             project.status = status
             project.currentRow = currentRow
-            project.startDate = Date()
-            project.lastModified = Date()
-            
-            yarns.forEach { project.addToYarns($0) }
-
+            yarns.forEach { yarn in
+                project.addYarn(yarn, context: viewContext)
+            }
             
             try? viewContext.save()
         }
@@ -121,7 +89,3 @@ print("After update - Project yarns count: \(project.yarns?.count ?? 0)")
         yarns.remove(yarn)
     }
 }
-
-
-//            project.yarns?.forEach { project.removeFromYarns($0) }
-//            yarns.forEach { project.addToYarns($0) }

@@ -9,36 +9,55 @@ import CoreData
 
 class ProjectListViewModel: ObservableObject {
     @Published var showingAddProject = false {
-            didSet {
-                print("showingAddProject didSet: \(showingAddProject)")
-                objectWillChange.send()
-            }
+        didSet {
+            #if DEBUG
+            print("showingAddProject didSet: \(showingAddProject)")
+            #endif
+            objectWillChange.send()
         }
-    let viewContext: NSManagedObjectContext
+    }
+    
+    private let viewContext: NSManagedObjectContext
     
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
+        setupNotifications()
+    }
+    
+    private func setupNotifications() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(managedObjectContextObjectsDidChange),
             name: .NSManagedObjectContextObjectsDidChange,
-            object: viewContext)
+            object: viewContext
+        )
     }
     
     func projectFetchRequest() -> NSFetchRequest<Project> {
-        let request: NSFetchRequest<Project> = Project.fetchRequest() as! NSFetchRequest<Project>
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Project.name, ascending: true)]
+        let request = Project.fetchRequest() as! NSFetchRequest<Project>
+        request.sortDescriptors = [
+            NSSortDescriptor(keyPath: \Project.lastModified, ascending: false),
+            NSSortDescriptor(keyPath: \Project.name, ascending: true)
+        ]
         request.predicate = NSPredicate(format: "deleted == NO")
         return request
     }
     
     @objc private func managedObjectContextObjectsDidChange() {
-        objectWillChange.send()
-    }
-      
-    func toggleAddProject() {
-        showingAddProject.toggle()
-        print("Toggle called: \(showingAddProject)") // Debug
+        DispatchQueue.main.async {
+            self.objectWillChange.send()
+        }
     }
     
+    func toggleAddProject() {
+        showingAddProject.toggle()
+        #if DEBUG
+        print("Toggle called: \(showingAddProject)")
+        #endif
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
+

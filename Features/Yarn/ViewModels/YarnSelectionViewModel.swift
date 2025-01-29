@@ -10,7 +10,6 @@ import CoreData
 
 class YarnSelectionViewModel: ObservableObject {
     @Published var selectedYarns: Set<Yarn>
-    @Published var error: Error?
     private let viewContext: NSManagedObjectContext
     
     init(selectedYarns: Set<Yarn>, viewContext: NSManagedObjectContext) {
@@ -18,18 +17,13 @@ class YarnSelectionViewModel: ObservableObject {
         self.viewContext = viewContext
     }
     
-    func fetchYarns() -> NSFetchRequest<Yarn> {
+    func yarnFetchRequest() -> NSFetchRequest<Yarn> {
         let request: NSFetchRequest<Yarn> = Yarn.fetchRequest() as! NSFetchRequest<Yarn>
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Yarn.colorName, ascending: true)]
+        request.sortDescriptors = [
+            NSSortDescriptor(keyPath: \Yarn.brand, ascending: true),
+            NSSortDescriptor(keyPath: \Yarn.colorName, ascending: true)
+        ]
         return request
-    }
-    
-    func loadYarns() {
-        do {
-            let _yarns = try viewContext.fetch(fetchYarns())
-        } catch {
-            self.error = error
-        }
     }
     
     func toggleSelection(for yarn: Yarn) {
@@ -39,4 +33,9 @@ class YarnSelectionViewModel: ObservableObject {
             selectedYarns.insert(yarn)
         }
     }
+    
+    func isSelected(_ yarn: Yarn) -> Bool {
+        selectedYarns.contains(yarn)
+    }
 }
+

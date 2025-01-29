@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-class YarnRepository: Identifiable {
+/* class YarnRepository: Identifiable {
     
     let viewContext: NSManagedObjectContext
     
@@ -65,3 +65,4 @@ class YarnRepository: Identifiable {
     }
 }
 
+*/

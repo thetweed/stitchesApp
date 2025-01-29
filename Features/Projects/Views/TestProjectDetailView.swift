@@ -5,7 +5,7 @@
 //  Created by Laurie on 1/28/25.
 //
 
-import SwiftUI
+/*import SwiftUI
 import CoreData
 
 struct TestProjectDetailView: View {
@@ -15,7 +15,147 @@ struct TestProjectDetailView: View {
     
     init(project: Project) {
         self.project = project
-        _viewModel = StateObject(wrappedValue: ProjectDetailViewModel(project: project))
+        _viewModel = StateObject(wrappedValue: ProjectDetailViewModel(
+            project: project,
+            context: CoreDataManager.shared.container.viewContext
+        ))
+    }
+    
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                projectHeader
+                projectDetails
+                patternNotesSection
+                yarnsSection
+            }
+            .padding()
+        }
+        .navigationTitle(viewModel.project.name)
+        .toolbar {
+            Button("Edit") {
+                viewModel.showingEditSheet.toggle()
+            }
+        }
+        .sheet(isPresented: $viewModel.showingEditSheet) {
+            TestEditView(project: viewModel.project, viewContext: viewContext)
+        }
+    }
+    
+    private var projectHeader: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(viewModel.statusText)
+                .font(.headline)
+            Text(viewModel.startDateText)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+            Text(viewModel.lastModifiedText)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+        }
+    }
+    
+    private var projectDetails: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(viewModel.currentRowText)
+                .font(.headline)
+        }
+    }
+    
+    private var patternNotesSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Pattern Notes")
+                .font(.headline)
+            Text(viewModel.patternNotes)
+                .padding()
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(8)
+        }
+    }
+    
+    private var yarnsSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Yarns")
+                .font(.headline)
+            
+            if !viewModel.hasYarns {
+                Text("No yarns added")
+                    .foregroundColor(.secondary)
+                    .padding(.top, 4)
+            } else {
+                ForEach(viewModel.yarnsArray, id: \.safeID) { yarn in
+                    YarnRowView(yarn: yarn)
+                        .swipeActions {
+                            Button(role: .destructive) {
+                                viewModel.removeYarn(yarn)
+                            } label: {
+                                Label("Remove", systemImage: "trash")
+                            }
+                        }
+                }
+            }
+        }
+        .onAppear {
+            debugYarns()
+        }
+    }
+    
+    private func debugYarns() {
+        #if DEBUG
+        print("🧶 Debugging Project Yarns:")
+        print("Project ID: \(project.id.uuidString)")
+        print("Project Name: \(project.name)")
+        
+        // Debug CoreData relationship
+        let yarnsCount = project.yarnsArray.count
+        print("Number of yarns in CoreData: \(yarnsCount)")
+        project.yarnsArray.forEach { yarn in
+            print("- Yarn: \(yarn.colorName), ID: \(yarn.id.uuidString)")
+        }
+        
+        // Debug ViewModel state
+        print("\nViewModel Yarns Count: \(viewModel.yarnsArray.count)")
+        viewModel.debugYarns()
+        #endif
+    }
+}
+
+struct TestProjectDetailView_Previews: PreviewProvider {
+   static let context = CoreDataManager.shared.container.viewContext
+   
+    static var previews: some View {
+        let sampleData = PreviewingData()
+        let projects = sampleData.sampleProjects(context)
+        return NavigationStack {
+            TestProjectDetailView(project: projects[0])
+                .environment(\.managedObjectContext, context)
+        }
+    }
+}
+
+
+/*private var yarnsSection: some View {
+    Section(header: Text("Yarns")) {
+        if viewModel.yarns.isEmpty {
+            Text("No yarns added")
+                .foregroundColor(.secondary)
+        } else {
+            ForEach(viewModel.sortedYarns, id: \.safeID) { yarn in
+                YarnRowView(yarn: yarn)
+            }
+        }
+    }
+}*/
+
+
+/*struct TestProjectDetailView: View {
+    let project: Project
+    @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var viewModel: ProjectDetailViewModel
+    
+    init(project: Project) {
+        self.project = project
+        _viewModel = StateObject(wrappedValue: ProjectDetailViewModel(project: project, context: CoreDataManager.shared.container.viewContext))
     }
     
     var body: some View {
@@ -102,31 +242,5 @@ struct TestProjectDetailView: View {
         }
     }
 
-}
-
-struct TestProjectDetailView_Previews: PreviewProvider {
-   static let context = CoreDataManager.shared.container.viewContext
-   
-    static var previews: some View {
-        let sampleData = PreviewingData()
-        let projects = sampleData.sampleProjects(context)
-        return NavigationStack {
-            TestProjectDetailView(project: projects[0])
-                .environment(\.managedObjectContext, context)
-        }
-    }
-}
-
-
-/*private var yarnsSection: some View {
-    Section(header: Text("Yarns")) {
-        if viewModel.yarns.isEmpty {
-            Text("No yarns added")
-                .foregroundColor(.secondary)
-        } else {
-            ForEach(viewModel.sortedYarns, id: \.safeID) { yarn in
-                YarnRowView(yarn: yarn)
-            }
-        }
-    }
 }*/
+*/

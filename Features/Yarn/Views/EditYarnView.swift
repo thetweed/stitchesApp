@@ -9,107 +9,84 @@ import SwiftUI
 import CoreData
 
 struct EditYarnView: View {
-   @ObservedObject var viewModel: EditYarnViewModel
-   @Environment(\.dismiss) private var dismiss
-   @State private var yardageString: String = ""
-   @State private var showingError = false
-   
-   private func save() {
-       do {
-           try viewModel.saveChanges()
-           dismiss()
-       } catch {
-           showingError = true
-       }
-   }
-   
-   var body: some View {
-       Form {
-           TextField("Brand", text: $viewModel.brand)
-           TextField("Color", text: $viewModel.colorName)
-           TextField("Weight Category", text: $viewModel.weightCategory)
-           TextField("Fiber Content", text: $viewModel.fiberContent)
-           TextField("Total Yardage", text: $yardageString)
-               .keyboardType(.decimalPad)
-               .onChange(of: yardageString) { oldValue, newValue in
-                   if let yards = Double(newValue) {
-                       viewModel.totalYardage = yards
-                   }
-               }
-       }
-       .navigationTitle("Edit Yarn")
-       .toolbar {
-           ToolbarItem(placement: .confirmationAction) {
-               Button("Save") {
-                   save()
-               }
-               .disabled(!viewModel.isFormValid)
-           }
-           ToolbarItem(placement: .cancellationAction) {
-               Button("Cancel", role: .cancel) {
-                   dismiss()
-               }
-           }
-       }
-       .alert("Invalid Yardage", isPresented: $showingError) {
-           Button("OK", role: .cancel) {}
-       }
-       .onAppear {
-           yardageString = String(viewModel.totalYardage)
-       }
-       .onDisappear {
-           if let context = viewModel.yarn.managedObjectContext {
-               try? context.save()
-           }
-       }
-   }
-}
-
-/*struct EditYarnView: View {
-    @StateObject var viewModel: EditYarnViewModel
+    @ObservedObject var viewModel: EditYarnViewModel
     @Environment(\.dismiss) private var dismiss
     @State private var yardageString: String = ""
     @State private var showingError = false
+    @State private var errorMessage = ""
     
     var body: some View {
         Form {
+            yarnDetailsSection
+            measurementsSection
+            propertiesSection
+        }
+        .navigationTitle("Edit Yarn")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Save") {
+                    save()
+                }
+                .disabled(!viewModel.isFormValid)
+            }
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel", role: .cancel) {
+                    dismiss()
+                }
+            }
+        }
+        .alert("Error", isPresented: $showingError) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(errorMessage)
+        }
+        .onAppear {
+            yardageString = String(format: "%.1f", viewModel.totalYardage)
+        }
+    }
+    
+    private var yarnDetailsSection: some View {
+        Section("Yarn Details") {
             TextField("Brand", text: $viewModel.brand)
-            TextField("Color", text: $viewModel.colorName)
-            TextField("Weight Category", text: $viewModel.weightCategory)
-            TextField("Fiber Content", text: $viewModel.fiberContent)
+                .textInputAutocapitalization(.words)
+            TextField("Color Name", text: $viewModel.colorName)
+                .textInputAutocapitalization(.words)
+            TextField("Color Number", text: $viewModel.colorNumber)
+        }
+    }
+    
+    private var measurementsSection: some View {
+        Section("Measurements") {
             TextField("Total Yardage", text: $yardageString)
                 .keyboardType(.decimalPad)
-                .onChange(of: yardageString) { newValue in
+                .onChange(of: yardageString) { oldValue, newValue in
                     if let yards = Double(newValue) {
                         viewModel.totalYardage = yards
                     }
                 }
-                .navigationTitle("Edit Yarn")
-                .toolbar {
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button("Save") {
-                            save()
-                        }
-                        .disabled(!viewModel.isFormValid)
-                    }
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Cancel", role: .cancel) {
-                            dismiss()
-                        }
-                    }
-                }
-                .alert("Invalid Yardage", isPresented: $showingError) {
-                    Button("OK", role: .cancel) {}
-                }
-        }
-        
-        func save() {
-            do {
-                try viewModel.saveChanges()
-                dismiss()
-            } catch {
-                showingError = true
-            }
         }
     }
-}*/
+    
+    private var propertiesSection: some View {
+        Section("Properties") {
+            Picker("Weight Category", selection: $viewModel.weightCategory) {
+                ForEach(Yarn.weightCategories, id: \.self) {
+                    Text($0)
+                }
+            }
+            TextField("Fiber Content", text: $viewModel.fiberContent)
+                .textInputAutocapitalization(.words)
+        }
+    }
+    
+    private func save() {
+        do {
+            try viewModel.saveChanges()
+            dismiss()
+        } catch {
+            errorMessage = error.localizedDescription
+            showingError = true
+        }
+    }
+}

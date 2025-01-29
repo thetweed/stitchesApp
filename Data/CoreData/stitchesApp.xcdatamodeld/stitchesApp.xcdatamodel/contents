@@ -7,12 +7,11 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="lastModified" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="project" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="targetCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="counterProject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="projectCounter" inverseEntity="Project"/>
+        <relationship name="toProject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="counters" inverseEntity="Project"/>
     </entity>
     <entity name="Project" representedClassName=".Project" syncable="YES">
-        <attribute name="counters" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="currentRow" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="deleted" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -23,9 +22,8 @@
         <attribute name="projectType" attributeType="String" defaultValueString="Crochet"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="status" optional="YES" attributeType="String" defaultValueString="Not Started"/>
-        <attribute name="yarns" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <relationship name="projectCounter" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Counter" inverseName="counterProject" inverseEntity="Counter"/>
-        <relationship name="projectYarn" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Yarn" inverseName="yarnProject" inverseEntity="Yarn"/>
+        <relationship name="counters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Counter" inverseName="toProject" inverseEntity="Counter"/>
+        <relationship name="yarns" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Yarn" inverseName="projects" inverseEntity="Yarn"/>
     </entity>
     <entity name="Yarn" representedClassName=".Yarn" syncable="YES">
         <attribute name="brand" optional="YES" attributeType="String"/>
@@ -35,11 +33,10 @@
         <attribute name="fiberContent" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="photoData" optional="YES" attributeType="Binary"/>
-        <attribute name="projects" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="purchaseDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="totalYardage" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="usedYardage" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="weightCategory" optional="YES" attributeType="String"/>
-        <relationship name="yarnProject" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="projectYarn" inverseEntity="Project"/>
+        <relationship name="projects" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="yarns" inverseEntity="Project"/>
     </entity>
 </model>

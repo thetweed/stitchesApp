@@ -11,45 +11,75 @@ import CoreData
 struct AddYarnView: View {
     @StateObject var viewModel: AddYarnViewModel
     @Environment(\.dismiss) private var dismiss
-    
-    init(viewModel: AddYarnViewModel) {
-         _viewModel = StateObject(wrappedValue: viewModel)
-     }
-    
-    let context = CoreDataManager.shared.container.viewContext
+    @State private var showingError = false
+    @State private var errorMessage = ""
     
     var body: some View {
         NavigationStack {
             Form {
-                Section {
-                    TextField("Brand", text: $viewModel.brand)
-                    TextField("Color Name", text: $viewModel.colorName)
-                    TextField("Weight Category", text: $viewModel.weightCategory)
-                    TextField("Fiber Content", text: $viewModel.fiberContent)
-                    TextField("Total Yardage", text: $viewModel.totalYardage)
-                        .keyboardType(.decimalPad)
+                yarnDetailsSection
+                measurementsSection
+                propertiesSection
+            }
+            .navigationTitle("Add Yarn")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel", role: .cancel) {
+                        dismiss()
+                    }
                 }
-                
-                Section {
+                ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
-                        do {
-                            try viewModel.saveYarn()
-                            dismiss()
-                        } catch {
-                            print("Error saving yarn: \(error)")
-                        }
+                        save()
                     }
-                }
-                .navigationTitle("Add Yarn")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button("Cancel") {
-                            dismiss()
-                        }
-                    }
+                    .disabled(!viewModel.isFormValid)
                 }
             }
         }
+        .alert("Error", isPresented: $showingError) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(errorMessage)
+        }
     }
     
+    private var yarnDetailsSection: some View {
+        Section("Yarn Details") {
+            TextField("Brand", text: $viewModel.brand)
+                .textInputAutocapitalization(.words)
+            TextField("Color Name", text: $viewModel.colorName)
+                .textInputAutocapitalization(.words)
+            TextField("Color Number", text: $viewModel.colorNumber)
+        }
+    }
+    
+    private var measurementsSection: some View {
+        Section("Measurements") {
+            TextField("Total Yardage", text: $viewModel.totalYardage)
+                .keyboardType(.decimalPad)
+        }
+    }
+    
+    private var propertiesSection: some View {
+        Section("Properties") {
+            Picker("Weight Category", selection: $viewModel.weightCategory) {
+                ForEach(Yarn.weightCategories, id: \.self) {
+                    Text($0)
+                }
+            }
+            TextField("Fiber Content", text: $viewModel.fiberContent)
+                .textInputAutocapitalization(.words)
+        }
+    }
+    
+    private func save() {
+        do {
+            try viewModel.saveYarn()
+            dismiss()
+        } catch {
+            errorMessage = error.localizedDescription
+            showingError = true
+        }
+    }
 }

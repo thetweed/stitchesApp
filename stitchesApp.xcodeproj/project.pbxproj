@@ -10,7 +10,6 @@
 		5B0637422D3AFAD9001D35E2 /* ProjectDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637412D3AFAD1001D35E2 /* ProjectDetailViewModel.swift */; };
 		5B0637442D3AFAE2001D35E2 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637432D3AFADD001D35E2 /* ProjectListView.swift */; };
 		5B0637462D3AFAEB001D35E2 /* ProjectRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637452D3AFAE6001D35E2 /* ProjectRowView.swift */; };
-		5B06374A2D3AFAFD001D35E2 /* AddProjectFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637492D3AFAF7001D35E2 /* AddProjectFormView.swift */; };
 		5B06374D2D3AFB28001D35E2 /* ProjectDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B06374C2D3AFB21001D35E2 /* ProjectDetailView.swift */; };
 		5B06374F2D3AFB2F001D35E2 /* ProjectEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B06374E2D3AFB2B001D35E2 /* ProjectEditView.swift */; };
 		5B0637512D419CD0001D35E2 /* YarnSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637502D419CCA001D35E2 /* YarnSelectionView.swift */; };
@@ -20,7 +19,6 @@
 		5B0637A82D430C33001D35E2 /* EditYarnViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637A72D430C2E001D35E2 /* EditYarnViewModel.swift */; };
 		5B0637AA2D430CB7001D35E2 /* EditYarnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637A92D430CB5001D35E2 /* EditYarnView.swift */; };
 		5B0637AC2D430D87001D35E2 /* ProjectAddEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637AB2D430D7F001D35E2 /* ProjectAddEditViewModel.swift */; };
-		5B0637AE2D430E09001D35E2 /* ProjectEditFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637AD2D430E05001D35E2 /* ProjectEditFormView.swift */; };
 		5B0637B02D431130001D35E2 /* ProjectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637AF2D43112B001D35E2 /* ProjectListViewModel.swift */; };
 		5B0637B42D442B72001D35E2 /* YarnInventoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637B32D442B69001D35E2 /* YarnInventoryViewModel.swift */; };
 		5B0637B72D442B8F001D35E2 /* YarnInventoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0637B62D442B89001D35E2 /* YarnInventoryView.swift */; };
@@ -53,6 +51,19 @@
 		5B4305602D48417C0038D6C7 /* TestYarnListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43055F2D4841790038D6C7 /* TestYarnListView.swift */; };
 		5B4305632D499E490038D6C7 /* TestEditDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305622D499E450038D6C7 /* TestEditDetailView.swift */; };
 		5B4305652D499FC40038D6C7 /* TestProjectDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305642D499FBD0038D6C7 /* TestProjectDetailView.swift */; };
+		5B4305672D49BE4F0038D6C7 /* ProjectYarnManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305662D49BE4A0038D6C7 /* ProjectYarnManager.swift */; };
+		5B43056F2D49D1470038D6C7 /* ProjectFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43056E2D49D1420038D6C7 /* ProjectFormView.swift */; };
+		5B4305712D49EBE90038D6C7 /* CounterSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305702D49EBE40038D6C7 /* CounterSetupView.swift */; };
+		5B4305732D49EC3A0038D6C7 /* StitchCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305722D49EC330038D6C7 /* StitchCounterViewModel.swift */; };
+		5B4305752D49EC8A0038D6C7 /* StitchCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305742D49EC850038D6C7 /* StitchCounterView.swift */; };
+		5B4305772D49ECEA0038D6C7 /* CounterRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305762D49ECE60038D6C7 /* CounterRowView.swift */; };
+		5B43057F2D4A0F720038D6C7 /* Notification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43057E2D4A0F6B0038D6C7 /* Notification.Name.swift */; };
+		5B4305812D4A0F960038D6C7 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305802D4A0F920038D6C7 /* NotificationManager.swift */; };
+		5B4305892D4A18220038D6C7 /* CounterNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305882D4A181E0038D6C7 /* CounterNavigationView.swift */; };
+		5B43058B2D4A18460038D6C7 /* CounterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43058A2D4A18430038D6C7 /* CounterListView.swift */; };
+		5B43058D2D4A19450038D6C7 /* AllCountersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43058C2D4A19420038D6C7 /* AllCountersListView.swift */; };
+		5B43058F2D4A221C0038D6C7 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43058E2D4A22190038D6C7 /* DashboardView.swift */; };
+		5B4305912D4A26E30038D6C7 /* DeprecatedContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305902D4A26DF0038D6C7 /* DeprecatedContentView.swift */; };
 		5B6242A22D385EC2008DE40D /* BasicStitchCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6242A12D385EC2008DE40D /* BasicStitchCounterViewModel.swift */; };
 		5B6242A42D3860CB008DE40D /* BasicStitchCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6242A32D3860CB008DE40D /* BasicStitchCounterView.swift */; };
 /* End PBXBuildFile section */
@@ -78,7 +89,6 @@
 		5B0637412D3AFAD1001D35E2 /* ProjectDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailViewModel.swift; sourceTree = "<group>"; };
 		5B0637432D3AFADD001D35E2 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		5B0637452D3AFAE6001D35E2 /* ProjectRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRowView.swift; sourceTree = "<group>"; };
-		5B0637492D3AFAF7001D35E2 /* AddProjectFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectFormView.swift; sourceTree = "<group>"; };
 		5B06374C2D3AFB21001D35E2 /* ProjectDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailView.swift; sourceTree = "<group>"; };
 		5B06374E2D3AFB2B001D35E2 /* ProjectEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectEditView.swift; sourceTree = "<group>"; };
 		5B0637502D419CCA001D35E2 /* YarnSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YarnSelectionView.swift; sourceTree = "<group>"; };
@@ -88,7 +98,6 @@
 		5B0637A72D430C2E001D35E2 /* EditYarnViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditYarnViewModel.swift; sourceTree = "<group>"; };
 		5B0637A92D430CB5001D35E2 /* EditYarnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditYarnView.swift; sourceTree = "<group>"; };
 		5B0637AB2D430D7F001D35E2 /* ProjectAddEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectAddEditViewModel.swift; sourceTree = "<group>"; };
-		5B0637AD2D430E05001D35E2 /* ProjectEditFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectEditFormView.swift; sourceTree = "<group>"; };
 		5B0637AF2D43112B001D35E2 /* ProjectListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModel.swift; sourceTree = "<group>"; };
 		5B0637B32D442B69001D35E2 /* YarnInventoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YarnInventoryViewModel.swift; sourceTree = "<group>"; };
 		5B0637B62D442B89001D35E2 /* YarnInventoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YarnInventoryView.swift; sourceTree = "<group>"; };
@@ -124,6 +133,19 @@
 		5B43055F2D4841790038D6C7 /* TestYarnListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestYarnListView.swift; sourceTree = "<group>"; };
 		5B4305622D499E450038D6C7 /* TestEditDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestEditDetailView.swift; sourceTree = "<group>"; };
 		5B4305642D499FBD0038D6C7 /* TestProjectDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProjectDetailView.swift; sourceTree = "<group>"; };
+		5B4305662D49BE4A0038D6C7 /* ProjectYarnManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectYarnManager.swift; sourceTree = "<group>"; };
+		5B43056E2D49D1420038D6C7 /* ProjectFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFormView.swift; sourceTree = "<group>"; };
+		5B4305702D49EBE40038D6C7 /* CounterSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterSetupView.swift; sourceTree = "<group>"; };
+		5B4305722D49EC330038D6C7 /* StitchCounterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StitchCounterViewModel.swift; sourceTree = "<group>"; };
+		5B4305742D49EC850038D6C7 /* StitchCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StitchCounterView.swift; sourceTree = "<group>"; };
+		5B4305762D49ECE60038D6C7 /* CounterRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterRowView.swift; sourceTree = "<group>"; };
+		5B43057E2D4A0F6B0038D6C7 /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
+		5B4305802D4A0F920038D6C7 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		5B4305882D4A181E0038D6C7 /* CounterNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterNavigationView.swift; sourceTree = "<group>"; };
+		5B43058A2D4A18430038D6C7 /* CounterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterListView.swift; sourceTree = "<group>"; };
+		5B43058C2D4A19420038D6C7 /* AllCountersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCountersListView.swift; sourceTree = "<group>"; };
+		5B43058E2D4A22190038D6C7 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		5B4305902D4A26DF0038D6C7 /* DeprecatedContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeprecatedContentView.swift; sourceTree = "<group>"; };
 		5B6242A12D385EC2008DE40D /* BasicStitchCounterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStitchCounterViewModel.swift; sourceTree = "<group>"; };
 		5B6242A32D3860CB008DE40D /* BasicStitchCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStitchCounterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -190,6 +212,8 @@
 		5B16DE262D137FE9008B5FEB /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				5B4305802D4A0F920038D6C7 /* NotificationManager.swift */,
+				5B4305662D49BE4A0038D6C7 /* ProjectYarnManager.swift */,
 				5B1D8F5C2D13774200297376 /* stitchesApp.xcdatamodeld */,
 				5B16DE272D137FEE008B5FEB /* Models */,
 				5B37E4FF2D3730E4005A3031 /* CoreDataManager.swift */,
@@ -200,6 +224,7 @@
 		5B16DE272D137FEE008B5FEB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				5B43057E2D4A0F6B0038D6C7 /* Notification.Name.swift */,
 				5B0637FA2D44CDA6001D35E2 /* View.swift */,
 				5B37E4F92D372CF4005A3031 /* Project.swift */,
 				5B37E4FB2D372D01005A3031 /* Yarn.swift */,
@@ -235,6 +260,8 @@
 		5B1D8F502D13774100297376 /* stitchesApp */ = {
 			isa = PBXGroup;
 			children = (
+				5B4305902D4A26DF0038D6C7 /* DeprecatedContentView.swift */,
+				5B43058E2D4A22190038D6C7 /* DashboardView.swift */,
 				5B0637FC2D44DD5B001D35E2 /* AlbumView.swift */,
 				5B1D8F532D13774100297376 /* ContentView.swift */,
 				5B1D8F512D13774100297376 /* stitchesAppApp.swift */,
@@ -301,6 +328,12 @@
 		5B37E4EE2D138284005A3031 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B43058C2D4A19420038D6C7 /* AllCountersListView.swift */,
+				5B43058A2D4A18430038D6C7 /* CounterListView.swift */,
+				5B4305882D4A181E0038D6C7 /* CounterNavigationView.swift */,
+				5B4305762D49ECE60038D6C7 /* CounterRowView.swift */,
+				5B4305742D49EC850038D6C7 /* StitchCounterView.swift */,
+				5B4305702D49EBE40038D6C7 /* CounterSetupView.swift */,
 				5B6242A32D3860CB008DE40D /* BasicStitchCounterView.swift */,
 			);
 			path = Views;
@@ -309,6 +342,7 @@
 		5B37E4EF2D138288005A3031 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				5B4305722D49EC330038D6C7 /* StitchCounterViewModel.swift */,
 				5B6242A12D385EC2008DE40D /* BasicStitchCounterViewModel.swift */,
 			);
 			path = ViewModels;
@@ -317,15 +351,14 @@
 		5B37E4F02D138291005A3031 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5B4305642D499FBD0038D6C7 /* TestProjectDetailView.swift */,
-				5B4305622D499E450038D6C7 /* TestEditDetailView.swift */,
-				5B06380A2D46F7BD001D35E2 /* AddProjectView.swift */,
-				5B0637AD2D430E05001D35E2 /* ProjectEditFormView.swift */,
+				5B43056E2D49D1420038D6C7 /* ProjectFormView.swift */,
 				5B06374E2D3AFB2B001D35E2 /* ProjectEditView.swift */,
+				5B06380A2D46F7BD001D35E2 /* AddProjectView.swift */,
 				5B06374C2D3AFB21001D35E2 /* ProjectDetailView.swift */,
 				5B0637432D3AFADD001D35E2 /* ProjectListView.swift */,
-				5B0637492D3AFAF7001D35E2 /* AddProjectFormView.swift */,
 				5B0637452D3AFAE6001D35E2 /* ProjectRowView.swift */,
+				5B4305622D499E450038D6C7 /* TestEditDetailView.swift */,
+				5B4305642D499FBD0038D6C7 /* TestProjectDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -633,8 +666,14 @@
 				5B37E5062D3738CB005A3031 /* CounterRepository.swift in Sources */,
 				5B0637A12D42FACB001D35E2 /* YarnSelectionViewModel.swift in Sources */,
 				5B06374D2D3AFB28001D35E2 /* ProjectDetailView.swift in Sources */,
-				5B0637AE2D430E09001D35E2 /* ProjectEditFormView.swift in Sources */,
+				5B4305712D49EBE90038D6C7 /* CounterSetupView.swift in Sources */,
+				5B4305672D49BE4F0038D6C7 /* ProjectYarnManager.swift in Sources */,
+				5B4305772D49ECEA0038D6C7 /* CounterRowView.swift in Sources */,
+				5B43058B2D4A18460038D6C7 /* CounterListView.swift in Sources */,
+				5B4305892D4A18220038D6C7 /* CounterNavigationView.swift in Sources */,
+				5B4305812D4A0F960038D6C7 /* NotificationManager.swift in Sources */,
 				5B0637AC2D430D87001D35E2 /* ProjectAddEditViewModel.swift in Sources */,
+				5B43058D2D4A19450038D6C7 /* AllCountersListView.swift in Sources */,
 				5B0637F12D44ACE3001D35E2 /* YarnDetailViewModel.swift in Sources */,
 				5B0637B42D442B72001D35E2 /* YarnInventoryViewModel.swift in Sources */,
 				5B0637E92D4498BE001D35E2 /* SingleYarnPreview.swift in Sources */,
@@ -643,21 +682,26 @@
 				5B37E4FA2D372CF4005A3031 /* Project.swift in Sources */,
 				5B4305652D499FC40038D6C7 /* TestProjectDetailView.swift in Sources */,
 				5B37E50E2D384DAE005A3031 /* YarnbookView.swift in Sources */,
+				5B43056F2D49D1470038D6C7 /* ProjectFormView.swift in Sources */,
+				5B4305752D49EC8A0038D6C7 /* StitchCounterView.swift in Sources */,
 				5B0637A62D4305C8001D35E2 /* AddYarnView.swift in Sources */,
 				5B1D8F522D13774100297376 /* stitchesAppApp.swift in Sources */,
 				5B06380B2D46F7C2001D35E2 /* AddProjectView.swift in Sources */,
+				5B43057F2D4A0F720038D6C7 /* Notification.Name.swift in Sources */,
 				5B0637B02D431130001D35E2 /* ProjectListViewModel.swift in Sources */,
 				5B0637422D3AFAD9001D35E2 /* ProjectDetailViewModel.swift in Sources */,
 				5B37E4FC2D372D01005A3031 /* Yarn.swift in Sources */,
 				5B06374F2D3AFB2F001D35E2 /* ProjectEditView.swift in Sources */,
-				5B06374A2D3AFAFD001D35E2 /* AddProjectFormView.swift in Sources */,
 				5B37E50C2D384D6C005A3031 /* CountersView.swift in Sources */,
 				5B37E5002D3730E4005A3031 /* CoreDataManager.swift in Sources */,
 				5B0637FB2D44CDAD001D35E2 /* View.swift in Sources */,
+				5B43058F2D4A221C0038D6C7 /* DashboardView.swift in Sources */,
+				5B4305912D4A26E30038D6C7 /* DeprecatedContentView.swift in Sources */,
 				5B4305602D48417C0038D6C7 /* TestYarnListView.swift in Sources */,
 				5B37E4FE2D372D0B005A3031 /* Counter.swift in Sources */,
 				5B6242A22D385EC2008DE40D /* BasicStitchCounterViewModel.swift in Sources */,
 				5B0637512D419CD0001D35E2 /* YarnSelectionView.swift in Sources */,
+				5B4305732D49EC3A0038D6C7 /* StitchCounterViewModel.swift in Sources */,
 				5B37E50A2D384D36005A3031 /* ProjectsView.swift in Sources */,
 				5B37E5042D3738BB005A3031 /* YarnRepository.swift in Sources */,
 				5B0637C32D4475C9001D35E2 /* Previewing.swift in Sources */,

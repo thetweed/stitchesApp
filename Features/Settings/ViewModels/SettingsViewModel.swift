@@ -5,6 +5,7 @@
 //  Created by Laurie on 1/16/25.
 //
 
+
 import SwiftUI
 import CoreData
 
@@ -12,13 +13,14 @@ class SettingsViewModel: ObservableObject {
     
     static let shared = SettingsViewModel()
     
-/*    @Published var showSettings: Bool = false
-    @Published var showAbout: Bool = false
-    @Published var showReset: Bool = false
-    @Published var showAppTheme: Bool = false
-    @Published var showLanguage: Bool = false
-    @Published var showMeasurementSystem: Bool = false
- */
+    @Published var highContrast: Bool = false
+    @Published var boldText: Bool = false
+    @Published var autoIncrementRows: Bool = true
+    @Published var showNotesByDefault: Bool = true
+    @Published var showCompletedProjects: Bool = true
+    @Published var enableReminders: Bool = false
+    @Published var dailyNotifications: Bool = false
+    @Published var inactiveProjectReminders: Bool = false
     
     enum AppTheme: String, CaseIterable {
         case light

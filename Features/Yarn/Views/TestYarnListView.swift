@@ -10,41 +10,120 @@ import CoreData
 
 struct YarnListTestView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Yarn.colorName, ascending: true)],
-        animation: .default)
-    private var yarns: FetchedResults<Yarn>
+    @FetchRequest private var yarns: FetchedResults<Yarn>
+    
+    init() {
+        _yarns = FetchRequest<Yarn>(
+            sortDescriptors: [
+                NSSortDescriptor(keyPath: \Yarn.brand, ascending: true),
+                NSSortDescriptor(keyPath: \Yarn.colorName, ascending: true)
+            ],
+            predicate: NSPredicate(format: "deleted == NO"),
+            animation: .default
+        )
+    }
     
     var body: some View {
         List {
-            ForEach(yarns, id: \.safeID) { yarn in
-                VStack(alignment: .leading) {
-                    Text("Brand: \(yarn.brand)")
-                        .font(.headline)
-                    Text("Color: \(yarn.colorName)")
-                    Text("Weight: \(yarn.weightCategory)")
-                    Text("Yardage: \(String(format: "%.1f", yarn.totalYardage))")
-                    if let fiberContent = yarn.fiberContent {
-                        Text("Fiber: \(fiberContent)")
-                    }
-                }
-                .padding(.vertical, 4)
+            if yarns.isEmpty {
+                emptyStateView
+            } else {
+                yarnsList
             }
         }
-        .navigationTitle("All Yarns Test View")
+        .navigationTitle("Yarn Test View")
+        .navigationBarTitleDisplayMode(.large)
+    }
+    
+    private var yarnsList: some View {
+        ForEach(yarns, id: \.safeID) { yarn in
+            YarnTestRow(yarn: yarn)
+        }
+    }
+    
+    private var emptyStateView: some View {
+        Text("No yarns found")
+            .font(.callout)
+            .foregroundColor(.secondary)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .listRowBackground(Color.clear)
     }
 }
 
-struct YarnListTestView_Previews: PreviewProvider {
-    static let context = CoreDataManager.shared.container.viewContext
+struct YarnTestRow: View {
+    let yarn: Yarn
     
-    static var previews: some View {
-        let sampleData = PreviewingData()
-        let _ = sampleData.sampleYarns(context)
-        
-        return NavigationStack {
-            YarnListTestView()
-                .environment(\.managedObjectContext, context)
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Group {
+                yarnBasicInfo
+                yarnDetails
+                if !yarn.projectsArray.isEmpty {
+                    projectsInfo
+                }
+            }
+            .font(.subheadline)
+        }
+        .padding(.vertical, 8)
+    }
+    
+    private var yarnBasicInfo: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(yarn.brand)
+                .font(.headline)
+            
+            Text(yarn.colorName)
+                .foregroundColor(.secondary)
+            
+            if let colorNumber = yarn.colorNumber {
+                Text("Color #: \(colorNumber)")
+                    .foregroundColor(.secondary)
+            }
+        }
+    }
+    
+    private var yardDetails: some View {
+        HStack {
+            Text("Total: \(String(format: "%.1f", yarn.totalYardage))y")
+            Text("Used: \(String(format: "%.1f", yarn.usedYardage))y")
+            Text("Remaining: \(String(format: "%.1f", yarn.remainingYardage))y")
+        }
+        .font(.caption)
+        .foregroundColor(.secondary)
+    }
+    
+    private var yarnDetails: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Weight: \(yarn.weightCategory)")
+            
+            if let fiberContent = yarn.fiberContent {
+                Text("Fiber: \(fiberContent)")
+            }
+            
+            yardDetails
+        }
+    }
+    
+    private var projectsInfo: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Projects:")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            
+            ForEach(yarn.projectsArray) { project in
+                Text("• \(project.name)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
         }
     }
 }
+
+
+#Preview {
+    NavigationStack {
+        YarnListTestView()
+            .environment(\.managedObjectContext, CoreDataManager.shared.container.viewContext)
+    }
+}
+

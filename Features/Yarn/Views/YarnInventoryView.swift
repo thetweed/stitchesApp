@@ -11,60 +11,110 @@ import CoreData
 struct YarnInventoryView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel: YarnInventoryViewModel
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Yarn.colorName, ascending: true)],
-        predicate: NSPredicate(format: "deleted == NO"),
-        animation: .default
-    ) private var yarns: FetchedResults<Yarn>
+    @FetchRequest private var yarns: FetchedResults<Yarn>
     
     init(viewContext: NSManagedObjectContext) {
         let vm = YarnInventoryViewModel(viewContext: viewContext)
         _viewModel = StateObject(wrappedValue: vm)
+        _yarns = FetchRequest(fetchRequest: vm.yarnFetchRequest())
     }
     
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(yarns, id: \.safeID) { yarn in
-                    NavigationLink(value: yarn.safeID) {
-                        YarnRowView(yarn: yarn)
+            ScrollView {
+                LazyVStack(spacing: 20) {
+                    if !inUseYarns.isEmpty {
+                        yarnSection(
+                            title: "In Projects",
+                            systemImage: "knot",
+                            yarns: inUseYarns,
+                            accentColor: .blue
+                        )
+                    }
+                    
+                    if !availableYarns.isEmpty {
+                        yarnSection(
+                            title: "Available",
+                            systemImage: "circle.hexagongrid.fill",
+                            yarns: availableYarns,
+                            accentColor: .green
+                        )
+                    }
+                    
+                    if yarns.isEmpty {
+                        emptyStateView
                     }
                 }
-                .onDelete(perform: deleteYarn)
+                .padding()
             }
             .navigationTitle("Yarn Inventory")
-            .navigationDestination(for: NSManagedObjectID.self) { yarnID in
-                if let yarn = try? viewContext.existingObject(with: yarnID) as? Yarn {
-                    YarnDetailView(yarn: yarn)
-                        .environment(\.managedObjectContext, viewContext)
-                }
-            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: viewModel.toggleAddProject) {
-                        Label("New Yarn", systemImage: "plus")
+                    Button {
+                        viewModel.toggleAddYarn()
+                    } label: {
+                        Label("Add Yarn", systemImage: "plus")
                     }
                 }
             }
             .sheet(isPresented: $viewModel.showingAddYarn) {
-                AddYarnView(viewModel: AddYarnViewModel(viewContext: viewModel.viewContext))
+                NavigationStack {
+                    AddYarnView(viewModel: AddYarnViewModel(viewContext: viewContext))
+                }
             }
         }
-        .environment(\.managedObjectContext, viewContext)
     }
     
-    private func deleteYarn(at offsets: IndexSet) {
-        viewContext.performAndWait {
-            for index in offsets {
-                let yarn = yarns[index]
-                viewContext.delete(yarn)
+    private var inUseYarns: [Yarn] {
+        yarns.filter { !$0.projectsArray.isEmpty }
+    }
+    
+    private var availableYarns: [Yarn] {
+        yarns.filter { $0.projectsArray.isEmpty }
+    }
+    
+    private func yarnSection(title: String, systemImage: String, yarns: [Yarn], accentColor: Color) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Label(title, systemImage: systemImage)
+                .font(.headline)
+                .foregroundStyle(accentColor)
+                .padding(.leading, 4)
+            
+            VStack(spacing: 12) {
+                ForEach(yarns, id: \.safeID) { yarn in
+                    NavigationLink(destination: YarnDetailView(yarn: yarn)) {
+                        YarnRowView(yarn: yarn)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 12)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color(.systemBackground))
+                                    .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
+                            )
+                    }
+                }
             }
-            try? viewContext.save()
         }
     }
+    
+    private var emptyStateView: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "circle.hexagongrid.fill")
+                .font(.system(size: 48))
+                .foregroundStyle(.secondary)
+            
+            Text("No Yarn Yet")
+                .font(.headline)
+            
+            Text("Tap the + button to add your first yarn")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 40)
+    }
 }
-
-
 
 #Preview {
     Previewing(\.sampleYarns) { _ in

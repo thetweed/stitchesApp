@@ -9,17 +9,20 @@ import CoreData
 
 struct AddProjectView: View {
     @StateObject private var viewModel: ProjectAddEditViewModel
-    @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.dismiss) private var dismiss
     
     init(viewContext: NSManagedObjectContext) {
-        let newProject = Project(context: viewContext)
-        _viewModel = StateObject(wrappedValue: ProjectAddEditViewModel(project: newProject, viewContext: viewContext))
+        let project = Project.create(
+            in: viewContext,
+            name: "",
+            projectType: "knitting"
+        )
+        _viewModel = StateObject(wrappedValue: ProjectAddEditViewModel(
+            project: project,
+            viewContext: viewContext
+        ))
     }
     
     var body: some View {
-        NavigationStack {
-            AddProjectFormView(viewModel: viewModel)
-        }
+        ProjectFormView(viewModel: viewModel, isNewProject: true)
     }
 }

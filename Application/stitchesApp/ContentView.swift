@@ -9,56 +9,69 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     @State private var selectedTab = 0
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            HomeView()
-                .tabItem {
-                    Label("Settings", systemImage: "circle.circle.fill")
-                }
-                .tag(0)
+            // Dashboard Tab
+            NavigationStack {
+                DashboardView()
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            NavigationLink(destination: SettingsView()) {
+                                Image(systemName: "gear")
+                            }
+                        }
+                    }
+            }
+            .tabItem {
+                Label("Home", systemImage: "house.fill")
+            }
+            .tag(0)
             
-            ProjectsView()
-                .tabItem {
-                    Label("Projects", systemImage: "pin.circle.fill")
-                }
-                .tag(1)
+            // Projects Tab
+            NavigationStack {
+                ProjectListView(viewContext: viewContext)
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+            .tabItem {
+                Label("Projects", systemImage: "square.stack.3d.up.fill")
+            }
+            .tag(1)
             
-            CountersView()
-                .tabItem {
-                    Label("Counters", systemImage: "link.circle.fill")
-                }
-                .tag(2)
-
-            YarnbookView()
-                .tabItem {
-                    Label("Yarnbook", systemImage: "tornado.circle.fill")
-                }
-                .tag(3)
+            // Counters Tab
+            NavigationStack {
+                CountersView()
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+            .tabItem {
+                Label("Counters", systemImage: "number.circle.fill")
+            }
+            .tag(2)
             
-            AlbumView()
-                .tabItem {
-                    Label("Album", systemImage: "camera.circle.fill")
-                }
-                .tag(3)
+            // Yarn Tab
+            NavigationStack {
+                YarnbookView()
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+            .tabItem {
+                Label("Yarn", systemImage: "tornado")
+            }
+            .tag(3)
+            
+            // Album Tab
+            NavigationStack {
+                AlbumView()
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+            .tabItem {
+                Label("Album", systemImage: "photo.stack")
+            }
+            .tag(4)
         }
-    }
-}
-
-struct HomeView: View {
-    var body: some View{
-        VStack {
-            Text("StitchCounter")
-                .padding(.top, 50)
-            Image("logo")
-                .resizable()
-                .padding(.bottom, 100)
-                .padding(.horizontal, 100)
-            Text("Settings")
-            SettingsView()
-        }
-        
+        .tint(.blue) // You can customize the accent color
     }
 }
 

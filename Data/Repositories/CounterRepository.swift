@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-class CounterRepository: Identifiable{
+/*class CounterRepository: Identifiable{
     
     let viewContext: NSManagedObjectContext
     
@@ -58,3 +58,4 @@ class CounterRepository: Identifiable{
     }
     
 }
+*/

@@ -10,11 +10,14 @@ import CoreData
 class YarnDetailViewModel: ObservableObject {
     @Published var yarn: Yarn
     @Published var showingEditSheet = false
+    private let dateFormatter: DateFormatter
     
     init(yarn: Yarn) {
         self.yarn = yarn
+        self.dateFormatter = DateFormatter()
+        self.dateFormatter.dateStyle = .medium
     }
-    
+
     var brandText: String {
         "Brand: \(yarn.brand)"
     }
@@ -28,7 +31,8 @@ class YarnDetailViewModel: ObservableObject {
     }
     
     var yardageText: String {
-        "Yardage: \(String(format: "%.1f", yarn.totalYardage)) total, \(String(format: "%.1f", yarn.usedYardage)) used"
+        let remainingYardage = yarn.remainingYardage
+        return "Yardage: \(String(format: "%.1f", yarn.totalYardage)) total, \(String(format: "%.1f", remainingYardage)) remaining"
     }
     
     var fiberContentText: String {
@@ -39,17 +43,14 @@ class YarnDetailViewModel: ObservableObject {
         guard let purchaseDate = yarn.purchaseDate else {
             return "Purchase Date: Not recorded"
         }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
         return "Purchased: \(dateFormatter.string(from: purchaseDate))"
     }
     
     var hasProjects: Bool {
-        guard let projects = yarn.projects else { return false }
-        return !projects.isEmpty
+        !projectsArray.isEmpty
     }
     
-    var projects: [Project] {
-        Array(yarn.projects ?? Set())
+    var projectsArray: [Project] {
+        yarn.projectsArray
     }
 }

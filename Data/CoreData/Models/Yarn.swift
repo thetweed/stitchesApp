@@ -8,7 +8,9 @@
 import Foundation
 import CoreData
 
-class Yarn: NSManagedObject {
+//@objc(Yarn)
+//public  .. @objc(projects) public
+class Yarn: NSManagedObject, Identifiable {
     @NSManaged public var id: UUID
     @NSManaged public var brand: String
     @NSManaged public var colorName: String
@@ -18,7 +20,7 @@ class Yarn: NSManagedObject {
     @NSManaged public var totalYardage: Double
     @NSManaged public var usedYardage: Double
     @NSManaged public var purchaseDate: Date?
-    @NSManaged public var projects: Set<Project>?
+    @NSManaged var projects: NSSet?
     @NSManaged public var photoData: Data?
 }
 
@@ -51,22 +53,30 @@ extension Yarn {
     }
 }
 
-/*extension Yarn {
-    @objc(addProjectsObject:)
-    @NSManaged public func addToProjects(_ value: Project)
-    
-    @objc(removeProjectsObject:)
-    @NSManaged public func removeFromProjects(_ value: Project)
-}*/
-
 extension Yarn {
-    @objc(addProjectsObject:)
-    @NSManaged public func addToProjects(_ value: Project)
+    func addToProjects(_ project: Project) {
+        let projects = self.projects?.mutableCopy() as? NSMutableSet ?? NSMutableSet()
+        projects.add(project)
+        self.projects = projects as NSSet
+    }
     
-    @objc(removeProjectsObject:)
-    @NSManaged public func removeFromProjects(_ value: Project)
+    func removeFromProjects(_ project: Project) {
+        let projects = self.projects?.mutableCopy() as? NSMutableSet ?? NSMutableSet()
+        projects.remove(project)
+        self.projects = projects as NSSet
+    }
+    
+    var projectsArray: [Project] {
+            let set = projects as? Set<Project> ?? []
+            return Array(set).sorted { $0.name < $1.name }
+        }
 }
 
+extension Yarn {
+    func validateProjectRelationship(_ project: Project) -> Bool {
+        projectsArray.contains(project)
+    }
+}
 
 extension Yarn {
     @objc var yarnID: UUID {
@@ -84,3 +94,18 @@ extension Yarn {
         self.objectID
     }
 }
+
+
+/*extension Yarn {
+   @objc(addProjectsObject:)
+    @NSManaged public func addToProjects(_ value: Project)
+    
+    @objc(removeProjectsObject:)
+    @NSManaged public func removeFromProjects(_ value: Project)
+    
+    @objc(addProjects:)
+    @NSManaged public func addToProjects(_ values: NSSet)
+    
+    @objc(removeProjects:)
+    @NSManaged public func removeFromProjects(_ values: NSSet)
+}*/
