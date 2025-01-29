@@ -48,6 +48,14 @@ extension Project {
     }
 }
 
+/*extension Project {
+    @objc(addYarnsObject:)
+    @NSManaged public func addToYarns(_ value: Yarn)
+    
+    @objc(removeYarnsObject:)
+    @NSManaged public func removeFromYarns(_ value: Yarn)
+}*/
+
 extension Project {
     @objc(addYarnsObject:)
     @NSManaged public func addToYarns(_ value: Yarn)
@@ -64,5 +72,11 @@ extension Project {
         set {
             id = newValue
         }
+    }
+}
+
+extension Project {
+    var yarnsArray: [Yarn] {
+        Array(yarns ?? [])
     }
 }

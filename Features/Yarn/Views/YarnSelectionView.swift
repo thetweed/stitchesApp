@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 
 struct YarnSelectionView: View {
+    @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel: YarnSelectionViewModel
     @Binding var selectedYarns: Set<Yarn>
     @FetchRequest private var yarns: FetchedResults<Yarn>
@@ -24,7 +25,7 @@ struct YarnSelectionView: View {
         List {
             ForEach(yarns, id: \.safeID) { yarn in
                 HStack {
-                    Text(yarn.colorName)
+                    YarnRowView(yarn: yarn)
                     Spacer()
                     if viewModel.selectedYarns.contains(yarn) {
                         Image(systemName: "checkmark")

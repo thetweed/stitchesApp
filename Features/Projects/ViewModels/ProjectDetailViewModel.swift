@@ -52,4 +52,23 @@ class ProjectDetailViewModel: ObservableObject {
     func removeYarn(_ yarn: Yarn) {
         project.yarns?.remove(yarn)
     }
+    
+    func debugYarns() {
+        #if DEBUG
+        print("📊 ViewModel Yarn Debug:")
+        print("Project: \(project.name)")
+        print("Yarns count in ViewModel: \(yarns.count)")
+        
+        // Check if yarns array matches CoreData relationship
+        if let coreDataYarns = project.yarns {
+            let matchingYarns = yarns.filter { viewModelYarn in
+                coreDataYarns.contains { coreDataYarn in
+                    coreDataYarn.id == viewModelYarn.id
+                }
+            }
+            print("Matching yarns count: \(matchingYarns.count)")
+            print("Mismatched yarns count: \(yarns.count - matchingYarns.count)")
+        }
+        #endif
+    }
 }

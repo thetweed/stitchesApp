@@ -51,6 +51,14 @@ extension Yarn {
     }
 }
 
+/*extension Yarn {
+    @objc(addProjectsObject:)
+    @NSManaged public func addToProjects(_ value: Project)
+    
+    @objc(removeProjectsObject:)
+    @NSManaged public func removeFromProjects(_ value: Project)
+}*/
+
 extension Yarn {
     @objc(addProjectsObject:)
     @NSManaged public func addToProjects(_ value: Project)
@@ -58,6 +66,7 @@ extension Yarn {
     @objc(removeProjectsObject:)
     @NSManaged public func removeFromProjects(_ value: Project)
 }
+
 
 extension Yarn {
     @objc var yarnID: UUID {

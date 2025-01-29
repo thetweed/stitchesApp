@@ -79,6 +79,9 @@ struct ProjectDetailView: View {
                 }
             }
         }
+        .onAppear {
+            viewModel.debugYarns()
+        }
     }
 }
 

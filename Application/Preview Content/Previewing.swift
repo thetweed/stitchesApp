@@ -80,3 +80,31 @@ struct PreviewingData {
            return sampleYarns
         }}
 }
+
+extension PreviewingData {
+    var sampleProjectWithYarns: (NSManagedObjectContext) -> Project { { context in
+        let yarns = self.sampleYarns(context)
+
+        let project = Project.create(
+            in: context,
+            name: "Sample Sweater",
+            projectType: "Knitting"
+        )
+        project.patternNotes = """
+            Needle size: US 7 (4.5mm)
+            Gauge: 20 sts x 28 rows = 4" in stockinette
+            
+            Pattern Instructions:
+            CO 200 sts
+            Row 1: *K2, P2* repeat to end
+            Row 2: Work as sts appear
+        """
+        project.currentRow = 42
+        project.status = "In Progress"
+
+        project.yarns = NSSet(array: Array(yarns.prefix(3))) as? Set<Yarn>
+        
+        try? context.save()
+        return project
+    }}
+}
