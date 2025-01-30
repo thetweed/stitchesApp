@@ -64,8 +64,9 @@ struct AddYarnView: View {
     private var propertiesSection: some View {
         Section("Properties") {
             Picker("Weight Category", selection: $viewModel.weightCategory) {
-                ForEach(Yarn.weightCategories, id: \.self) {
-                    Text($0)
+                Text("Select Weight").tag("") 
+                ForEach(Yarn.weightCategories, id: \.self) { category in
+                    Text(category).tag(category)
                 }
             }
             TextField("Fiber Content", text: $viewModel.fiberContent)

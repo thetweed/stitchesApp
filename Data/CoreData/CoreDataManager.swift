@@ -18,19 +18,11 @@ class CoreDataManager {
             container.viewContext
         }
     
-    func saveContext() {
-            let context = container.viewContext
-            if context.hasChanges {
-                do {
-                    try context.save()
-                } catch {
-                    let error = error as NSError
-                    print("Unresolved Core Data error \(error), \(error.userInfo)")
-                }
-            }
-        }
-    
     private init() {
+        
+        let description = NSPersistentStoreDescription()
+        description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+        container.persistentStoreDescriptions = [description]
         
         container.loadPersistentStores { description, error in
             if let error = error {
@@ -41,4 +33,16 @@ class CoreDataManager {
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 
     }
+    
+    func saveContext() {
+            let context = container.viewContext
+            if context.hasChanges {
+                do {
+                    try context.save()
+                } catch {
+                    let error = error as NSError
+                    print("ViewContext save error: \(error as NSError)")
+                }
+            }
+        }
 }

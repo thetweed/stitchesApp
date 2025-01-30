@@ -69,58 +69,31 @@ struct ProjectFormView: View {
     }
     
     private var yarnSection: some View {
-        Section {
-            Button(action: {
-                viewModel.showYarnSelection = true
-            }) {
-                Label("Select Yarns", systemImage: "plus.circle")
-            }
-            .navigationDestination(isPresented: $viewModel.showYarnSelection) {
-                YarnSelectionView(selectedYarns: $viewModel.yarns, viewContext: viewContext)
-            }
-            
-            ForEach(viewModel.sortedYarns, id: \.safeID) { yarn in
-                YarnRowView(yarn: yarn)
-                    .swipeActions {
-                        Button(role: .destructive) {
-                            viewModel.removeYarn(yarn)
-                        } label: {
-                            Label("Remove", systemImage: "trash")
+        VStack {
+            Section {
+                Button(action: {
+                    viewModel.showYarnSelection = true
+                }) {
+                    Label("Select Yarns", systemImage: "plus.circle")
+                }
+                
+                ForEach(viewModel.sortedYarns, id: \.safeID) { yarn in
+                    YarnRowView(yarn: yarn)
+                        .swipeActions {
+                            Button(role: .destructive) {
+                                viewModel.removeYarn(yarn)
+                            } label: {
+                                Label("Remove", systemImage: "trash")
+                            }
                         }
-                    }
+                }
             }
+
+        }
+        .navigationDestination(isPresented: $viewModel.showYarnSelection) {
+            YarnSelectionView(selectedYarns: $viewModel.yarns, viewContext: viewContext)
         }
     }
-    
-    /*private var counterSection: some View {
-        Section(header: Text("Counters")) {
-            // Button to create new counter
-            Button(action: {
-                viewModel.showingNewCounterSheet.toggle()
-            }) {
-                Label("Add New Counter", systemImage: "plus.circle")
-            }
-            
-            // Button to attach existing counter
-            Button(action: {
-                viewModel.showingAttachCounterSheet.toggle()
-            }) {
-                Label("Attach Existing Counter", systemImage: "link")
-            }
-            
-            // Display currently attached counters
-            ForEach(viewModel.attachedCounters, id: \.safeID) { counter in
-                CounterRowView(counter: counter)
-                    .swipeActions {
-                        Button(role: .destructive) {
-                            viewModel.detachCounter(counter)
-                        } label: {
-                            Label("Detach", systemImage: "link.badge.minus")
-                        }
-                    }
-            }
-        }
-    }*/
     
     private var counterSection: some View {
         Section(header: Text("Counters")) {

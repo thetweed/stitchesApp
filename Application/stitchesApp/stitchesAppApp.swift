@@ -10,6 +10,52 @@ import CoreData
 
 @main
 struct stitchesAppApp: App {
+    let coreDataManager = CoreDataManager.shared
+    @State private var isLoading = true
+    
+    var body: some Scene {
+        WindowGroup {
+            ZStack {
+                if isLoading {
+                    SplashScreenView()
+                } else {
+                    ContentView()
+                        .environment(\.managedObjectContext, coreDataManager.viewContext)
+                        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                            coreDataManager.saveContext()
+                        }
+                }
+            }
+            .task {
+                await initializeApp()
+            }
+        }
+    }
+    
+    private func initializeApp() async {
+        do {
+            let fetchRequest = NSFetchRequest<Project>(entityName: "Project")
+            _ = try coreDataManager.viewContext.fetch(fetchRequest)
+
+            try await Task.sleep(nanoseconds: 1_000_000_000) // 1 seconds
+            await MainActor.run {
+                withAnimation {
+                    isLoading = false
+                }
+            }
+        } catch {
+            print("Initialization error: \(error)")
+            await MainActor.run {
+                withAnimation {
+                    isLoading = false
+                }
+            }
+        }
+    }
+}
+
+/*@main
+struct stitchesAppApp: App {
     let persistenceController = CoreDataManager.shared
     @State private var isLoading = true
 
@@ -33,7 +79,7 @@ struct stitchesAppApp: App {
                 }
             }
         }
-}
+}*/
 
 struct SplashScreenView: View {
     var body: some View {

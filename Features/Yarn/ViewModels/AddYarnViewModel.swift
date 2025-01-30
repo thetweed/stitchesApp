@@ -12,7 +12,7 @@ class AddYarnViewModel: ObservableObject {
     @Published var brand = ""
     @Published var colorName = ""
     @Published var colorNumber = ""
-    @Published var weightCategory = ""
+    @Published var weightCategory = Yarn.WeightCategory.worsted.rawValue
     @Published var fiberContent = ""
     @Published var totalYardage = ""
     private let context: NSManagedObjectContext

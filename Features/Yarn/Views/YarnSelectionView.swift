@@ -8,122 +8,21 @@
 import SwiftUI
 import CoreData
 
-/*struct YarnSelectionView: View {
-   @Environment(\.dismiss) private var dismiss
-   @StateObject private var viewModel: YarnSelectionViewModel
-   @Binding var selectedYarns: Set<Yarn>
-   @FetchRequest private var yarns: FetchedResults<Yarn>
-   
-   init(selectedYarns: Binding<Set<Yarn>>, viewContext: NSManagedObjectContext) {
-       let vm = YarnSelectionViewModel(selectedYarns: selectedYarns.wrappedValue, viewContext: viewContext)
-       _viewModel = StateObject(wrappedValue: vm)
-       _yarns = FetchRequest<Yarn>(fetchRequest: vm.yarnFetchRequest())
-       _selectedYarns = selectedYarns
-   }
-   
-   var body: some View {
-       NavigationStack {
-           List {
-               if yarns.isEmpty {
-                   emptyStateView
-               } else {
-                   yarnList
-               }
-           }
-           .navigationTitle("Select Yarns")
-           .navigationBarTitleDisplayMode(.inline)
-           .toolbar {
-               ToolbarItem(placement: .navigationBarTrailing) {
-                   Button("Done") {
-                       selectedYarns = viewModel.selectedYarns
-                       dismiss()
-                   }
-               }
-               ToolbarItem(placement: .navigationBarLeading) {
-                   Button("Cancel", role: .cancel) {
-                       dismiss()
-                   }
-               }
-           }
-       }
-   }
-   
-   private var yarnList: some View {
-       ForEach(yarns, id: \.safeID) { yarn in
-           YarnSelectionRow(
-               yarn: yarn,
-               isSelected: viewModel.isSelected(yarn),
-               onTap: {
-                   viewModel.toggleSelection(for: yarn)
-                   selectedYarns = viewModel.selectedYarns
-               }
-           )
-       }
-   }
-   
-   private var emptyStateView: some View {
-       VStack(spacing: 20) {
-           Image(systemName: "scalemass.fill")
-               .font(.system(size: 60))
-               .foregroundColor(.secondary)
-           
-           Text("No Yarns Available")
-               .font(.title2)
-               .foregroundColor(.primary)
-           
-           Text("Add yarns to your inventory first")
-               .font(.subheadline)
-               .foregroundColor(.secondary)
-               .multilineTextAlignment(.center)
-               .padding(.horizontal)
-       }
-       .padding()
-       .frame(maxWidth: .infinity, maxHeight: .infinity)
-       .background(Color(.systemGroupedBackground))
-       .listRowInsets(EdgeInsets())
-   }
-}
-
-struct YarnSelectionRow: View {
-   let yarn: Yarn
-   let isSelected: Bool
-   let onTap: () -> Void
-   
-   var body: some View {
-       HStack {
-           YarnRowView(yarn: yarn, showDetails: false)
-           Spacer()
-           if isSelected {
-               Image(systemName: "checkmark.circle.fill")
-                   .foregroundColor(.accentColor)
-                   .imageScale(.large)
-           }
-       }
-       .contentShape(Rectangle())
-       .onTapGesture(perform: onTap)
-       .listRowBackground(isSelected ? Color.accentColor.opacity(0.1) : nil)
-   }
-}
-
-struct YarnSelectionRowOriginalDesign: View {
-    let yarn: Yarn
-    let isSelected: Bool
-    let onTap: () -> Void
-    
-    var body: some View {
-        HStack {
-            YarnRowView(yarn: yarn)
-            Spacer()
-            if isSelected {
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundColor(.blue)
-                    .imageScale(.large)
-            }
+struct YarnSelectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        let context = CoreDataManager.shared.container.viewContext
+        let previewData = PreviewingData()
+        let sampleYarns = previewData.sampleYarns(context)
+        
+        NavigationStack {
+            YarnSelectionView(
+                selectedYarns: .constant(Set(sampleYarns.prefix(2))),
+                viewContext: context
+            )
         }
-        .contentShape(Rectangle())
-        .onTapGesture(perform: onTap)
+        .environment(\.managedObjectContext, context)
     }
-}*/
+}
 
 struct YarnSelectionView: View {
     @Environment(\.dismiss) private var dismiss
@@ -141,7 +40,7 @@ struct YarnSelectionView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVStack(spacing: 20) {
+                VStack(spacing: 20) {
                     if !availableYarns.isEmpty {
                         yarnSection(
                             title: "Available Yarns",
@@ -262,21 +161,5 @@ struct YarnSelectionRow: View {
         )
         .contentShape(Rectangle())
         .onTapGesture(perform: onTap)
-    }
-}
-
-struct YarnSelectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        let context = CoreDataManager.shared.container.viewContext
-        let previewData = PreviewingData()
-        let sampleYarns = previewData.sampleYarns(context)
-        
-        NavigationStack {
-            YarnSelectionView(
-                selectedYarns: .constant(Set(sampleYarns.prefix(2))),
-                viewContext: context
-            )
-        }
-        .environment(\.managedObjectContext, context)
     }
 }

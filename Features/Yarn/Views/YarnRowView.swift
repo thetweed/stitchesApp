@@ -14,7 +14,6 @@ struct YarnRowView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            // Yarn Name and Brand
             HStack(alignment: .center, spacing: 8) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(yarn.colorName)
@@ -44,7 +43,6 @@ struct YarnRowView: View {
             }
             
             if showDetails {
-                // Yarn Details Row
                 HStack(spacing: 16) {
                     HStack(spacing: 4) {
                         Image(systemName: "ruler")

@@ -38,7 +38,7 @@ extension Project {
         project.name = name
         project.projectType = projectType
         project.startDate = startDate
-        project.status = "active"
+        project.status = "Not Started"
         project.currentRow = 0
         project.lastModified = Date()
         return project

@@ -43,10 +43,9 @@ extension Yarn {
         return yarn
     }
     
-    static let weightCategories = [
-        "Lace", "Super Fine", "Fine", "Light", "Medium",
-        "Bulky", "Super Bulky", "Jumbo"
-    ]
+    static var weightCategories: [String] {
+        WeightCategory.allCases.map { $0.rawValue }
+    }
     
     var remainingYardage: Double {
         return totalYardage - usedYardage
@@ -92,5 +91,18 @@ extension Yarn {
 extension Yarn {
     var safeID: NSManagedObjectID {
         self.objectID
+    }
+}
+
+extension Yarn {
+    enum WeightCategory: String, CaseIterable {
+        case lace = "Lace"
+        case fingering = "Fingering"
+        case sport = "Sport"
+        case dk = "DK"
+        case worsted = "Worsted"
+        case aran = "Aran"
+        case bulky = "Bulky"
+        case superBulky = "Super Bulky"
     }
 }
