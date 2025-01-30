@@ -90,61 +90,6 @@ struct ProjectListView: View {
         }
     }
     
-    /*var body: some View {
-        NavigationStack {
-            ScrollView {
-                LazyVStack(spacing: 20) {
-                    if !activeProjects.isEmpty {
-                        projectSection(
-                            title: "Active Projects",
-                            systemImage: "flag.pattern.checkered",
-                            projects: activeProjects,
-                            accentColor: .blue
-                        )
-                    }
-                    
-                    if !plannedProjects.isEmpty {
-                        projectSection(
-                            title: "Planned",
-                            systemImage: "doc.text",
-                            projects: plannedProjects,
-                            accentColor: Color(.darkGray)  // Darker gray color
-                        )
-                    }
-                    
-                    if !completedProjects.isEmpty {
-                        projectSection(
-                            title: "Finished Projects",
-                            systemImage: "checkmark.circle",
-                            projects: completedProjects,
-                            accentColor: .green
-                        )
-                    }
-                    
-                    if projects.isEmpty {
-                        emptyStateView
-                    }
-                }
-                .padding()
-            }
-            .navigationTitle("Knitting Projects")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        viewModel.toggleAddProject()
-                    } label: {
-                        Label("Add Project", systemImage: "plus")
-                    }
-                }
-            }
-            .sheet(isPresented: $viewModel.showingAddProject) {
-                NavigationStack {
-                    AddProjectView(viewContext: viewContext)
-                }
-            }
-        }
-    }*/
-    
     private func projectSection(title: String, systemImage: String, projects: [Project], accentColor: Color) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             Label(title, systemImage: systemImage)

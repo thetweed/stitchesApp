@@ -8,8 +8,7 @@
 import Foundation
 import CoreData
 
-// Counter Entity
-class Counter: NSManagedObject {
+    class Counter: NSManagedObject {
     @NSManaged public var id: UUID
     @NSManaged public var name: String
     @NSManaged public var currentCount: Int32
@@ -38,6 +37,7 @@ extension Counter: Identifiable {
     static let counterTypes = ["row", "stitch", "repeat"]
 }
 
+//Below is set up for later use
 extension Counter {
     @NSManaged public var stitchesPerRepeat: Int32  // For repeat counters
     @NSManaged public var isActive: Bool            // To track active vs archived counters
@@ -47,5 +47,14 @@ extension Counter {
 extension Counter {
     var safeID: NSManagedObjectID {
         self.objectID
+    }
+}
+
+extension Counter {
+    static func fetchRequest(_ predicate: NSPredicate) -> NSFetchRequest<Counter> {
+        let request = NSFetchRequest<Counter>(entityName: "Counter")
+        request.predicate = predicate
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Counter.lastModified, ascending: false)]
+        return request
     }
 }

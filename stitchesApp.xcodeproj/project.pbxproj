@@ -66,6 +66,9 @@
 		5B4305A32D4AD3AA0038D6C7 /* CounterSetUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305A22D4AD3A30038D6C7 /* CounterSetUpViewModel.swift */; };
 		5B4305A52D4AE76C0038D6C7 /* ProjectCountersRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305A42D4AE7670038D6C7 /* ProjectCountersRow.swift */; };
 		5B4305A72D4AEAD90038D6C7 /* UnattachedCounterSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305A62D4AEAC90038D6C7 /* UnattachedCounterSelectionView.swift */; };
+		5B4306272D4B606E0038D6C7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B4306262D4B606E0038D6C7 /* LaunchScreen.storyboard */; };
+		5B4306282D4B606E0038D6C7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B4306262D4B606E0038D6C7 /* LaunchScreen.storyboard */; };
+		5B4306292D4B606E0038D6C7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B4306262D4B606E0038D6C7 /* LaunchScreen.storyboard */; };
 		5B6242A22D385EC2008DE40D /* BasicStitchCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6242A12D385EC2008DE40D /* BasicStitchCounterViewModel.swift */; };
 		5B6242A42D3860CB008DE40D /* BasicStitchCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6242A32D3860CB008DE40D /* BasicStitchCounterView.swift */; };
 /* End PBXBuildFile section */
@@ -150,11 +153,13 @@
 		5B4305A22D4AD3A30038D6C7 /* CounterSetUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterSetUpViewModel.swift; sourceTree = "<group>"; };
 		5B4305A42D4AE7670038D6C7 /* ProjectCountersRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCountersRow.swift; sourceTree = "<group>"; };
 		5B4305A62D4AEAC90038D6C7 /* UnattachedCounterSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnattachedCounterSelectionView.swift; sourceTree = "<group>"; };
+		5B4306262D4B606E0038D6C7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5B6242A12D385EC2008DE40D /* BasicStitchCounterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStitchCounterViewModel.swift; sourceTree = "<group>"; };
 		5B6242A32D3860CB008DE40D /* BasicStitchCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStitchCounterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		5B4306472D4B65720038D6C7 /* Fredoka */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Fredoka; sourceTree = "<group>"; };
 		5BA3A1022D39B9790068BFBB /* Settings */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Settings; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -240,6 +245,7 @@
 		5B1D8F452D13774100297376 = {
 			isa = PBXGroup;
 			children = (
+				5B4306262D4B606E0038D6C7 /* LaunchScreen.storyboard */,
 				5B92DDD02D137E8100306A26 /* Application */,
 				5B92DDD12D137E9C00306A26 /* Core */,
 				5B92DDD22D137EA200306A26 /* Data */,
@@ -396,6 +402,7 @@
 		5B37E4F52D1382BE005A3031 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				5B4306472D4B65720038D6C7 /* Fredoka */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -566,6 +573,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				5B4306472D4B65720038D6C7 /* Fredoka */,
 				5BA3A1022D39B9790068BFBB /* Settings */,
 			);
 			name = stitchesApp;
@@ -586,6 +594,9 @@
 			dependencies = (
 				5B1D8F652D13774200297376 /* PBXTargetDependency */,
 			);
+			fileSystemSynchronizedGroups = (
+				5B4306472D4B65720038D6C7 /* Fredoka */,
+			);
 			name = stitchesAppTests;
 			productName = stitchesAppTests;
 			productReference = 5B1D8F632D13774200297376 /* stitchesAppTests.xctest */;
@@ -603,6 +614,9 @@
 			);
 			dependencies = (
 				5B1D8F6F2D13774200297376 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5B4306472D4B65720038D6C7 /* Fredoka */,
 			);
 			name = stitchesAppUITests;
 			productName = stitchesAppUITests;
@@ -659,6 +673,7 @@
 			files = (
 				5B37E5082D378B09005A3031 /* Assets.xcassets in Resources */,
 				5B1D8F592D13774200297376 /* Preview Assets.xcassets in Resources */,
+				5B4306282D4B606E0038D6C7 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -666,6 +681,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B4306292D4B606E0038D6C7 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -673,6 +689,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B4306272D4B606E0038D6C7 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

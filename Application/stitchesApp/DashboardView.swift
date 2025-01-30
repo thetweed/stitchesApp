@@ -39,55 +39,62 @@ struct DashboardView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                LazyVStack(spacing: 20) {
-                    welcomeSection
-                    statsSection
-                    
-                    if !activeProjects.isEmpty {
-                        projectSection(
-                            title: "Active Projects",
-                            systemImage: "flag.pattern.checkered",
-                            projects: Array(activeProjects.prefix(3)),
-                            accentColor: .blue
-                        )
-                    }
-                    
-                    quickActionsSection
-                    
-                    if activeProjects.isEmpty {
-                        emptyStateView
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.vertical, 20)
-                .frame(maxWidth: 650) // Constrain maximum width
-                .frame(maxWidth: .infinity) // Center horizontally
-            }
-            .navigationTitle("Dashboard")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showingAddProject = true
-                    } label: {
-                        Label("Add Project", systemImage: "plus")
-                    }
-                }
-            }
-        }
-        .sheet(isPresented: $showingAddProject) {
+        ZStack {
             NavigationStack {
-                AddProjectView(viewContext: viewContext)
+                ScrollView {
+                    LazyVStack(spacing: 20) {
+                        
+                        welcomeSection
+                        Image("logoNoWords")
+                            .resizable()
+                            .frame(width: 100, height: 100)
+                        statsSection
+                        
+                        if !activeProjects.isEmpty {
+                            projectSection(
+                                title: "Active Projects",
+                                systemImage: "flag.pattern.checkered",
+                                projects: Array(activeProjects.prefix(3)),
+                                accentColor: .blue
+                            )
+                        }
+                        
+                        quickActionsSection
+                        
+                        if activeProjects.isEmpty {
+                            emptyStateView
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 20)
+                    .frame(maxWidth: 650) // Constrain maximum width
+                    .frame(maxWidth: .infinity) // Center horizontally
+                }
+                .navigationTitle("Dashboard")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            showingAddProject = true
+                        } label: {
+                            Label("Add Project", systemImage: "plus")
+                        }
+                    }
+                }
             }
-        }
-        .sheet(isPresented: $showingAddCounter) {
+            .sheet(isPresented: $showingAddProject) {
+                NavigationStack {
+                    AddProjectView(viewContext: viewContext)
+                }
+            }
+            .sheet(isPresented: $showingAddCounter) {
                 CounterSetupView()
-        }
-        .sheet(isPresented: $showingAddYarn) {
-            NavigationStack {
-                AddYarnView(viewModel: AddYarnViewModel(viewContext: viewContext))
             }
+            .sheet(isPresented: $showingAddYarn) {
+                NavigationStack {
+                    AddYarnView(viewModel: AddYarnViewModel(viewContext: viewContext))
+                }
+            }
+            
         }
     }
     

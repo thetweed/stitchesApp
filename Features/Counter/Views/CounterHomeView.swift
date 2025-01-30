@@ -20,37 +20,6 @@ struct CounterHomeView: View {
     @State private var showingNewCounter = false
     @State private var expandedProjects: Set<Project> = []
     
-    /*var body: some View {
-        NavigationStack {
-            ScrollView {
-                LazyVStack(spacing: 20) {
-                    if !counters.isEmpty {
-                        recentActivitySection
-                        projectCountersSection
-                    } else {
-                        emptyStateView
-                    }
-                    
-                    allCountersSection
-                }
-                .padding()
-            }
-            .navigationTitle("Counter Home")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showingNewCounter = true
-                    } label: {
-                        Label("Add Counter", systemImage: "plus")
-                    }
-                }
-            }
-            .sheet(isPresented: $showingNewCounter) {
-                CounterSetupView()
-            }
-        }
-    }*/
-    
     var body: some View {
         NavigationStack {
             ScrollView {

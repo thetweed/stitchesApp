@@ -23,6 +23,7 @@ class ProjectDetailViewModel: ObservableObject {
         self.counters = Array(project.counters?.allObjects as? [Counter] ?? [])
         self.refreshYarns()
         self.refreshCounters()
+        self.refreshData()
     }
     
     var statusText: String {
@@ -65,17 +66,31 @@ class ProjectDetailViewModel: ObservableObject {
         }
     }
     
+    func refreshData() {
+            context.performAndWait {
+                context.refresh(project, mergeChanges: true)
+                self.yarns = project.yarnsArray
+                self.counters = project.countersArray
+                
+                print("Refreshed project data - Counters count: \(self.counters.count)")
+            }
+            objectWillChange.send()
+        }
+    
+    func refreshCounters() {
+            context.performAndWait {
+                context.refresh(project, mergeChanges: true)
+                self.counters = project.countersArray
+                print("Refreshed counters: Found \(counters.count) counters")
+            }
+            objectWillChange.send()
+        }
+    
     func refreshYarns() {
         yarns = project.yarnsArray
         objectWillChange.send()
     }
-    
-    func refreshCounters() {
-            let projectCounters = project.counters?.allObjects as? [Counter] ?? []
-            counters = projectCounters
-            print("Refreshed counters: Found \(counters.count) counters")
-            objectWillChange.send()
-        }
+
 
     func debugYarns() {
         #if DEBUG

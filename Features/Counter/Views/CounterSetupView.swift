@@ -11,20 +11,17 @@ import CoreData
 struct CounterSetupView: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.dismiss) private var dismiss
-    @StateObject var viewModel: CounterSetupViewModel
+    @StateObject private var viewModel: CounterSetupViewModel
     
-    @FetchRequest(
-        entity: Project.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Project.name, ascending: true)],
-        animation: .default
-    ) var projects: FetchedResults<Project>
+    let project: Project?
     
     init(project: Project? = nil) {
+        self.project = project
         _viewModel = StateObject(wrappedValue: CounterSetupViewModel(project: project))
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section("Counter Details") {
                     TextField("Counter Name", text: $viewModel.counterName)
@@ -40,15 +37,9 @@ struct CounterSetupView: View {
                         .keyboardType(.numberPad)
                 }
                 
-                Section("Project") {
-                    Picker("Attach to Project", selection: $viewModel.selectedProject) {
-                        Text("None")
-                            .tag(Optional<Project>.none)
-                        
-                        ForEach(projects) { project in
-                            Text(project.name)
-                                .tag(Optional(project))
-                        }
+                if project == nil {
+                    Section("Project") {
+                        Text(project?.name ?? "None")
                     }
                 }
                 
@@ -78,9 +69,12 @@ struct CounterSetupView: View {
                 
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
-                        viewModel.saveCounter(context: context)
-                        dismiss()
+                        Task {
+                            await viewModel.saveCounter(context: context)
+                            dismiss()
+                        }
                     }
+                    .disabled(!viewModel.isValid)
                 }
             }
         }

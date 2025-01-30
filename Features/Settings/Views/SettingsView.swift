@@ -88,7 +88,7 @@ struct SettingsView: View {
     SettingsView()
 }
 
-//Add reminders or whatever notifications later maybe?
+//Add reminders or whatever notifications later?
 /* Section {
     Toggle("Project Reminders", isOn: $settings.enableReminders)
     if settings.enableReminders {

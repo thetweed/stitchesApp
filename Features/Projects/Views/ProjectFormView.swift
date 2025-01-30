@@ -68,32 +68,6 @@ struct ProjectFormView: View {
         }
     }
     
-    /*private var yarnSection: some View {
-        Section {
-            NavigationLink {
-                YarnSelectionView(selectedYarns: $viewModel.yarns, viewContext: viewContext)
-            } label: {
-                HStack {
-                    Text("Select Yarns")
-                    Spacer()
-                    Text("\(viewModel.yarns.count) selected")
-                        .foregroundColor(.secondary)
-                }
-            }
-            
-            ForEach(viewModel.sortedYarns, id: \.safeID) { yarn in
-                YarnRowView(yarn: yarn)
-                    .swipeActions {
-                        Button(role: .destructive) {
-                            viewModel.removeYarn(yarn)
-                        } label: {
-                            Label("Remove", systemImage: "trash")
-                        }
-                    }
-            }
-        }
-    }*/
-    
     private var yarnSection: some View {
         Section {
             Button(action: {
@@ -118,7 +92,7 @@ struct ProjectFormView: View {
         }
     }
     
-    private var counterSection: some View {
+    /*private var counterSection: some View {
         Section(header: Text("Counters")) {
             // Button to create new counter
             Button(action: {
@@ -144,6 +118,35 @@ struct ProjectFormView: View {
                             Label("Detach", systemImage: "link.badge.minus")
                         }
                     }
+            }
+        }
+    }*/
+    
+    private var counterSection: some View {
+        Section(header: Text("Counters")) {
+            Button(action: {
+                viewModel.showingNewCounterSheet.toggle()
+            }) {
+                Label("Add New Counter", systemImage: "plus.circle")
+            }
+            
+            Button(action: {
+                viewModel.showingAttachCounterSheet.toggle()
+            }) {
+                Label("Attach Existing Counter", systemImage: "link")
+            }
+            
+            LazyVStack(alignment: .leading, spacing: 8) {
+                ForEach(viewModel.attachedCounters, id: \.safeID) { counter in
+                    CounterRowView(counter: counter)
+                        .swipeActions {
+                            Button(role: .destructive) {
+                                viewModel.detachCounter(counter)
+                            } label: {
+                                Label("Detach", systemImage: "link.badge.minus")
+                            }
+                        }
+                }
             }
         }
     }

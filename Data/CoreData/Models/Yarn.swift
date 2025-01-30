@@ -94,18 +94,3 @@ extension Yarn {
         self.objectID
     }
 }
-
-
-/*extension Yarn {
-   @objc(addProjectsObject:)
-    @NSManaged public func addToProjects(_ value: Project)
-    
-    @objc(removeProjectsObject:)
-    @NSManaged public func removeFromProjects(_ value: Project)
-    
-    @objc(addProjects:)
-    @NSManaged public func addToProjects(_ values: NSSet)
-    
-    @objc(removeProjects:)
-    @NSManaged public func removeFromProjects(_ values: NSSet)
-}*/

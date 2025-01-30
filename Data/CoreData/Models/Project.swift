@@ -142,6 +142,27 @@ extension Project {
     }
     
     func addToCounters(_ counter: Counter) {
+        let counters = self.counters?.mutableCopy() as? NSMutableSet ?? NSMutableSet()
+        counters.add(counter)
+        self.counters = counters as NSSet
+        self.lastModified = Date()
+    }
+    
+    func removeFromCounters(_ counter: Counter) {
+        let counters = self.counters?.mutableCopy() as? NSMutableSet ?? NSMutableSet()
+        counters.remove(counter)
+        self.counters = counters as NSSet
+        self.lastModified = Date()
+    }
+}
+
+/*extension Project {
+    var countersArray: [Counter] {
+        let set = counters as? Set<Counter> ?? []
+        return Array(set).sorted { $0.lastModified > $1.lastModified }
+    }
+    
+    func addToCounters(_ counter: Counter) {
         let counterSet = self.counters?.mutableCopy() as? NSMutableSet ?? NSMutableSet()
         counterSet.add(counter)
         self.counters = counterSet as NSSet
@@ -153,3 +174,4 @@ extension Project {
         self.counters = counterSet as NSSet
     }
 }
+*/
