@@ -21,12 +21,31 @@ class ProjectAddEditViewModel: ObservableObject {
     @Published var showYarnSelection = false
     
     let statuses = ["Not Started", "In Progress", "Completed", "Frogged"]
-    let project: Project
     private let viewContext: NSManagedObjectContext
+   let existingProject: Project?
     
-    init(project: Project, viewContext: NSManagedObjectContext) {
+    
+    /*init(project: Project, viewContext: NSManagedObjectContext) {
         self.project = project
         self.viewContext = viewContext
+        
+        self.name = project.name
+        self.patternNotes = project.patternNotes ?? ""
+        self.status = project.status
+        self.currentRow = project.currentRow
+        self.yarns = project.yarns as? Set<Yarn> ?? []
+        self.attachedCounters = Array(project.counters?.allObjects as? [Counter] ?? [])
+    }*/
+    
+    //new project
+    init(viewContext: NSManagedObjectContext) {
+        self.existingProject = nil
+        self.viewContext = viewContext
+    }
+    //existing project
+    init(project: Project, viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+        self.existingProject = project
         
         self.name = project.name
         self.patternNotes = project.patternNotes ?? ""
@@ -45,7 +64,7 @@ class ProjectAddEditViewModel: ObservableObject {
     }
     
     func updateProject() {
-            guard isValid else { return }
+        guard let project = existingProject, isValid else { return }
             
             viewContext.performAndWait {
                 project.name = name
@@ -78,9 +97,11 @@ class ProjectAddEditViewModel: ObservableObject {
         }
     
     func refreshAttachedCounters() {
-        viewContext.refresh(project, mergeChanges: true)
-        attachedCounters = Array(project.counters?.allObjects as? [Counter] ?? [])
-        objectWillChange.send()
+        if let project = existingProject {
+            viewContext.refresh(project, mergeChanges: true)
+            attachedCounters = Array(project.counters?.allObjects as? [Counter] ?? [])
+            objectWillChange.send()
+        }
     }
     
     func detachCounter(_ counter: Counter) {
@@ -91,12 +112,12 @@ class ProjectAddEditViewModel: ObservableObject {
         }
     }
     
-    func saveProject() {
+  /*  func saveProject() {
         viewContext.performAndWait {
             let project = Project.create(
                 in: viewContext,
                 name: name,
-                projectType: "knitting", // You might want to make this configurable
+                projectType: "Knitting", // You might want to make this configurable
                 startDate: Date()
             )
             
@@ -110,6 +131,34 @@ class ProjectAddEditViewModel: ObservableObject {
                             project.addToCounters(counter)
                             counter.project = project
                         }
+            
+            try? viewContext.save()
+        }
+    }
+    */
+    
+    func saveProject() {
+        viewContext.performAndWait {
+            // Only create the project when actually saving
+            let project = Project.create(
+                in: viewContext,
+                name: name,
+                projectType: "Knitting",
+                startDate: Date()
+            )
+            
+            project.patternNotes = patternNotes
+            project.status = status
+            project.currentRow = currentRow
+            
+            yarns.forEach { yarn in
+                project.addYarn(yarn, context: viewContext)
+            }
+            
+            countersToAttach.forEach { counter in
+                project.addToCounters(counter)
+                counter.project = project
+            }
             
             try? viewContext.save()
         }

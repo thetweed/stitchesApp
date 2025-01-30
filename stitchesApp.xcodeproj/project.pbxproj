@@ -69,6 +69,8 @@
 		5B4306272D4B606E0038D6C7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B4306262D4B606E0038D6C7 /* LaunchScreen.storyboard */; };
 		5B4306282D4B606E0038D6C7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B4306262D4B606E0038D6C7 /* LaunchScreen.storyboard */; };
 		5B4306292D4B606E0038D6C7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B4306262D4B606E0038D6C7 /* LaunchScreen.storyboard */; };
+		5B4307932D4C283B0038D6C7 /* PhotoPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4307922D4C28330038D6C7 /* PhotoPickerViewModel.swift */; };
+		5B4307962D4C284B0038D6C7 /* PhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4307952D4C28470038D6C7 /* PhotoPickerView.swift */; };
 		5B6242A22D385EC2008DE40D /* BasicStitchCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6242A12D385EC2008DE40D /* BasicStitchCounterViewModel.swift */; };
 		5B6242A42D3860CB008DE40D /* BasicStitchCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6242A32D3860CB008DE40D /* BasicStitchCounterView.swift */; };
 /* End PBXBuildFile section */
@@ -154,6 +156,8 @@
 		5B4305A42D4AE7670038D6C7 /* ProjectCountersRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCountersRow.swift; sourceTree = "<group>"; };
 		5B4305A62D4AEAC90038D6C7 /* UnattachedCounterSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnattachedCounterSelectionView.swift; sourceTree = "<group>"; };
 		5B4306262D4B606E0038D6C7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5B4307922D4C28330038D6C7 /* PhotoPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerViewModel.swift; sourceTree = "<group>"; };
+		5B4307952D4C28470038D6C7 /* PhotoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerView.swift; sourceTree = "<group>"; };
 		5B6242A12D385EC2008DE40D /* BasicStitchCounterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStitchCounterViewModel.swift; sourceTree = "<group>"; };
 		5B6242A32D3860CB008DE40D /* BasicStitchCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStitchCounterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -443,6 +447,7 @@
 		5B4305932D4A313A0038D6C7 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
+				5B4307922D4C28330038D6C7 /* PhotoPickerViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -450,6 +455,7 @@
 		5B4305942D4A31400038D6C7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B4307952D4C28470038D6C7 /* PhotoPickerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -707,6 +713,7 @@
 				5B0637442D3AFAE2001D35E2 /* ProjectListView.swift in Sources */,
 				5B0637462D3AFAEB001D35E2 /* ProjectRowView.swift in Sources */,
 				5B1D8F5E2D13774200297376 /* stitchesApp.xcdatamodeld in Sources */,
+				5B4307962D4C284B0038D6C7 /* PhotoPickerView.swift in Sources */,
 				5B0637B72D442B8F001D35E2 /* YarnInventoryView.swift in Sources */,
 				5B0637A82D430C33001D35E2 /* EditYarnViewModel.swift in Sources */,
 				5B1D8F542D13774100297376 /* ContentView.swift in Sources */,
@@ -730,6 +737,7 @@
 				5B37E4FA2D372CF4005A3031 /* Project.swift in Sources */,
 				5B4305652D499FC40038D6C7 /* TestProjectDetailView.swift in Sources */,
 				5B37E50E2D384DAE005A3031 /* YarnbookView.swift in Sources */,
+				5B4307932D4C283B0038D6C7 /* PhotoPickerViewModel.swift in Sources */,
 				5B43056F2D49D1470038D6C7 /* ProjectFormView.swift in Sources */,
 				5B0637A62D4305C8001D35E2 /* AddYarnView.swift in Sources */,
 				5B1D8F522D13774100297376 /* stitchesAppApp.swift in Sources */,

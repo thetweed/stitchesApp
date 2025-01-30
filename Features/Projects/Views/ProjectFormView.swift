@@ -27,18 +27,22 @@ struct ProjectFormView: View {
             .toolbar(content: toolbarContent)
         }
         .sheet(isPresented: $viewModel.showingNewCounterSheet) {
-            CounterSetupView(project: viewModel.project)
+            if let project = viewModel.existingProject {
+                CounterSetupView(project: project)
+                    .onDisappear {
+                        viewModel.refreshAttachedCounters()
+                    }
+            }
+        }
+        .sheet(isPresented: $viewModel.showingAttachCounterSheet) {
+            if let project = viewModel.existingProject {
+                UnattachedCounterSelectionView(
+                    selectedCounters: $viewModel.countersToAttach,
+                    project: project
+                )
                 .onDisappear {
                     viewModel.refreshAttachedCounters()
                 }
-        }
-        .sheet(isPresented: $viewModel.showingAttachCounterSheet) {
-            UnattachedCounterSelectionView(
-                selectedCounters: $viewModel.countersToAttach,
-                project: viewModel.project
-            )
-            .onDisappear {
-                viewModel.refreshAttachedCounters()
             }
         }
     }
@@ -69,26 +73,23 @@ struct ProjectFormView: View {
     }
     
     private var yarnSection: some View {
-        VStack {
-            Section {
-                Button(action: {
-                    viewModel.showYarnSelection = true
-                }) {
-                    Label("Select Yarns", systemImage: "plus.circle")
-                }
-                
-                ForEach(viewModel.sortedYarns, id: \.safeID) { yarn in
-                    YarnRowView(yarn: yarn)
-                        .swipeActions {
-                            Button(role: .destructive) {
-                                viewModel.removeYarn(yarn)
-                            } label: {
-                                Label("Remove", systemImage: "trash")
-                            }
-                        }
-                }
+        Section {
+            Button(action: {
+                viewModel.showYarnSelection = true
+            }) {
+                Label("Select Yarns", systemImage: "plus.circle")
             }
-
+            
+            ForEach(viewModel.sortedYarns, id: \.safeID) { yarn in
+                YarnRowView(yarn: yarn)
+                    .swipeActions {
+                        Button(role: .destructive) {
+                            viewModel.removeYarn(yarn)
+                        } label: {
+                            Label("Remove", systemImage: "trash")
+                        }
+                    }
+            }
         }
         .navigationDestination(isPresented: $viewModel.showYarnSelection) {
             YarnSelectionView(selectedYarns: $viewModel.yarns, viewContext: viewContext)
