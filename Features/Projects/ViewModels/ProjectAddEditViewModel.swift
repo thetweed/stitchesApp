@@ -18,6 +18,7 @@ class ProjectAddEditViewModel: ObservableObject {
     @Published var showingAttachCounterSheet = false
     @Published var countersToAttach: Set<Counter> = []
     @Published var attachedCounters: [Counter] = []
+    @Published var showYarnSelection = false
     
     let statuses = ["Not Started", "In Progress", "Completed", "Frogged"]
     let project: Project

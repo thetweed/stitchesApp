@@ -50,7 +50,7 @@ struct SettingsView: View {
                     Toggle("Show Project Notes by Default", isOn: $settings.showNotesByDefault)
                     Toggle("Show Completed Projects", isOn: $settings.showCompletedProjects)
                 } header: {
-                    Label("Project Defaults", systemImage: "knot")
+                    Label("Project Defaults", systemImage: "scissors")
                 }
                 Section {
                                     NavigationLink {

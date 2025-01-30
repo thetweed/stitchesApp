@@ -30,7 +30,7 @@ struct ProjectCountersRow: View {
     private var statusIcon: String {
         switch project.status {
         case "In Progress":
-            return "knot"
+            return "scissors"
         case "Completed":
             return "checkmark.circle.fill"
         case "Frogged":

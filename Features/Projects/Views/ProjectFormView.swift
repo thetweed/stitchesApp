@@ -68,7 +68,7 @@ struct ProjectFormView: View {
         }
     }
     
-    private var yarnSection: some View {
+    /*private var yarnSection: some View {
         Section {
             NavigationLink {
                 YarnSelectionView(selectedYarns: $viewModel.yarns, viewContext: viewContext)
@@ -79,6 +79,30 @@ struct ProjectFormView: View {
                     Text("\(viewModel.yarns.count) selected")
                         .foregroundColor(.secondary)
                 }
+            }
+            
+            ForEach(viewModel.sortedYarns, id: \.safeID) { yarn in
+                YarnRowView(yarn: yarn)
+                    .swipeActions {
+                        Button(role: .destructive) {
+                            viewModel.removeYarn(yarn)
+                        } label: {
+                            Label("Remove", systemImage: "trash")
+                        }
+                    }
+            }
+        }
+    }*/
+    
+    private var yarnSection: some View {
+        Section {
+            Button(action: {
+                viewModel.showYarnSelection = true
+            }) {
+                Label("Select Yarns", systemImage: "plus.circle")
+            }
+            .navigationDestination(isPresented: $viewModel.showYarnSelection) {
+                YarnSelectionView(selectedYarns: $viewModel.yarns, viewContext: viewContext)
             }
             
             ForEach(viewModel.sortedYarns, id: \.safeID) { yarn in

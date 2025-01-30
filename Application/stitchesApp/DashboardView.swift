@@ -99,7 +99,7 @@ struct DashboardView: View {
             statsCard(
                 title: "Active Projects",
                 value: "\(activeProjects.count)",
-                systemImage: "flag.pattern.checkered",
+                systemImage: "scroll.fill",
                 color: .blue
             )
             

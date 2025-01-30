@@ -14,7 +14,6 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            // Dashboard Tab
             NavigationStack {
                 DashboardView()
                     .navigationBarTitleDisplayMode(.inline)

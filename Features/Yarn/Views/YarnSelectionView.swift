@@ -154,7 +154,7 @@ struct YarnSelectionView: View {
                     if !inUseYarns.isEmpty {
                         yarnSection(
                             title: "In Other Projects",
-                            systemImage: "knot",
+                            systemImage: "scissors",
                             yarns: inUseYarns,
                             accentColor: .blue
                         )

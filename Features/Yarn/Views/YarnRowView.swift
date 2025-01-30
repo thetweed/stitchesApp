@@ -28,7 +28,7 @@ struct YarnRowView: View {
                 
                 if !yarn.projectsArray.isEmpty {
                     HStack(spacing: 4) {
-                        Image(systemName: "knot")
+                        Image(systemName: "scissors")
                             .font(.caption)
                         Text("In Use")
                             .font(.caption)

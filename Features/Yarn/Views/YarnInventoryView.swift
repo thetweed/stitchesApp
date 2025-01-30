@@ -26,7 +26,7 @@ struct YarnInventoryView: View {
                     if !inUseYarns.isEmpty {
                         yarnSection(
                             title: "In Projects",
-                            systemImage: "knot",
+                            systemImage: "scissors",
                             yarns: inUseYarns,
                             accentColor: .blue
                         )
