@@ -62,7 +62,6 @@ struct ProjectRowView: View {
                 )
             }
             
-            // Project Details Row
             HStack(spacing: 16) {
                 if project.yarnsArray.count > 0 {
                     HStack(spacing: 4) {

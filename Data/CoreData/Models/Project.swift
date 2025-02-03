@@ -33,6 +33,7 @@ extension Project {
                        name: String,
                        projectType: String,
                        startDate: Date = Date()) -> Project {
+        print("Creating new Project entity")
         let project = Project(context: context)
         project.id = UUID()
         project.name = name
@@ -41,6 +42,7 @@ extension Project {
         project.status = "Not Started"
         project.currentRow = 0
         project.lastModified = Date()
+        print("Created project with name: \(name), id: \(project.id)")
         return project
     }
 }
@@ -155,23 +157,3 @@ extension Project {
         self.lastModified = Date()
     }
 }
-
-/*extension Project {
-    var countersArray: [Counter] {
-        let set = counters as? Set<Counter> ?? []
-        return Array(set).sorted { $0.lastModified > $1.lastModified }
-    }
-    
-    func addToCounters(_ counter: Counter) {
-        let counterSet = self.counters?.mutableCopy() as? NSMutableSet ?? NSMutableSet()
-        counterSet.add(counter)
-        self.counters = counterSet as NSSet
-    }
-    
-    func removeFromCounters(_ counter: Counter) {
-        let counterSet = self.counters?.mutableCopy() as? NSMutableSet ?? NSMutableSet()
-        counterSet.remove(counter)
-        self.counters = counterSet as NSSet
-    }
-}
-*/

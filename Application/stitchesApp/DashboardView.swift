@@ -81,11 +81,23 @@ struct DashboardView: View {
                     }
                 }
             }
+            .onAppear {
+                            print("DashboardView appeared - Active projects count: \(activeProjects.count)")
+                        }
+            .onChange(of: activeProjects.count) { oldCount, newCount in
+                print("Active projects count changed from \(oldCount) to: \(newCount)")
+                CoreDataManager.shared.saveContext()
+            }
             .sheet(isPresented: $showingAddProject) {
                 NavigationStack {
                     AddProjectView(viewContext: viewContext)
                 }
+                .onDisappear {
+                    print("AddProject sheet disappeared from Dashboard - attempting to save")
+                    CoreDataManager.shared.saveContext()
+                }
             }
+            
             .sheet(isPresented: $showingAddCounter) {
                 CounterSetupView()
             }

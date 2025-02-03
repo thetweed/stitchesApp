@@ -12,6 +12,62 @@ import CoreData
 struct stitchesAppApp: App {
     let coreDataManager = CoreDataManager.shared
     @State private var isLoading = true
+    @Environment(\.scenePhase) var scenePhase
+    
+    var body: some Scene {
+        WindowGroup {
+            ZStack {
+                if isLoading {
+                    SplashScreenView()
+                } else {
+                    ContentView()
+                        .environment(\.managedObjectContext, coreDataManager.viewContext)
+                        .onChange(of: scenePhase) { oldPhase, newPhase in
+                            if newPhase == .inactive || newPhase == .background {
+                                print("App moving to \(newPhase) - attempting to save")
+                                coreDataManager.saveContext()
+                            }
+                        }
+                        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                            print("Application will resign active - attempting to save")
+                            coreDataManager.saveContext()
+                        }
+                        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                            print("Application entering background - attempting to save")
+                            coreDataManager.saveContext()
+                        }
+                }
+            }
+            .task {
+                do {
+                    print("Beginning app initialization...")
+                    let fetchRequest = NSFetchRequest<Project>(entityName: "Project")
+                    let projects = try coreDataManager.viewContext.fetch(fetchRequest)
+                    print("Found \(projects.count) projects during initialization")
+                    
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second delay
+                    await MainActor.run {
+                        withAnimation {
+                            isLoading = false
+                        }
+                    }
+                } catch {
+                    print("Initialization error: \(error)")
+                    await MainActor.run {
+                        withAnimation {
+                            isLoading = false
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*@main
+struct stitchesAppApp: App {
+    let coreDataManager = CoreDataManager.shared
+    @State private var isLoading = true
     
     var body: some Scene {
         WindowGroup {
@@ -52,7 +108,117 @@ struct stitchesAppApp: App {
             }
         }
     }
-}
+}*/
+
+
+/*@main
+struct stitchesAppApp: App {
+    let coreDataManager = CoreDataManager.shared
+    @State private var isLoading = true
+    
+    var body: some Scene {
+        WindowGroup {
+            ZStack {
+                if isLoading {
+                    SplashScreenView()
+                } else {
+                    ContentView()
+                        .environment(\.managedObjectContext, coreDataManager.viewContext)
+                        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                            print("Application will resign active - saving context")
+                            coreDataManager.saveContext()
+                        }
+                        // Add these additional save points
+                        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                            print("Application did enter background - saving context")
+                            coreDataManager.saveContext()
+                        }
+                        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification)) { _ in
+                            print("Application will terminate - saving context")
+                            coreDataManager.saveContext()
+                        }
+                }
+            }
+            .task {
+                await initializeApp()
+            }
+        }
+    }
+    
+    private func initializeApp() async {
+        do {
+            print("Beginning app initialization...")
+            let fetchRequest = NSFetchRequest<Project>(entityName: "Project")
+            let projects = try coreDataManager.viewContext.fetch(fetchRequest)
+            print("Found \(projects.count) projects during initialization")
+            
+            // Add counts for other entities
+            let yarnCount = try coreDataManager.viewContext.count(for: NSFetchRequest(entityName: "Yarn"))
+            let counterCount = try coreDataManager.viewContext.count(for: NSFetchRequest(entityName: "Counter"))
+            print("Initial counts - Projects: \(projects.count), Yarns: \(yarnCount), Counters: \(counterCount)")
+
+            try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+            await MainActor.run {
+                withAnimation {
+                    isLoading = false
+                }
+            }
+        } catch {
+            print("Initialization error: \(error)")
+            print("Detailed error: \(error as NSError).userInfo")
+            await MainActor.run {
+                withAnimation {
+                    isLoading = false
+                }
+            }
+        }
+    }
+}*/
+
+/*struct stitchesAppApp: App {
+    let coreDataManager = CoreDataManager.shared
+    @State private var isLoading = true
+    
+    var body: some Scene {
+        WindowGroup {
+            ZStack {
+                if isLoading {
+                    SplashScreenView()
+                } else {
+                    ContentView()
+                        .environment(\.managedObjectContext, coreDataManager.viewContext)
+                        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                            coreDataManager.saveContext()
+                        }
+                }
+            }
+            .task {
+                await initializeApp()
+            }
+        }
+    }
+    
+    private func initializeApp() async {
+        do {
+            let fetchRequest = NSFetchRequest<Project>(entityName: "Project")
+            _ = try coreDataManager.viewContext.fetch(fetchRequest)
+
+            try await Task.sleep(nanoseconds: 1_000_000_000) // 1 seconds
+            await MainActor.run {
+                withAnimation {
+                    isLoading = false
+                }
+            }
+        } catch {
+            print("Initialization error: \(error)")
+            await MainActor.run {
+                withAnimation {
+                    isLoading = false
+                }
+            }
+        }
+    }
+}*/
 
 /*@main
 struct stitchesAppApp: App {

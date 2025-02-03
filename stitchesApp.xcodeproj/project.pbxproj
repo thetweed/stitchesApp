@@ -73,6 +73,9 @@
 		5B4307962D4C284B0038D6C7 /* PhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4307952D4C28470038D6C7 /* PhotoPickerView.swift */; };
 		5B6242A22D385EC2008DE40D /* BasicStitchCounterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6242A12D385EC2008DE40D /* BasicStitchCounterViewModel.swift */; };
 		5B6242A42D3860CB008DE40D /* BasicStitchCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6242A32D3860CB008DE40D /* BasicStitchCounterView.swift */; };
+		5BF0EDBC2D5181FE008FC461 /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF0EDBB2D5181FE008FC461 /* LogEntry.swift */; };
+		5BF0EDBF2D5181FE008FC461 /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF0EDBB2D5181FE008FC461 /* LogEntry.swift */; };
+		5BF0EDC12D5181FE008FC461 /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF0EDBB2D5181FE008FC461 /* LogEntry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +163,7 @@
 		5B4307952D4C28470038D6C7 /* PhotoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerView.swift; sourceTree = "<group>"; };
 		5B6242A12D385EC2008DE40D /* BasicStitchCounterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStitchCounterViewModel.swift; sourceTree = "<group>"; };
 		5B6242A32D3860CB008DE40D /* BasicStitchCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStitchCounterView.swift; sourceTree = "<group>"; };
+		5BF0EDBB2D5181FE008FC461 /* LogEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEntry.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -237,6 +241,7 @@
 		5B16DE272D137FEE008B5FEB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				5BF0EDBB2D5181FE008FC461 /* LogEntry.swift */,
 				5B43057E2D4A0F6B0038D6C7 /* Notification.Name.swift */,
 				5B0637FA2D44CDA6001D35E2 /* View.swift */,
 				5B37E4F92D372CF4005A3031 /* Project.swift */,
@@ -714,6 +719,7 @@
 				5B0637462D3AFAEB001D35E2 /* ProjectRowView.swift in Sources */,
 				5B1D8F5E2D13774200297376 /* stitchesApp.xcdatamodeld in Sources */,
 				5B4307962D4C284B0038D6C7 /* PhotoPickerView.swift in Sources */,
+				5BF0EDBC2D5181FE008FC461 /* LogEntry.swift in Sources */,
 				5B0637B72D442B8F001D35E2 /* YarnInventoryView.swift in Sources */,
 				5B0637A82D430C33001D35E2 /* EditYarnViewModel.swift in Sources */,
 				5B1D8F542D13774100297376 /* ContentView.swift in Sources */,
@@ -771,6 +777,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BF0EDBF2D5181FE008FC461 /* LogEntry.swift in Sources */,
 				5B1D8F682D13774200297376 /* stitchesAppTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -781,6 +788,7 @@
 			files = (
 				5B1D8F722D13774200297376 /* stitchesAppUITests.swift in Sources */,
 				5B1D8F742D13774200297376 /* stitchesAppUITestsLaunchTests.swift in Sources */,
+				5BF0EDC12D5181FE008FC461 /* LogEntry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -87,6 +87,10 @@ struct ProjectListView: View {
                 print("Projects count: \(projects.count)")
                 print("Projects is empty: \(projects.isEmpty)")
             }
+            .onDisappear {
+                print("ProjectListView disappearing - attempting to save")
+                CoreDataManager.shared.saveContext()
+            }
         }
     }
     

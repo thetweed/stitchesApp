@@ -11,6 +11,12 @@
         <attribute name="targetCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="project" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="counters" inverseEntity="Project"/>
     </entity>
+    <entity name="LogEntry" representedClassName=".LogEntry" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="message" optional="YES" attributeType="String"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
     <entity name="Project" representedClassName=".Project" syncable="YES">
         <attribute name="currentRow" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="deleted" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>

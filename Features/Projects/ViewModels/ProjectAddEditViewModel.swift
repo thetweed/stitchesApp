@@ -23,20 +23,7 @@ class ProjectAddEditViewModel: ObservableObject {
     let statuses = ["Not Started", "In Progress", "Completed", "Frogged"]
     private let viewContext: NSManagedObjectContext
    let existingProject: Project?
-    
-    
-    /*init(project: Project, viewContext: NSManagedObjectContext) {
-        self.project = project
-        self.viewContext = viewContext
-        
-        self.name = project.name
-        self.patternNotes = project.patternNotes ?? ""
-        self.status = project.status
-        self.currentRow = project.currentRow
-        self.yarns = project.yarns as? Set<Yarn> ?? []
-        self.attachedCounters = Array(project.counters?.allObjects as? [Counter] ?? [])
-    }*/
-    
+
     //new project
     init(viewContext: NSManagedObjectContext) {
         self.existingProject = nil
@@ -111,35 +98,12 @@ class ProjectAddEditViewModel: ObservableObject {
             attachedCounters.removeAll(where: { $0.id == counter.id })
         }
     }
-    
-  /*  func saveProject() {
-        viewContext.performAndWait {
-            let project = Project.create(
-                in: viewContext,
-                name: name,
-                projectType: "Knitting", // You might want to make this configurable
-                startDate: Date()
-            )
-            
-            project.patternNotes = patternNotes
-            project.status = status
-            project.currentRow = currentRow
-            yarns.forEach { yarn in
-                project.addYarn(yarn, context: viewContext)
-            }
-            countersToAttach.forEach { counter in
-                            project.addToCounters(counter)
-                            counter.project = project
-                        }
-            
-            try? viewContext.save()
-        }
-    }
-    */
+
     
     func saveProject() {
+        print("\n--- Beginning saveProject in ViewModel ---")
         viewContext.performAndWait {
-            // Only create the project when actually saving
+            print("Creating new project in context")
             let project = Project.create(
                 in: viewContext,
                 name: name,
@@ -160,8 +124,19 @@ class ProjectAddEditViewModel: ObservableObject {
                 counter.project = project
             }
             
-            try? viewContext.save()
+            do {
+                print("Attempting to save new project to context")
+                try viewContext.save()
+                print("Successfully saved new project")
+                
+                // Debug current state
+                let projectCount = try viewContext.count(for: NSFetchRequest(entityName: "Project"))
+                print("Total projects after save: \(projectCount)")
+            } catch {
+                print("Failed to save new project: \(error)")
+            }
         }
+        print("--- Completed saveProject in ViewModel ---\n")
     }
     
     func addYarn(_ yarn: Yarn) {

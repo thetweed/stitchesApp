@@ -37,7 +37,7 @@ extension Counter: Identifiable {
     static let counterTypes = ["row", "stitch", "repeat"]
 }
 
-//Below is set up for later use
+//Below set up for later use
 extension Counter {
     @NSManaged public var stitchesPerRepeat: Int32  // For repeat counters
     @NSManaged public var isActive: Bool            // To track active vs archived counters
