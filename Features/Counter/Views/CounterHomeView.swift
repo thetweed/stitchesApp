@@ -27,7 +27,7 @@ struct CounterHomeView: View {
                     if !counters.isEmpty {
                         recentActivitySection
                         projectCountersSection
-                        allCountersSection  // Moved inside the if !counters.isEmpty condition
+                        allCountersSection  
                     } else {
                         emptyStateView
                     }

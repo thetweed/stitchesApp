@@ -12,13 +12,14 @@ struct UnattachedCounterSelectionView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     @Binding var selectedCounters: Set<Counter>
-    let project: Project
+    let project: Project?
     
     @FetchRequest private var unattachedCounters: FetchedResults<Counter>
     
-    init(selectedCounters: Binding<Set<Counter>>, project: Project) {
+    init(selectedCounters: Binding<Set<Counter>>, project: Project?) {
         self._selectedCounters = selectedCounters
         self.project = project
+        
         self._unattachedCounters = FetchRequest(
             entity: Counter.entity(),
             sortDescriptors: [NSSortDescriptor(keyPath: \Counter.lastModified, ascending: false)],
@@ -28,105 +29,56 @@ struct UnattachedCounterSelectionView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            List(unattachedCounters, id: \.safeID) { counter in
-                HStack {
-                    CounterRowView(counter: counter)
-                    Spacer()
-                    if selectedCounters.contains(counter) {
-                        Image(systemName: "checkmark")
-                            .foregroundColor(.accentColor)
-                    }
-                }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    if selectedCounters.contains(counter) {
-                        selectedCounters.remove(counter)
-                    } else {
-                        selectedCounters.insert(counter)
-                    }
-                }
-            }
-            .navigationTitle("Select Counters")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") {
-                        viewContext.performAndWait {
-                            selectedCounters.forEach { counter in
-                                counter.project = project
-                                project.addToCounters(counter)
-                                counter.lastModified = Date()
-                            }
-                            
-                            do {
-                                try viewContext.save()
-                                print("Saved counter selections successfully")
-                            } catch {
-                                print("Error saving counter selections: \(error)")
-                            }
+            NavigationStack {
+                List(unattachedCounters, id: \.safeID) { counter in
+                    HStack {
+                        CounterRowView(counter: counter)
+                        Spacer()
+                        if selectedCounters.contains(counter) {
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.accentColor)
                         }
-                        dismiss()
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        if selectedCounters.contains(counter) {
+                            selectedCounters.remove(counter)
+                        } else {
+                            selectedCounters.insert(counter)
+                        }
+                    }
+                }
+                .navigationTitle("Select Counters")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Done") {
+                            viewContext.performAndWait {
+                                selectedCounters.forEach { counter in
+                                    if let project = project {
+                                        counter.project = project
+                                        project.addToCounters(counter)
+                                        counter.lastModified = Date()
+                                    }
+                                }
+                                
+                                do {
+                                    try viewContext.save()
+                                    print("Saved counter selections successfully")
+                                } catch {
+                                    print("Error saving counter selections: \(error)")
+                                }
+                            }
+                            dismiss()
+                        }
                     }
                 }
             }
+            .onDisappear {
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name("CountersUpdated"),
+                            object: nil
+                        )
+                    }
         }
-    }
 }
 
-/*struct UnattachedCounterSelectionView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.dismiss) private var dismiss
-    @Binding var selectedCounters: Set<Counter>
-    let project: Project
-    
-    @FetchRequest(
-        entity: Counter.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Counter.name, ascending: true)],
-        predicate: NSPredicate(format: "project == nil"),
-        animation: .default
-    ) private var unattachedCounters: FetchedResults<Counter>
-    
-    var body: some View {
-        NavigationStack {
-            List(unattachedCounters, id: \.safeID) { counter in
-                HStack {
-                    CounterRowView(counter: counter)
-                    Spacer()
-                    if selectedCounters.contains(counter) {
-                        Image(systemName: "checkmark")
-                            .foregroundColor(.accentColor)
-                    }
-                }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    if selectedCounters.contains(counter) {
-                        selectedCounters.remove(counter)
-                    } else {
-                        selectedCounters.insert(counter)
-                    }
-                }
-            }
-            .navigationTitle("Select Counters")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") {
-                        // Apply all changes when done is tapped
-                        selectedCounters.forEach { counter in
-                            counter.project = project
-                            project.addToCounters(counter)
-                        }
-                        
-                        do {
-                            try viewContext.save()
-                            print("Saved counter selections")
-                        } catch {
-                            print("Error saving counter selections: \(error)")
-                        }
-                        dismiss()
-                    }
-                }
-            }
-        }
-    }
-}
-*/

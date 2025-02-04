@@ -24,7 +24,6 @@ class StitchCounterViewModel: ObservableObject {
         self.counter = counter
         
         if let counter = counter {
-            // Load existing counter
             currentCount = Int(counter.currentCount)
             targetCount = Int(counter.targetCount)
             counterName = counter.name

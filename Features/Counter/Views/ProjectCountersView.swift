@@ -16,7 +16,6 @@ struct ProjectCountersView: View {
     
     init(project: Project) {
         self.project = project
-        // Set up a fetch request for counters belonging to this project
         _counters = FetchRequest(
             entity: Counter.entity(),
             sortDescriptors: [NSSortDescriptor(keyPath: \Counter.lastModified, ascending: false)],
@@ -42,7 +41,7 @@ struct ProjectCountersView: View {
             }
         }
         .sheet(isPresented: $showingAddCounter) {
-            CounterSetupView(project: project)
+            CounterSetupView()
         }
     }
     

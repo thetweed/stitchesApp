@@ -12,62 +12,67 @@ struct ProjectListView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel: ProjectListViewModel
     @FetchRequest private var projects: FetchedResults<Project>
+    @State private var deletedProjectIDs: Set<UUID> = []
     
     init(viewContext: NSManagedObjectContext) {
-        let vm = ProjectListViewModel(viewContext: viewContext)
-        _viewModel = StateObject(wrappedValue: vm)
-        _projects = FetchRequest(fetchRequest: vm.projectFetchRequest())
-    }
+            let vm = ProjectListViewModel(viewContext: viewContext)
+            _viewModel = StateObject(wrappedValue: vm)
+            _projects = FetchRequest(fetchRequest: vm.projectFetchRequest())
+        }
     
     private var activeProjects: [Project] {
-        projects.filter { $0.status == "In Progress" }
+        projects.filter { $0.status == "In Progress" && !deletedProjectIDs.contains($0.id) }
     }
 
     private var plannedProjects: [Project] {
-        projects.filter { $0.status == "Not Started" }
+        projects.filter { $0.status == "Not Started" && !deletedProjectIDs.contains($0.id) }
     }
 
     private var completedProjects: [Project] {
-        projects.filter { $0.status == "Completed" || $0.status == "Frogged" }
+        projects.filter { ($0.status == "Completed" || $0.status == "Frogged") && !deletedProjectIDs.contains($0.id) }
+    }
+    
+    private var hasVisibleProjects: Bool {
+        !activeProjects.isEmpty || !plannedProjects.isEmpty || !completedProjects.isEmpty
     }
 
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVStack(spacing: 20) {
-                    if projects.isEmpty {
-                        emptyStateView
-                    } else {
-                        if !activeProjects.isEmpty {
-                            projectSection(
-                                title: "Active Projects",
-                                systemImage: "flag.pattern.checkered",
-                                projects: activeProjects,
-                                accentColor: .blue
-                            )
-                        }
-                        
-                        if !plannedProjects.isEmpty {
-                            projectSection(
-                                title: "Planned",
-                                systemImage: "doc.text",
-                                projects: plannedProjects,
-                                accentColor: Color(.darkGray)
-                            )
-                        }
-                        
-                        if !completedProjects.isEmpty {
-                            projectSection(
-                                title: "Finished Projects",
-                                systemImage: "checkmark.circle",
-                                projects: completedProjects,
-                                accentColor: .green
-                            )
+                    LazyVStack(spacing: 20) {
+                        if !hasVisibleProjects {
+                            emptyStateView
+                        } else {
+                            if !activeProjects.isEmpty {
+                                projectSection(
+                                    title: "Active Projects",
+                                    systemImage: "flag.pattern.checkered",
+                                    projects: activeProjects,
+                                    accentColor: .blue
+                                )
+                            }
+                                    
+                            if !plannedProjects.isEmpty {
+                                projectSection(
+                                    title: "Planned",
+                                    systemImage: "doc.text",
+                                    projects: plannedProjects,
+                                    accentColor: Color(.darkGray)
+                                )
+                            }
+                                    
+                            if !completedProjects.isEmpty {
+                                projectSection(
+                                    title: "Finished Projects",
+                                    systemImage: "checkmark.circle",
+                                    projects: completedProjects,
+                                    accentColor: .green
+                                )
+                            }
                         }
                     }
+                    .padding()
                 }
-                .padding()
-            }
             .navigationTitle("Knitting Projects")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -81,6 +86,13 @@ struct ProjectListView: View {
             .sheet(isPresented: $viewModel.showingAddProject) {
                 NavigationStack {
                     AddProjectView(viewContext: viewContext)
+                }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("ProjectDeleted"))) { notification in
+                if let deletedProjectID = notification.userInfo?["projectID"] as? UUID {
+                    _ = withAnimation {
+                        deletedProjectIDs.insert(deletedProjectID)
+                    }
                 }
             }
             .onAppear {

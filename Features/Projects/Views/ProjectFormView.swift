@@ -27,15 +27,21 @@ struct ProjectFormView: View {
             .toolbar(content: toolbarContent)
         }
         .sheet(isPresented: $viewModel.showingNewCounterSheet) {
-            if let project = viewModel.existingProject {
-                CounterSetupView(project: project)
-                    .onDisappear {
-                        viewModel.refreshAttachedCounters()
-                    }
+            CounterSetupView { counter in
+                viewModel.handleNewCounter(counter)
             }
         }
+        
         .sheet(isPresented: $viewModel.showingAttachCounterSheet) {
-            if let project = viewModel.existingProject {
+            if isNewProject {
+                UnattachedCounterSelectionView(
+                    selectedCounters: $viewModel.countersToAttach,
+                    project: nil
+                )
+                .onDisappear {
+                    viewModel.refreshAttachedCounters()
+                }
+            } else if let project = viewModel.existingProject {
                 UnattachedCounterSelectionView(
                     selectedCounters: $viewModel.countersToAttach,
                     project: project

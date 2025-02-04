@@ -124,7 +124,7 @@ struct DashboardView: View {
             
             statsCard(
                 title: "Active Counters",
-                value: "\(activeCounters.count)", // Now using the actual count
+                value: "\(activeCounters.count)", 
                 systemImage: "number.circle.fill",
                 color: .orange
             )

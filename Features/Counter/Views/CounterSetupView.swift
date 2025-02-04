@@ -10,15 +10,14 @@ import CoreData
 
 struct CounterSetupView: View {
     @Environment(\.managedObjectContext) private var context
-    @Environment(\.dismiss) private var dismiss
-    @StateObject private var viewModel: CounterSetupViewModel
-    
-    let project: Project?
-    
-    init(project: Project? = nil) {
-        self.project = project
-        _viewModel = StateObject(wrappedValue: CounterSetupViewModel(project: project))
-    }
+        @Environment(\.dismiss) private var dismiss
+        @StateObject private var viewModel: CounterSetupViewModel
+        
+        init(onCounterCreated: ((Counter) -> Void)? = nil) {
+            _viewModel = StateObject(wrappedValue: CounterSetupViewModel(
+                onCounterCreated: onCounterCreated
+            ))
+        }
     
     var body: some View {
         NavigationStack {
@@ -37,9 +36,9 @@ struct CounterSetupView: View {
                         .keyboardType(.numberPad)
                 }
                 
-                if project == nil {
+                if viewModel.project == nil {
                     Section("Project") {
-                        Text(project?.name ?? "None")
+                        Text(viewModel.project?.name ?? "None")
                     }
                 }
                 
@@ -84,11 +83,11 @@ struct CounterSetupView: View {
 struct CounterSetupView_Previews: PreviewProvider {
     static var previews: some View {
         Previewing(\.sampleProjectWithCounter) { project in
-            CounterSetupView(project: project)
+            CounterSetupView()
         }
         
         Previewing(\.sampleProjectWithCounter) { _ in
-            CounterSetupView(project: nil)
+            CounterSetupView()
         }
         .previewDisplayName("No Project")
     }

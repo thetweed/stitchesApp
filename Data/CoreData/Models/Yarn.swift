@@ -8,8 +8,6 @@
 import Foundation
 import CoreData
 
-//@objc(Yarn)
-//public  .. @objc(projects) public
 class Yarn: NSManagedObject, Identifiable {
     @NSManaged public var id: UUID
     @NSManaged public var brand: String

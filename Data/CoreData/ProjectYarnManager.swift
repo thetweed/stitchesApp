@@ -5,6 +5,7 @@
 //  Created by Laurie on 1/28/25.
 //
 
+// For use in other views/view models that just need yarn management
 /*import SwiftUI
 import CoreData
 
@@ -15,7 +16,6 @@ class ProjectYarnManager {
         self.context = context
     }
     
-    // For use in other views/view models that just need yarn management
     func addYarnToProject(_ yarn: Yarn, project: Project) {
         context.performAndWait {
             project.addYarn(yarn, context: context)

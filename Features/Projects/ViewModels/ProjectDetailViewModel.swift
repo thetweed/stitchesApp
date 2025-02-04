@@ -9,38 +9,52 @@ import SwiftUI
 import CoreData
 
 class ProjectDetailViewModel: ObservableObject {
+    
     @Published var project: Project
     @Published var showingEditSheet = false
+    @Published var isDeleted = false
     @Published private(set) var yarns: [Yarn] = []
     @Published private(set) var counters: [Counter] = []
     
     private let context: NSManagedObjectContext
+    private let projectID: String
     
     init(project: Project, context: NSManagedObjectContext) {
         self.project = project
         self.context = context
+        self.projectID = project.id.uuidString
         self.yarns = project.yarnsArray
         self.counters = Array(project.counters?.allObjects as? [Counter] ?? [])
         self.refreshYarns()
         self.refreshCounters()
         self.refreshData()
+        
+        NotificationCenter.default.addObserver(
+            forName: NSNotification.Name("ProjectDeleted"),
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            if let deletedProjectIDString = notification.userInfo?["projectIDString"] as? String,
+               deletedProjectIDString == self?.projectID {  // Compare strings instead of UUID
+                self?.handleDeletion()
+            }
+        }
     }
     
     var statusText: String {
-        "Status: \(project.status)"
+        guard !isDeleted else { return "" }
+        return "Status: \(project.status)"
     }
+
     
     var startDateText: String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return "Started: \(formatter.string(from: project.startDate))"
+        guard !isDeleted else { return "" }
+        return ProjectDateFormatter.shared.string(from: project.startDate)
     }
-    
+
     var lastModifiedText: String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return "Last modified: \(formatter.string(from: project.lastModified))"
+        guard !isDeleted else { return "" }
+        return ProjectDateFormatter.shared.string(from: project.lastModified)
     }
     
     var currentRowText: String {
@@ -90,7 +104,16 @@ class ProjectDetailViewModel: ObservableObject {
         yarns = project.yarnsArray
         objectWillChange.send()
     }
-
+    
+    func handleDeletion() {
+        DispatchQueue.main.async { [weak self] in
+            self?.isDeleted = true
+            // Clear references that might cause retain cycles
+            self?.counters = []
+            self?.yarns = []
+            self?.objectWillChange.send()
+        }
+    }
 
     func debugYarns() {
         #if DEBUG
@@ -115,3 +138,4 @@ class ProjectDetailViewModel: ObservableObject {
         #endif
     }
 }
+

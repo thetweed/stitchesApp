@@ -8,8 +8,6 @@
 import Foundation
 import CoreData
 
-//@objc(Project)
-//public .. @objc(yarns) public
 class Project: NSManagedObject, Identifiable {
     
     @NSManaged public var id: UUID
@@ -30,9 +28,9 @@ class Project: NSManagedObject, Identifiable {
 extension Project {
     @discardableResult
     static func create(in context: NSManagedObjectContext,
-                       name: String,
-                       projectType: String,
-                       startDate: Date = Date()) -> Project {
+                      name: String,
+                      projectType: String,
+                      startDate: Date = Date()) -> Project {
         print("Creating new Project entity")
         let project = Project(context: context)
         project.id = UUID()
@@ -157,3 +155,43 @@ extension Project {
         self.lastModified = Date()
     }
 }
+
+class ProjectDateFormatter {
+    static let shared = ProjectDateFormatter()
+    
+    private let dateFormatter: DateFormatter
+    
+    private init() {
+        dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .short
+    }
+    
+    func string(from date: Date) -> String {
+        dateFormatter.string(from: date)
+    }
+    
+    func relativeString(from date: Date) -> String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .short
+        return formatter.localizedString(for: date, relativeTo: Date())
+    }
+}
+
+extension Project {
+    func prepareForDeletion(in context: NSManagedObjectContext) {
+        context.performAndWait {
+            // Detach counters, delete counters
+            countersArray.forEach { counter in
+                removeFromCounters(counter)
+                context.delete(counter)
+            }
+            
+            // Detach yarns (don't delete yarns)
+            yarnsArray.forEach { yarn in
+                removeYarn(yarn, context: context)
+            }
+        }
+    }
+}
+

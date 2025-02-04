@@ -35,6 +35,7 @@ class ProjectListViewModel: ObservableObject {
     
     func projectFetchRequest() -> NSFetchRequest<Project> {
         let request = Project.fetchRequest() as! NSFetchRequest<Project>
+        request.returnsObjectsAsFaults = false
         request.sortDescriptors = [
             NSSortDescriptor(keyPath: \Project.lastModified, ascending: false),
             NSSortDescriptor(keyPath: \Project.name, ascending: true)
