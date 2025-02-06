@@ -83,3 +83,12 @@ struct SplashScreenView: View {
         }
     }
 }
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    let phoneSessionManager = PhoneSessionManager.shared
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        print("Phone: App did finish launching")
+        return true
+    }
+}
