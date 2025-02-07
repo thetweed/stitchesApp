@@ -10,10 +10,8 @@ import CoreData
 import WatchConnectivity
 
 struct ContentView: View {
-    @StateObject private var motionManager = MotionManager()
     @Environment(\.managedObjectContext) private var viewContext
-    @StateObject private var sessionManager = WatchSessionManager.shared
-    
+    @EnvironmentObject private var sessionManager: WatchSessionManager
     @State private var selectedCounter: Counter?
     
     var body: some View {
@@ -21,23 +19,21 @@ struct ContentView: View {
             if let counter = selectedCounter {
                 CountingView(
                     counter: counter,
-                    motionManager: motionManager,
                     selectedCounter: $selectedCounter
                 )
             } else {
                 CounterSelectionView(selectedCounter: $selectedCounter)
             }
         }
-        .environmentObject(sessionManager)
         .onAppear {
-                print("ContentView appeared")
-                print("Session manager instance: \(ObjectIdentifier(sessionManager))")
-                print("Session manager reachable state: \(sessionManager.isReachable)")
-                }
+            print("ContentView appeared")
+            print("Session manager instance: \(ObjectIdentifier(sessionManager))")
+            print("Session manager reachable state: \(sessionManager.isReachable)")
+        }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+/*struct ContentView_Previews: PreviewProvider {
     struct DebugWrapper: View {
         let sessionManager: WatchSessionManager
         
@@ -55,3 +51,4 @@ struct ContentView_Previews: PreviewProvider {
         DebugWrapper(sessionManager: PreviewWatchSessionManager.previewShared)
     }
 }
+*/

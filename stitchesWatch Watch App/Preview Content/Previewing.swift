@@ -10,7 +10,7 @@ import CoreData
 import SwiftUI
 import WatchConnectivity
 
-class PreviewCoreDataManager {
+/*class PreviewCoreDataManager {
     static let shared = PreviewCoreDataManager()
     let container: NSPersistentContainer
     
@@ -132,3 +132,4 @@ extension View {
     }
 }
 
+*/

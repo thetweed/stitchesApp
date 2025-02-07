@@ -10,6 +10,7 @@ import CoreData
 
 @main
 struct stitchesAppApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     let coreDataManager = CoreDataManager.shared
     @State private var isLoading = true
     @Environment(\.scenePhase) var scenePhase

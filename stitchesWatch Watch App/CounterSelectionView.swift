@@ -11,9 +11,9 @@ import WatchConnectivity
 
 struct CounterSelectionView: View {
     @Environment(\.managedObjectContext) private var viewContext
-        @StateObject private var sessionManager = WatchSessionManager.shared
-        @Binding var selectedCounter: Counter?
-        @FetchRequest private var activeProjects: FetchedResults<Project>
+    @EnvironmentObject private var sessionManager: WatchSessionManager
+    @Binding var selectedCounter: Counter?
+    @FetchRequest private var activeProjects: FetchedResults<Project>
         
         init(selectedCounter: Binding<Counter?>) {
             self._selectedCounter = selectedCounter
@@ -101,6 +101,7 @@ struct CounterSelectionView: View {
     }
 }
 
+/*
 struct CounterSelectionView_Previews: PreviewProvider {
     static var previews: some View {
         let manager = PreviewCoreDataManager.shared
@@ -113,3 +114,4 @@ struct CounterSelectionView_Previews: PreviewProvider {
         }
     }
 }
+*/

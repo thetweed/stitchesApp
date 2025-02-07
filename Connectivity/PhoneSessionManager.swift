@@ -55,21 +55,32 @@ extension PhoneSessionManager: WCSessionDelegate {
     }
     
     func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
-            DispatchQueue.main.async {
-                print("Phone: Received message: \(message)")
-                if let type = message["type"] as? String {
-                    switch type {
-                    case "requestCounters":
-                        print("Phone: Received request for counters")
-                        self.sendCountersToWatch()
-                        replyHandler(["status": "processing"])
-                    default:
-                        print("Phone: Unknown message type: \(type)")
-                        replyHandler(["status": "unknown type"])
+        DispatchQueue.main.async {
+            print("Phone: Received message: \(message)")
+            if let type = message["type"] as? String {
+                switch type {
+                case "requestCounters":
+                    print("Phone: Received request for counters")
+                    self.sendCountersToWatch()
+                    replyHandler(["status": "processing"])
+                case "stitchCount":
+                    print("Phone: Received stitch count update")
+                    if let count = message["count"] as? Int,
+                       let counterIdString = message["counterId"] as? String,
+                       let counterId = UUID(uuidString: counterIdString) {
+                        self.updateCounter(id: counterId, count: count)
+                        replyHandler(["status": "updated"])
+                    } else {
+                        print("Phone: Invalid stitch count data received")
+                        replyHandler(["status": "error", "message": "Invalid data"])
                     }
+                default:
+                    print("Phone: Unknown message type: \(type)")
+                    replyHandler(["status": "unknown type"])
                 }
             }
         }
+    }
     
     private func updateCounter(id: UUID, count: Int) {
         let context = CoreDataManager.shared.viewContext
@@ -97,6 +108,7 @@ extension PhoneSessionManager {
         
         let context = CoreDataManager.shared.viewContext
         let request = NSFetchRequest<Counter>(entityName: "Counter")
+        request.predicate = NSPredicate(format: "project != nil")  // Only send counters with projects
         
         do {
             let counters = try context.fetch(request)

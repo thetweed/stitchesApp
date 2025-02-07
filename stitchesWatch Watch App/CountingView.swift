@@ -10,67 +10,98 @@ import WatchConnectivity
 
 struct CountingView: View {
     let counter: Counter
-    @ObservedObject var motionManager: MotionManager
+    @StateObject private var motionManager: MotionManager
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.dismiss) private var dismiss
-    //@ObservedObject private var sessionManager = WatchSessionManager.shared
     @EnvironmentObject private var sessionManager: WatchSessionManager
     @Binding var selectedCounter: Counter?
+    @Environment(\.dismiss) private var dismiss
+    
+    init(counter: Counter, selectedCounter: Binding<Counter?>) {
+        self.counter = counter
+        self._motionManager = StateObject(wrappedValue: MotionManager(initialCount: Int(counter.currentCount)))
+        self._selectedCounter = selectedCounter
+    }
     
     var body: some View {
-        VStack {
-            
+        VStack(spacing: 12) {
             Text(counter.name)
                 .font(.headline)
             
-            Text("\(motionManager.stitchCount)")
+            Text("\(motionManager.stitchCount) / \(counter.targetCount)")
                 .font(.system(.title, design: .rounded))
                 .bold()
             
-            HStack {
-                Button(action: {
-                    saveCount()
-                }) {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.title2)
-                }
-                
-                Button(action: {
-                    selectedCounter = nil
-                }) {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(.title2)
-                }
+            Button(action: {
+                saveCount()
+            }) {
+                Text("Save Count")
+                    .font(.body)
+                    .bold()
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 8)
             }
+            .buttonStyle(.borderedProminent)
+            .tint(.green)
             
             if !sessionManager.isReachable {
                 Text("iPhone not reachable")
                     .foregroundColor(.red)
                     .font(.caption)
             }
-            
         }
-        .onAppear{
-            print("CountingView appeared")
-            print("Session manager reachable state: \(sessionManager.isReachable)")
-            print("Session manager instance: \(ObjectIdentifier(sessionManager))")
+        .padding()
+        .navigationBarBackButtonHidden(false)  // Show the back button
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action: {
+                    motionManager.stopMotionDetection()
+                    selectedCounter = nil
+                }) {
+                    Image(systemName: "chevron.left")
+                }
+            }
+        }
+        .onAppear {
+            print("CountingView appeared for counter: \(counter.name) with count: \(counter.currentCount)")
+            motionManager.startMotionDetection()
+        }
+        .onDisappear {
+            motionManager.stopMotionDetection()
         }
     }
     
     private func saveCount() {
-        counter.currentCount = Int32(motionManager.stitchCount)
-        counter.lastModified = Date()
+        let count = motionManager.stitchCount
+        print("Saving count \(count) for counter: \(counter.name)")
         
-        do {
-            try viewContext.save()
-            sessionManager.sendStitchCount(motionManager.stitchCount, forCounter: counter)
-        } catch {
-            print("Error saving count: \(error)")
+        viewContext.performAndWait {
+            counter.currentCount = Int32(count)
+            counter.lastModified = Date()
+            
+            do {
+                try viewContext.save()
+                print("Successfully saved count to local CoreData")
+                
+                sessionManager.sendStitchCount(count, forCounter: counter) { success in
+                    if success {
+                        print("Successfully synced count with phone")
+                        // Return to selection view after successful save
+                        DispatchQueue.main.async {
+                            motionManager.stopMotionDetection()
+                            selectedCounter = nil
+                        }
+                    } else {
+                        print("Failed to sync count with phone")
+                    }
+                }
+            } catch {
+                print("Error saving count: \(error)")
+            }
         }
     }
 }
 
-struct CountingView_Previews: PreviewProvider {
+/*struct CountingView_Previews: PreviewProvider {
     static var previews: some View {
         let context = PreviewCoreDataManager.shared.viewContext
         let sessionManager = PreviewWatchSessionManager.previewShared
@@ -86,5 +117,5 @@ struct CountingView_Previews: PreviewProvider {
             .environmentObject(sessionManager)
         }
     }
-}
+}*/
 

@@ -11,32 +11,70 @@ import CoreData
 
 class MotionManager: ObservableObject {
     private let motionManager = CMMotionManager()
-    @Published var stitchCount: Int = 0
+    @Published private(set) var stitchCount: Int
+    private var isEnabled = true
     
-    // Threshold for detecting a stitch motion
-    private let motionThreshold: Double = 0.5
+    // Adjusted thresholds
+    private let motionThreshold: Double = 1.2  // Increased threshold for more deliberate motion
+    private let minimumMotionInterval: TimeInterval = 0.5  // Increased interval to prevent rapid counting
+    private var lastMotionTimestamp: Date?
     
-    init() {
-        setupMotionDetection()
+    init(initialCount: Int = 0) {
+        self.stitchCount = initialCount
+        print("Initializing MotionManager with count: \(initialCount)")
     }
     
-    private func setupMotionDetection() {
-        if motionManager.isAccelerometerAvailable {
-            motionManager.accelerometerUpdateInterval = 0.1
+    func startMotionDetection() {
+        print("Starting motion detection")
+        guard motionManager.isAccelerometerAvailable else {
+            print("Accelerometer not available")
+            return
+        }
+        
+        isEnabled = true
+        motionManager.accelerometerUpdateInterval = 0.1
+        
+        let queue = OperationQueue()
+        motionManager.startAccelerometerUpdates(to: queue) { [weak self] data, error in
+            guard let self = self,
+                  let data = data,
+                  error == nil,
+                  self.isEnabled else { return }
             
-            motionManager.startAccelerometerUpdates(to: .main) { [weak self] data, error in
-                guard let data = data, error == nil else { return }
-                
-                // Basic motion detection algorithm
-                // You'll need to refine this based on actual knitting motion patterns
-                if abs(data.acceleration.x) > self?.motionThreshold ?? 0 {
-                    self?.stitchCount += 1
+            let currentTime = Date()
+            if let lastTime = self.lastMotionTimestamp,
+               currentTime.timeIntervalSince(lastTime) < self.minimumMotionInterval {
+                return
+            }
+            
+            // Calculate total acceleration using all axes
+            let totalAcceleration = sqrt(
+                pow(data.acceleration.x, 2) +
+                pow(data.acceleration.y, 2) +
+                pow(data.acceleration.z, 2)
+            )
+            
+            // Only count significant movements
+            if totalAcceleration > self.motionThreshold {
+                self.lastMotionTimestamp = currentTime
+                DispatchQueue.main.async {
+                    self.stitchCount += 1
+                    print("Stitch detected, new count: \(self.stitchCount)")
                 }
             }
         }
     }
     
     func stopMotionDetection() {
+        print("Stopping motion detection")
+        isEnabled = false
         motionManager.stopAccelerometerUpdates()
+    }
+    
+    func updateCount(_ newCount: Int) {
+        DispatchQueue.main.async {
+            self.stitchCount = newCount
+            print("Updated stitch count to: \(newCount)")
+        }
     }
 }

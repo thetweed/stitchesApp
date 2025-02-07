@@ -32,22 +32,28 @@ class WatchSessionManager: NSObject, ObservableObject {
         }
     }
     
-    func sendStitchCount(_ count: Int, forCounter counter: Counter) {
+    func sendStitchCount(_ count: Int, forCounter counter: Counter, completion: @escaping (Bool) -> Void = { _ in }) {
         guard session.isReachable else {
-            print("iPhone is not reachable")
+            print("Watch: iPhone is not reachable, cannot send stitch count")
+            completion(false)
             return
         }
         
+        print("Watch: Sending stitch count \(count) for counter \(counter.name)")
         let message = [
             "type": "stitchCount",
             "count": count,
-            "counterId": counter.id.uuidString
+            "counterId": counter.id.uuidString,
+            "timestamp": Date().timeIntervalSince1970
         ] as [String: Any]
         
         session.sendMessage(message, replyHandler: { reply in
-            print("Message sent successfully: \(reply)")
+            print("Watch: Stitch count sent successfully, reply: \(reply)")
+            let success = reply["status"] as? String == "updated"
+            completion(success)
         }, errorHandler: { error in
-            print("Error sending message: \(error.localizedDescription)")
+            print("Watch: Error sending stitch count: \(error.localizedDescription)")
+            completion(false)
         })
     }
     
@@ -58,7 +64,6 @@ class WatchSessionManager: NSObject, ObservableObject {
         
         guard session.activationState == .activated else {
             print("Watch: Session not yet activated, waiting...")
-            // Wait briefly and try again
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 self?.requestCounters()
             }
@@ -67,15 +72,29 @@ class WatchSessionManager: NSObject, ObservableObject {
         
         guard session.isReachable else {
             print("Watch: iPhone is not reachable")
+            // Retry after a delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+                self?.requestCounters()
+            }
             return
         }
         
         print("Watch: Sending request for counters")
         let message = ["type": "requestCounters"]
-        session.sendMessage(message, replyHandler: { reply in
+        session.sendMessage(message, replyHandler: { [weak self] reply in
             print("Watch: Counter request sent, reply received: \(reply)")
-        }, errorHandler: { error in
+            if reply["status"] as? String != "processing" {
+                // If we didn't get a processing status, retry after a delay
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    self?.requestCounters()
+                }
+            }
+        }, errorHandler: { [weak self] error in
             print("Watch: Error requesting counters: \(error.localizedDescription)")
+            // Retry after a delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                self?.requestCounters()
+            }
         })
     }
         
