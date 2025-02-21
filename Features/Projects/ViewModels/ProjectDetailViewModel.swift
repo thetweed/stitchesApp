@@ -45,13 +45,13 @@ class ProjectDetailViewModel: ObservableObject {
         guard !isDeleted else { return "" }
         return "Status: \(project.status)"
     }
-
+    
     
     var startDateText: String {
         guard !isDeleted else { return "" }
         return ProjectDateFormatter.shared.string(from: project.startDate)
     }
-
+    
     var lastModifiedText: String {
         guard !isDeleted else { return "" }
         return ProjectDateFormatter.shared.string(from: project.lastModified)
@@ -81,24 +81,24 @@ class ProjectDetailViewModel: ObservableObject {
     }
     
     func refreshData() {
-            context.performAndWait {
-                context.refresh(project, mergeChanges: true)
-                self.yarns = project.yarnsArray
-                self.counters = project.countersArray
-                
-                print("Refreshed project data - Counters count: \(self.counters.count)")
-            }
-            objectWillChange.send()
+        context.performAndWait {
+            context.refresh(project, mergeChanges: true)
+            self.yarns = project.yarnsArray
+            self.counters = project.countersArray
+            
+            print("Refreshed project data - Counters count: \(self.counters.count)")
         }
+        objectWillChange.send()
+    }
     
     func refreshCounters() {
-            context.performAndWait {
-                context.refresh(project, mergeChanges: true)
-                self.counters = project.countersArray
-                print("Refreshed counters: Found \(counters.count) counters")
-            }
-            objectWillChange.send()
+        context.performAndWait {
+            context.refresh(project, mergeChanges: true)
+            self.counters = project.countersArray
+            print("Refreshed counters: Found \(counters.count) counters")
         }
+        objectWillChange.send()
+    }
     
     func refreshYarns() {
         yarns = project.yarnsArray
@@ -114,9 +114,9 @@ class ProjectDetailViewModel: ObservableObject {
             self?.objectWillChange.send()
         }
     }
-
+    
     func debugYarns() {
-        #if DEBUG
+#if DEBUG
         print("📊 ViewModel Yarn Debug:")
         print("Project: \(project.name)")
         print("Yarns count in ViewModel: \(yarnsArray.count)")
@@ -135,7 +135,7 @@ class ProjectDetailViewModel: ObservableObject {
             print("  Brand: \(yarn.brand)")
             print("  ID: \(yarn.id)")
         }
-        #endif
+#endif
     }
 }
 

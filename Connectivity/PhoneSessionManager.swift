@@ -16,19 +16,19 @@ class PhoneSessionManager: NSObject, ObservableObject {
     private let session: WCSession
     
     override private init() {
-            self.session = .default
-            super.init()
-            
-            print("Phone: Initializing PhoneSessionManager")
-            if WCSession.isSupported() {
-                print("Phone: WCSession is supported, setting up delegate")
-                session.delegate = self
-                session.activate()
-                print("Phone: WCSession activation requested")
-            } else {
-                print("Phone: WCSession is not supported")
-            }
+        self.session = .default
+        super.init()
+        
+        print("Phone: Initializing PhoneSessionManager")
+        if WCSession.isSupported() {
+            print("Phone: WCSession is supported, setting up delegate")
+            session.delegate = self
+            session.activate()
+            print("Phone: WCSession activation requested")
+        } else {
+            print("Phone: WCSession is not supported")
         }
+    }
 }
 
 extension PhoneSessionManager: WCSessionDelegate {

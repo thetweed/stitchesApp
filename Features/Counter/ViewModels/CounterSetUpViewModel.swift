@@ -34,32 +34,32 @@ class CounterSetupViewModel: ObservableObject {
     }
     
     func saveCounter(context: NSManagedObjectContext) async {
-            await context.perform {
-                let counter = Counter.create(in: context,
-                                           name: self.counterName.isEmpty ? "Unnamed Counter" : self.counterName,
-                                           counterType: self.counterType)
-                
-                counter.currentCount = Int32(self.startingCount)
-                counter.targetCount = Int32(self.targetCount)
-                counter.notes = self.notes
-                counter.lastModified = Date()
-                
-                if let project = self.project {
-                    counter.project = project
-                    project.addToCounters(counter)
-                    project.lastModified = Date()
+        await context.perform {
+            let counter = Counter.create(in: context,
+                                         name: self.counterName.isEmpty ? "Unnamed Counter" : self.counterName,
+                                         counterType: self.counterType)
+            
+            counter.currentCount = Int32(self.startingCount)
+            counter.targetCount = Int32(self.targetCount)
+            counter.notes = self.notes
+            counter.lastModified = Date()
+            
+            if let project = self.project {
+                counter.project = project
+                project.addToCounters(counter)
+                project.lastModified = Date()
+            }
+            
+            do {
+                try context.save()
+                print("Counter saved successfully")
+                DispatchQueue.main.async {
+                    self.onCounterCreated?(counter)
                 }
-                
-                do {
-                    try context.save()
-                    print("Counter saved successfully")
-                    DispatchQueue.main.async {
-                        self.onCounterCreated?(counter)
-                    }
-                } catch {
-                    print("Error saving counter: \(error)")
-                }
+            } catch {
+                print("Error saving counter: \(error)")
             }
         }
+    }
 }
 

@@ -11,24 +11,24 @@ import CoreData
 
 @objc(LogEntry)
 public class LogEntry: NSManagedObject {
-
+    
 }
 
 extension LogEntry {
-
+    
     @nonobjc public class func fetchRequest() -> NSFetchRequest<LogEntry> {
         return NSFetchRequest<LogEntry>(entityName: "LogEntry")
     }
-
+    
     @NSManaged public var id: UUID?
     @NSManaged public var timestamp: Date?
     @NSManaged public var message: String?
     @NSManaged public var category: String?
-
+    
 }
 
 extension LogEntry : Identifiable {
-
+    
 }
 
 extension LogEntry {

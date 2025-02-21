@@ -87,26 +87,26 @@ class ProjectAddEditViewModel: ObservableObject {
     }
     
     func handleNewCounter(_ counter: Counter) {
-            viewContext.performAndWait {
-                if let project = existingProject {
-                    project.addToCounters(counter)
-                    counter.project = project
-                    try? viewContext.save()
-                }
-                countersToAttach.insert(counter)
-                refreshAttachedCounters()
-            }
-        }
-        
-        func refreshAttachedCounters() {
+        viewContext.performAndWait {
             if let project = existingProject {
-                viewContext.refresh(project, mergeChanges: true)
-                attachedCounters = Array(project.counters?.allObjects as? [Counter] ?? [])
-            } else {
-                attachedCounters = Array(countersToAttach)
+                project.addToCounters(counter)
+                counter.project = project
+                try? viewContext.save()
             }
-            objectWillChange.send()
+            countersToAttach.insert(counter)
+            refreshAttachedCounters()
         }
+    }
+    
+    func refreshAttachedCounters() {
+        if let project = existingProject {
+            viewContext.refresh(project, mergeChanges: true)
+            attachedCounters = Array(project.counters?.allObjects as? [Counter] ?? [])
+        } else {
+            attachedCounters = Array(countersToAttach)
+        }
+        objectWillChange.send()
+    }
     
     func detachCounter(_ counter: Counter) {
         viewContext.performAndWait {
@@ -193,4 +193,4 @@ class ProjectAddEditViewModel: ObservableObject {
         }
     }
 }
-    
+

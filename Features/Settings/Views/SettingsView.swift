@@ -15,20 +15,20 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
-
+                
                 Section {
                     Picker("Theme", selection: $settings.appTheme) {
                         ForEach(SettingsViewModel.AppTheme.allCases, id: \.self) { theme in
                             Text(theme.rawValue.capitalized).tag(theme)
                         }
                     }
-
+                    
                     Toggle("Increase Contrast", isOn: $settings.highContrast)
                     Toggle("Bold Text", isOn: $settings.boldText)
                 } header: {
                     Label("Display", systemImage: "paintbrush.fill")
                 }
-
+                
                 Section {
                     Picker("Language", selection: $settings.language) {
                         ForEach(SettingsViewModel.Language.allCases, id: \.self) { language in
@@ -44,7 +44,7 @@ struct SettingsView: View {
                 } header: {
                     Label("Preferences", systemImage: "gearshape.fill")
                 }
-
+                
                 Section {
                     Toggle("Auto-increment Row Counter", isOn: $settings.autoIncrementRows)
                     Toggle("Show Project Notes by Default", isOn: $settings.showNotesByDefault)
@@ -53,16 +53,16 @@ struct SettingsView: View {
                     Label("Project Defaults", systemImage: "scissors")
                 }
                 Section {
-                                    NavigationLink {
-                                        BackupView()
-                                    } label: {
-                                        Label("Backup & Data", systemImage: "externaldrive.fill")
-                                    }
-                                }
+                    NavigationLink {
+                        BackupView()
+                    } label: {
+                        Label("Backup & Data", systemImage: "externaldrive.fill")
+                    }
+                }
                 
                 Section {
                     NavigationLink {
-
+                        
                         Text("Help Content")
                     } label: {
                         Label("Help & Tips", systemImage: "questionmark.circle")
@@ -72,7 +72,7 @@ struct SettingsView: View {
                         Label("Privacy Policy", systemImage: "hand.raised")
                     }
                     
-
+                    
                     Label("Version 1.0.0", systemImage: "info.circle")
                         .foregroundColor(.secondary)
                 } header: {
@@ -90,11 +90,11 @@ struct SettingsView: View {
 
 //Add reminders or whatever notifications later?
 /* Section {
-    Toggle("Project Reminders", isOn: $settings.enableReminders)
-    if settings.enableReminders {
-        Toggle("Daily Progress Notifications", isOn: $settings.dailyNotifications)
-        Toggle("Inactive Project Reminders", isOn: $settings.inactiveProjectReminders)
-    }
-} header: {
-    Label("Notifications", systemImage: "bell.fill")
-}*/
+ Toggle("Project Reminders", isOn: $settings.enableReminders)
+ if settings.enableReminders {
+ Toggle("Daily Progress Notifications", isOn: $settings.dailyNotifications)
+ Toggle("Inactive Project Reminders", isOn: $settings.inactiveProjectReminders)
+ }
+ } header: {
+ Label("Notifications", systemImage: "bell.fill")
+ }*/

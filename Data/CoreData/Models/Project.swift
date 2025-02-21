@@ -28,9 +28,9 @@ class Project: NSManagedObject, Identifiable {
 extension Project {
     @discardableResult
     static func create(in context: NSManagedObjectContext,
-                      name: String,
-                      projectType: String,
-                      startDate: Date = Date()) -> Project {
+                       name: String,
+                       projectType: String,
+                       startDate: Date = Date()) -> Project {
         print("Creating new Project entity")
         let project = Project(context: context)
         project.id = UUID()
@@ -68,7 +68,7 @@ extension Project {
         return Array(set).sorted { $0.brand < $1.brand }
     }
     
-   func addToYarns(_ yarn: Yarn) {
+    func addToYarns(_ yarn: Yarn) {
         let yarns = self.yarns?.mutableCopy() as? NSMutableSet ?? NSMutableSet()
         yarns.add(yarn)
         self.yarns = yarns as NSSet

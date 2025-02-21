@@ -18,7 +18,7 @@ struct AddProjectView: View {
     var body: some View {
         ProjectFormView(viewModel: viewModel, isNewProject: true)
             .onDisappear {
-                            print("AddProjectView disappeared")
-                        }
+                print("AddProjectView disappeared")
+            }
     }
 }

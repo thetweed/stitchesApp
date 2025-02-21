@@ -17,7 +17,7 @@ struct StitchesWatchApp: App {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, coreDataManager.viewContext)
-                .environmentObject(sessionManager)  
+                .environmentObject(sessionManager)
         }
     }
 }

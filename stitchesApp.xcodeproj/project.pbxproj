@@ -62,7 +62,6 @@
 		5B43058B2D4A18460038D6C7 /* ProjectCountersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43058A2D4A18430038D6C7 /* ProjectCountersView.swift */; };
 		5B43058D2D4A19450038D6C7 /* AllCountersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43058C2D4A19420038D6C7 /* AllCountersListView.swift */; };
 		5B43058F2D4A221C0038D6C7 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B43058E2D4A22190038D6C7 /* DashboardView.swift */; };
-		5B4305912D4A26E30038D6C7 /* DeprecatedContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305902D4A26DF0038D6C7 /* DeprecatedContentView.swift */; };
 		5B4305A32D4AD3AA0038D6C7 /* CounterSetUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305A22D4AD3A30038D6C7 /* CounterSetUpViewModel.swift */; };
 		5B4305A52D4AE76C0038D6C7 /* ProjectCountersRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305A42D4AE7670038D6C7 /* ProjectCountersRow.swift */; };
 		5B4305A72D4AEAD90038D6C7 /* UnattachedCounterSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4305A62D4AEAC90038D6C7 /* UnattachedCounterSelectionView.swift */; };
@@ -191,7 +190,6 @@
 		5B43058A2D4A18430038D6C7 /* ProjectCountersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCountersView.swift; sourceTree = "<group>"; };
 		5B43058C2D4A19420038D6C7 /* AllCountersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCountersListView.swift; sourceTree = "<group>"; };
 		5B43058E2D4A22190038D6C7 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
-		5B4305902D4A26DF0038D6C7 /* DeprecatedContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeprecatedContentView.swift; sourceTree = "<group>"; };
 		5B4305A22D4AD3A30038D6C7 /* CounterSetUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterSetUpViewModel.swift; sourceTree = "<group>"; };
 		5B4305A42D4AE7670038D6C7 /* ProjectCountersRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCountersRow.swift; sourceTree = "<group>"; };
 		5B4305A62D4AEAC90038D6C7 /* UnattachedCounterSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnattachedCounterSelectionView.swift; sourceTree = "<group>"; };
@@ -358,7 +356,6 @@
 				5B37E50B2D384D6C005A3031 /* CountersView.swift */,
 				5B37E50D2D384DAE005A3031 /* YarnbookView.swift */,
 				5B0637FC2D44DD5B001D35E2 /* AlbumView.swift */,
-				5B4305902D4A26DF0038D6C7 /* DeprecatedContentView.swift */,
 			);
 			path = stitchesApp;
 			sourceTree = "<group>";
@@ -938,7 +935,6 @@
 				5B37E5002D3730E4005A3031 /* CoreDataManager.swift in Sources */,
 				5B0637FB2D44CDAD001D35E2 /* View.swift in Sources */,
 				5B43058F2D4A221C0038D6C7 /* DashboardView.swift in Sources */,
-				5B4305912D4A26E30038D6C7 /* DeprecatedContentView.swift in Sources */,
 				5B4305602D48417C0038D6C7 /* TestYarnListView.swift in Sources */,
 				5B37E4FE2D372D0B005A3031 /* Counter.swift in Sources */,
 				5B6242A22D385EC2008DE40D /* BasicStitchCounterViewModel.swift in Sources */,

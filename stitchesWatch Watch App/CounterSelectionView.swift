@@ -14,16 +14,16 @@ struct CounterSelectionView: View {
     @EnvironmentObject private var sessionManager: WatchSessionManager
     @Binding var selectedCounter: Counter?
     @FetchRequest private var activeProjects: FetchedResults<Project>
+    
+    init(selectedCounter: Binding<Counter?>) {
+        self._selectedCounter = selectedCounter
         
-        init(selectedCounter: Binding<Counter?>) {
-            self._selectedCounter = selectedCounter
-            
-            let fetchRequest = NSFetchRequest<Project>(entityName: "Project")
-            fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \Project.lastModified, ascending: false)]
-            fetchRequest.predicate = NSPredicate(format: "status != %@", "Completed")
-            
-            self._activeProjects = FetchRequest<Project>(fetchRequest: fetchRequest)
-        }
+        let fetchRequest = NSFetchRequest<Project>(entityName: "Project")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \Project.lastModified, ascending: false)]
+        fetchRequest.predicate = NSPredicate(format: "status != %@", "Completed")
+        
+        self._activeProjects = FetchRequest<Project>(fetchRequest: fetchRequest)
+    }
     
     var body: some View {
         List {

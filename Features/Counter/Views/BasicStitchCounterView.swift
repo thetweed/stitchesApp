@@ -17,7 +17,7 @@ struct BasicStitchCounterView: View {
     
     init(context: NSManagedObjectContext, counter: Counter? = nil) {
         _viewModel = StateObject(wrappedValue:
-            StitchCounterViewModel(context: context, counter: counter)
+                                    StitchCounterViewModel(context: context, counter: counter)
         )
     }
     

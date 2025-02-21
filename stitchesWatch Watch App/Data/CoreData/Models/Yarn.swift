@@ -25,11 +25,11 @@ class Yarn: NSManagedObject, Identifiable {
 extension Yarn {
     @discardableResult
     static func create(in context: NSManagedObjectContext,
-                      brand: String,
-                      colorName: String,
-                      weightCategory: String,
-                      fiberContent: String,
-                      totalYardage: Double) -> Yarn {
+                       brand: String,
+                       colorName: String,
+                       weightCategory: String,
+                       fiberContent: String,
+                       totalYardage: Double) -> Yarn {
         let yarn = Yarn(context: context)
         yarn.id = UUID()
         yarn.brand = brand
@@ -64,9 +64,9 @@ extension Yarn {
     }
     
     var projectsArray: [Project] {
-            let set = projects as? Set<Project> ?? []
-            return Array(set).sorted { $0.name < $1.name }
-        }
+        let set = projects as? Set<Project> ?? []
+        return Array(set).sorted { $0.name < $1.name }
+    }
 }
 
 extension Yarn {

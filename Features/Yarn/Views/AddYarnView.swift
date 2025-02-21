@@ -64,7 +64,7 @@ struct AddYarnView: View {
     private var propertiesSection: some View {
         Section("Properties") {
             Picker("Weight Category", selection: $viewModel.weightCategory) {
-                Text("Select Weight").tag("") 
+                Text("Select Weight").tag("")
                 ForEach(Yarn.weightCategories, id: \.self) { category in
                     Text(category).tag(category)
                 }

@@ -13,7 +13,7 @@ struct ProjectDetailView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel: ProjectDetailViewModel
- 
+    
     
     init(project: Project) {
         self.project = project
@@ -71,7 +71,7 @@ struct ProjectDetailView: View {
             }
         }
     }
-
+    
     private var projectHeader: some View {
         Group {
             if !viewModel.isDeleted {
@@ -101,7 +101,7 @@ struct ProjectDetailView: View {
             }
         }
     }
-
+    
     private var patternNotesSection: some View {
         Group {
             if !viewModel.isDeleted {
@@ -117,7 +117,7 @@ struct ProjectDetailView: View {
             }
         }
     }
-
+    
     private var yarnsSection: some View {
         Group {
             if !viewModel.isDeleted {
@@ -158,7 +158,7 @@ struct ProjectDetailView: View {
             }
         }
     }
-
+    
     private var countersSection: some View {
         Group {
             if !viewModel.isDeleted {
@@ -200,7 +200,7 @@ struct ProjectDetailView_Previews: PreviewProvider {
                     .onAppear {
                         print("Preview project ID: \(project.id)")
                         print("Preview project yarns count: \(project.yarns?.count ?? 0)")
-                        project.debugYarnRelationship() 
+                        project.debugYarnRelationship()
                     }
             }
         }

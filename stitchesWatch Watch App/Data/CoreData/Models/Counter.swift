@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-    class Counter: NSManagedObject {
+class Counter: NSManagedObject {
     @NSManaged public var id: UUID
     @NSManaged public var name: String
     @NSManaged public var currentCount: Int32
@@ -23,8 +23,8 @@ import CoreData
 extension Counter: Identifiable {
     @discardableResult
     static func create(in context: NSManagedObjectContext,
-                      name: String,
-                      counterType: String) -> Counter {
+                       name: String,
+                       counterType: String) -> Counter {
         let counter = Counter(context: context)
         counter.id = UUID()
         counter.name = name

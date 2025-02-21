@@ -17,7 +17,7 @@ class YarnDetailViewModel: ObservableObject {
         self.dateFormatter = DateFormatter()
         self.dateFormatter.dateStyle = .medium
     }
-
+    
     var brandText: String {
         "Brand: \(yarn.brand)"
     }

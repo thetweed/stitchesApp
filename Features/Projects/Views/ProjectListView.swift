@@ -15,19 +15,19 @@ struct ProjectListView: View {
     @State private var deletedProjectIDs: Set<UUID> = []
     
     init(viewContext: NSManagedObjectContext) {
-            let vm = ProjectListViewModel(viewContext: viewContext)
-            _viewModel = StateObject(wrappedValue: vm)
-            _projects = FetchRequest(fetchRequest: vm.projectFetchRequest())
-        }
+        let vm = ProjectListViewModel(viewContext: viewContext)
+        _viewModel = StateObject(wrappedValue: vm)
+        _projects = FetchRequest(fetchRequest: vm.projectFetchRequest())
+    }
     
     private var activeProjects: [Project] {
         projects.filter { $0.status == "In Progress" && !deletedProjectIDs.contains($0.id) }
     }
-
+    
     private var plannedProjects: [Project] {
         projects.filter { $0.status == "Not Started" && !deletedProjectIDs.contains($0.id) }
     }
-
+    
     private var completedProjects: [Project] {
         projects.filter { ($0.status == "Completed" || $0.status == "Frogged") && !deletedProjectIDs.contains($0.id) }
     }
@@ -35,44 +35,44 @@ struct ProjectListView: View {
     private var hasVisibleProjects: Bool {
         !activeProjects.isEmpty || !plannedProjects.isEmpty || !completedProjects.isEmpty
     }
-
+    
     var body: some View {
         NavigationStack {
             ScrollView {
-                    LazyVStack(spacing: 20) {
-                        if !hasVisibleProjects {
-                            emptyStateView
-                        } else {
-                            if !activeProjects.isEmpty {
-                                projectSection(
-                                    title: "Active Projects",
-                                    systemImage: "flag.pattern.checkered",
-                                    projects: activeProjects,
-                                    accentColor: .blue
-                                )
-                            }
-                                    
-                            if !plannedProjects.isEmpty {
-                                projectSection(
-                                    title: "Planned",
-                                    systemImage: "doc.text",
-                                    projects: plannedProjects,
-                                    accentColor: Color(.darkGray)
-                                )
-                            }
-                                    
-                            if !completedProjects.isEmpty {
-                                projectSection(
-                                    title: "Finished Projects",
-                                    systemImage: "checkmark.circle",
-                                    projects: completedProjects,
-                                    accentColor: .green
-                                )
-                            }
+                LazyVStack(spacing: 20) {
+                    if !hasVisibleProjects {
+                        emptyStateView
+                    } else {
+                        if !activeProjects.isEmpty {
+                            projectSection(
+                                title: "Active Projects",
+                                systemImage: "flag.pattern.checkered",
+                                projects: activeProjects,
+                                accentColor: .blue
+                            )
+                        }
+                        
+                        if !plannedProjects.isEmpty {
+                            projectSection(
+                                title: "Planned",
+                                systemImage: "doc.text",
+                                projects: plannedProjects,
+                                accentColor: Color(.darkGray)
+                            )
+                        }
+                        
+                        if !completedProjects.isEmpty {
+                            projectSection(
+                                title: "Finished Projects",
+                                systemImage: "checkmark.circle",
+                                projects: completedProjects,
+                                accentColor: .green
+                            )
                         }
                     }
-                    .padding()
                 }
+                .padding()
+            }
             .navigationTitle("Knitting Projects")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

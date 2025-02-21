@@ -19,9 +19,9 @@ class ProjectRowViewModel: ObservableObject {
     }
     
     var lastModifiedText: String {
-           guard !isDeleted else { return "" }
-           return ProjectDateFormatter.shared.relativeString(from: project.lastModified)
-       }
+        guard !isDeleted else { return "" }
+        return ProjectDateFormatter.shared.relativeString(from: project.lastModified)
+    }
 }
 
 struct ProjectRowView: View {
@@ -133,8 +133,8 @@ struct OldProjectRowView: View {
     @StateObject private var viewModel: ProjectRowViewModel
     
     init(project: Project) {
-            _viewModel = StateObject(wrappedValue: ProjectRowViewModel(project: project))
-        }
+        _viewModel = StateObject(wrappedValue: ProjectRowViewModel(project: project))
+    }
     
     private var statusColor: Color {
         switch viewModel.project.status {
@@ -163,76 +163,76 @@ struct OldProjectRowView: View {
     }
     
     var body: some View {
-            if !viewModel.isDeleted {
-                VStack(alignment: .leading, spacing: 8) {
-                    // Project Name and Status Badge
-                    HStack(alignment: .center, spacing: 8) {
-                        Text(viewModel.project.name)
-                            .font(.headline)
-                        
-                        Spacer()
-                        
-                        // Status Badge
-                        HStack(spacing: 4) {
-                            Image(systemName: statusIcon)
-                                .font(.caption)
-                            Text(viewModel.project.status)
-                                .font(.caption)
-                        }
-                        .foregroundStyle(statusColor)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(
-                            Capsule()
-                                .fill(statusColor.opacity(0.15))
-                        )
-                    }
+        if !viewModel.isDeleted {
+            VStack(alignment: .leading, spacing: 8) {
+                // Project Name and Status Badge
+                HStack(alignment: .center, spacing: 8) {
+                    Text(viewModel.project.name)
+                        .font(.headline)
                     
-                    HStack(spacing: 16) {
-                        if viewModel.project.yarnsArray.count > 0 {
-                            HStack(spacing: 4) {
-                                Image(systemName: "circle.hexagongrid.fill")
-                                    .font(.caption)
-                                Text("\(viewModel.project.yarnsArray.count) yarn\(viewModel.project.yarnsArray.count == 1 ? "" : "s")")
-                                    .font(.caption)
-                            }
-                            .foregroundColor(.secondary)
-                        }
-                        
-                        if viewModel.project.status != "Not Started" {
-                            HStack(spacing: 4) {
-                                Image(systemName: "arrow.up.and.down")
-                                    .font(.caption)
-                                Text("Row \(viewModel.project.currentRow)")
-                                    .font(.caption)
-                            }
-                            .foregroundColor(.secondary)
-                        }
-                        
+                    Spacer()
+                    
+                    // Status Badge
+                    HStack(spacing: 4) {
+                        Image(systemName: statusIcon)
+                            .font(.caption)
+                        Text(viewModel.project.status)
+                            .font(.caption)
+                    }
+                    .foregroundStyle(statusColor)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(
+                        Capsule()
+                            .fill(statusColor.opacity(0.15))
+                    )
+                }
+                
+                HStack(spacing: 16) {
+                    if viewModel.project.yarnsArray.count > 0 {
                         HStack(spacing: 4) {
-                            Image(systemName: "clock")
+                            Image(systemName: "circle.hexagongrid.fill")
                                 .font(.caption)
-                            Text(viewModel.lastModifiedText)
+                            Text("\(viewModel.project.yarnsArray.count) yarn\(viewModel.project.yarnsArray.count == 1 ? "" : "s")")
                                 .font(.caption)
                         }
                         .foregroundColor(.secondary)
-                        
-                        Spacer()
                     }
-                }
-                .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("ProjectDeleted"))) { notification in
-                    if let deletedProjectIDString = notification.userInfo?["projectIDString"] as? String,
-                       deletedProjectIDString == viewModel.project.id.uuidString {
-                        withAnimation {
-                            viewModel.isDeleted = true
+                    
+                    if viewModel.project.status != "Not Started" {
+                        HStack(spacing: 4) {
+                            Image(systemName: "arrow.up.and.down")
+                                .font(.caption)
+                            Text("Row \(viewModel.project.currentRow)")
+                                .font(.caption)
                         }
+                        .foregroundColor(.secondary)
+                    }
+                    
+                    HStack(spacing: 4) {
+                        Image(systemName: "clock")
+                            .font(.caption)
+                        Text(viewModel.lastModifiedText)
+                            .font(.caption)
+                    }
+                    .foregroundColor(.secondary)
+                    
+                    Spacer()
+                }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("ProjectDeleted"))) { notification in
+                if let deletedProjectIDString = notification.userInfo?["projectIDString"] as? String,
+                   deletedProjectIDString == viewModel.project.id.uuidString {
+                    withAnimation {
+                        viewModel.isDeleted = true
                     }
                 }
-
-            } else {
-                EmptyView()
             }
+            
+        } else {
+            EmptyView()
         }
+    }
 }
 
 

@@ -97,7 +97,7 @@ class WatchSessionManager: NSObject, ObservableObject {
             }
         })
     }
-        
+    
     private func updateOrCreateCounter(from data: [String: Any], in context: NSManagedObjectContext) {
         guard let idString = data["id"] as? String,
               let id = UUID(uuidString: idString) else {

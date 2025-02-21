@@ -30,31 +30,31 @@ struct Previewing<Content: View, Model>: View {
 struct PreviewingData {
     
     var sampleProjects: (NSManagedObjectContext) -> [Project] { { context in
-         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = Project.fetchRequest()
-         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-         do {
-             try context.execute(batchDeleteRequest)
-             context.reset() // Reset context after batch delete
-         } catch {
-             print("Failed to clear projects: \(error)")
-         }
-           
-           var sampleProjects = [Project]()
-           for _ in 0..<4 {
-               let project = Project.create(
-                   in: context,
-                   name: "Project \(sampleProjects.count + 1)",
-                   projectType: "Knitting"
-               )
-               project.patternNotes = "This is a sample pattern note"
-               project.currentRow = 100
-               sampleProjects.append(project)
-               project.status = "Not Started"
-           }
-           try? context.save()
-           return sampleProjects
-       }}
-
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = Project.fetchRequest()
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+            try context.execute(batchDeleteRequest)
+            context.reset() // Reset context after batch delete
+        } catch {
+            print("Failed to clear projects: \(error)")
+        }
+        
+        var sampleProjects = [Project]()
+        for _ in 0..<4 {
+            let project = Project.create(
+                in: context,
+                name: "Project \(sampleProjects.count + 1)",
+                projectType: "Knitting"
+            )
+            project.patternNotes = "This is a sample pattern note"
+            project.currentRow = 100
+            sampleProjects.append(project)
+            project.status = "Not Started"
+        }
+        try? context.save()
+        return sampleProjects
+    }}
+    
     var sampleYarns: (NSManagedObjectContext) -> [Yarn] { { context in
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = Yarn.fetchRequest()
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
@@ -66,22 +66,22 @@ struct PreviewingData {
         }
         
         var sampleYarns = [Yarn]()
-           for i in 0..<5 {
-               let yarn = Yarn.create(
-                   in: context,
-                   brand: "Brand \(i + 1)",
-                   colorName: "Color \(i + 1)",
-                   weightCategory: Yarn.weightCategories[i % Yarn.weightCategories.count],
-                   fiberContent: "Wool/Acrylic Blend",
-                   totalYardage: 100.0
-               )
-               yarn.colorNumber = "\(i + 1)"
-               yarn.purchaseDate = Date()
-               sampleYarns.append(yarn)
-           }
-           try? context.save()
-           return sampleYarns
-        }}
+        for i in 0..<5 {
+            let yarn = Yarn.create(
+                in: context,
+                brand: "Brand \(i + 1)",
+                colorName: "Color \(i + 1)",
+                weightCategory: Yarn.weightCategories[i % Yarn.weightCategories.count],
+                fiberContent: "Wool/Acrylic Blend",
+                totalYardage: 100.0
+            )
+            yarn.colorNumber = "\(i + 1)"
+            yarn.purchaseDate = Date()
+            sampleYarns.append(yarn)
+        }
+        try? context.save()
+        return sampleYarns
+    }}
     
     var sampleProjectWithYarns: (NSManagedObjectContext) -> Project { { context in
         let project = Project.create(
@@ -98,7 +98,7 @@ struct PreviewingData {
             fiberContent: "100% Wool",
             totalYardage: 220
         )
-
+        
         context.performAndWait {
             project.addYarn(yarn, context: context)
             
@@ -139,7 +139,7 @@ extension PreviewingData {
             name: "Sample Knitting Project",
             projectType: "Knitting"
         )
-
+        
         let counter = Counter.create(
             in: context,
             name: "Sleeve Increases",

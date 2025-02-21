@@ -132,23 +132,23 @@ struct ProjectFormView: View {
     }
     
     @ToolbarContentBuilder
-        private func toolbarContent() -> some ToolbarContent {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button("Cancel", role: .cancel) {
-                    dismiss()
-                }
-            }
-            
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Save") {
-                    if isNewProject {
-                        viewModel.saveProject()
-                    } else {
-                        viewModel.updateProject()
-                    }
-                    dismiss()
-                }
-                .disabled(!viewModel.isValid)
+    private func toolbarContent() -> some ToolbarContent {
+        ToolbarItem(placement: .navigationBarLeading) {
+            Button("Cancel", role: .cancel) {
+                dismiss()
             }
         }
+        
+        ToolbarItem(placement: .navigationBarTrailing) {
+            Button("Save") {
+                if isNewProject {
+                    viewModel.saveProject()
+                } else {
+                    viewModel.updateProject()
+                }
+                dismiss()
+            }
+            .disabled(!viewModel.isValid)
+        }
+    }
 }

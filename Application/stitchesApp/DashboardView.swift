@@ -82,8 +82,8 @@ struct DashboardView: View {
                 }
             }
             .onAppear {
-                            print("DashboardView appeared - Active projects count: \(activeProjects.count)")
-                        }
+                print("DashboardView appeared - Active projects count: \(activeProjects.count)")
+            }
             .onChange(of: activeProjects.count) { oldCount, newCount in
                 print("Active projects count changed from \(oldCount) to: \(newCount)")
                 CoreDataManager.shared.saveContext()
@@ -124,7 +124,7 @@ struct DashboardView: View {
             
             statsCard(
                 title: "Active Counters",
-                value: "\(activeCounters.count)", 
+                value: "\(activeCounters.count)",
                 systemImage: "number.circle.fill",
                 color: .orange
             )

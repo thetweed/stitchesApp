@@ -1,29 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "QapwfSa0WxOm_1024_1024.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "size" : "1024x1024"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "idiom" : "universal",
-      "platform" : "ios",
-      "size" : "1024x1024"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "tinted"
-        }
-      ],
+      "filename" : "AppIcon_Stitches.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"

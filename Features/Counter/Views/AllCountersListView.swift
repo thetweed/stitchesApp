@@ -69,13 +69,13 @@ struct AllCountersView: View {
     
     var filteredCounters: [Counter] {
         var result = Array(counters)
-
+        
         if let predicate = selectedFilter.predicate {
             result = result.filter { counter in
                 predicate.evaluate(with: counter)
             }
         }
-
+        
         if !searchText.isEmpty {
             result = result.filter { counter in
                 counter.name.localizedCaseInsensitiveContains(searchText) ||

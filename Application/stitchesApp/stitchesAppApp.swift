@@ -69,7 +69,7 @@ struct stitchesAppApp: App {
 struct SplashScreenView: View {
     var body: some View {
         ZStack {
-            Color("darkPurple") 
+            Color("darkPurple")
                 .ignoresSafeArea()
             
             VStack {

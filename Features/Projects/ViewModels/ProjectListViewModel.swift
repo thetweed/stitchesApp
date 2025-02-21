@@ -10,9 +10,9 @@ import CoreData
 class ProjectListViewModel: ObservableObject {
     @Published var showingAddProject = false {
         didSet {
-            #if DEBUG
+#if DEBUG
             print("showingAddProject didSet: \(showingAddProject)")
-            #endif
+#endif
             objectWillChange.send()
         }
     }
@@ -52,9 +52,9 @@ class ProjectListViewModel: ObservableObject {
     
     func toggleAddProject() {
         showingAddProject.toggle()
-        #if DEBUG
+#if DEBUG
         print("Toggle called: \(showingAddProject)")
-        #endif
+#endif
     }
     
     deinit {

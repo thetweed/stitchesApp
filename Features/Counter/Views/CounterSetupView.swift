@@ -10,14 +10,14 @@ import CoreData
 
 struct CounterSetupView: View {
     @Environment(\.managedObjectContext) private var context
-        @Environment(\.dismiss) private var dismiss
-        @StateObject private var viewModel: CounterSetupViewModel
-        
-        init(onCounterCreated: ((Counter) -> Void)? = nil) {
-            _viewModel = StateObject(wrappedValue: CounterSetupViewModel(
-                onCounterCreated: onCounterCreated
-            ))
-        }
+    @Environment(\.dismiss) private var dismiss
+    @StateObject private var viewModel: CounterSetupViewModel
+    
+    init(onCounterCreated: ((Counter) -> Void)? = nil) {
+        _viewModel = StateObject(wrappedValue: CounterSetupViewModel(
+            onCounterCreated: onCounterCreated
+        ))
+    }
     
     var body: some View {
         NavigationStack {
